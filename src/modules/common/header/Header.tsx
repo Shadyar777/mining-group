@@ -5,7 +5,7 @@ import Languages from './Languages';
 
 import Menu from './Menu';
 import LeftDrawer from './LeftDrawer';
-import Logo from './logo';
+import Logo from './Logo.tsx';
 
 const Header = () => {
   const [isOpen, setisOpen] = useState(false);

@@ -14,6 +14,7 @@ export const StyledHeader = styled('header')(() => ({
     alignItems: 'center',
 
     '.header__language-and-logo': {
+      marginLeft: '100px',
       display: 'flex',
       gap: '0 32px',
       alignItems: 'center',
@@ -35,8 +36,10 @@ export const StyledLanguages = styled(FormControl)(() => ({
 
 export const StyledLogo = styled('div')(() => ({
   '.logo__img': {
-    width: '120px',
-    height: '120px',
+    maxWidth: '120px',
+    minWidth: '50px',
+    width: '100%',
+    height: 'auto',
   },
 }));
 

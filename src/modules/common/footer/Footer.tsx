@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Container } from '@mui/material';
 import StyledFooter from './styled';
 import { getLinks } from '../../../routers/useAppRoutes';
-import Logo from '../header/logo';
+import Logo from '../header/Logo.tsx';
 
 const Footer = () => {
   const links = getLinks();

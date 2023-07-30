@@ -2,7 +2,7 @@ import { Button, Container, styled, Typography } from '@mui/material';
 
 export const StyledAboutCompany = styled('div')(() => ({
   width: '100%',
-  padding: '120px',
+  padding: '120px 0',
 
   '& .about-company__content': {
     display: 'flex',
