@@ -17,10 +17,8 @@ const Footer = () => {
             <ul>
               {links.map(({ name, path }, idx) => {
                 return (
-                  <li>
-                    <Link to={path} key={`name-${idx}`}>
-                      {name}
-                    </Link>
+                  <li key={`name-${idx}`}>
+                    <Link to={path}>{name}</Link>
                   </li>
                 );
               })}

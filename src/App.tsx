@@ -4,6 +4,8 @@ import Footer from './modules/common/footer/Footer';
 import { useAppRoutes } from './routers/useAppRoutes';
 import { Box } from '@mui/material';
 
+import 'react-multi-carousel/lib/styles.css';
+
 export function App() {
   const element = useAppRoutes();
 

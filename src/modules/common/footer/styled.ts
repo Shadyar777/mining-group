@@ -41,6 +41,7 @@ const StyledFooter = styled('footer')(() => ({
     fontSize: '24px',
     display: 'flex',
     gap: '0 16px',
+    flexWrap: 'wrap',
 
     li: {
       listStyleType: 'none',
