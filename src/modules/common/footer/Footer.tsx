@@ -1,11 +1,35 @@
+import { Link } from 'react-router-dom';
 import { Container } from '@mui/material';
 import StyledFooter from './styled';
+import { getLinks } from '../../../routers/useAppRoutes';
+import Logo from '../header/logo';
 
 const Footer = () => {
+  const links = getLinks();
   return (
     <StyledFooter>
       <Container maxWidth='lg'>
-        <div>hello Footer</div>
+        <div className='footer__conteiner'>
+          <div className='footer__logo'>
+            <Logo />
+          </div>
+          <div className='footer__list-links'>
+            <ul>
+              {links.map(({ name, path }, idx) => {
+                return (
+                  <li>
+                    <Link to={path} key={`name-${idx}`}>
+                      {name}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <div className='footer-text__rights-reserved'>
+            © TOO “Invest Mining Group” | All rights reserved.
+          </div>
+        </div>
       </Container>
     </StyledFooter>
   );

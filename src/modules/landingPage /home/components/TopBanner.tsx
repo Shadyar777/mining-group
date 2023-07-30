@@ -8,8 +8,7 @@ export const StyledTopBanner = styled('div')(() => ({
   '.top-banner-container': {
     width: '100%',
     height: '100%',
-    background: `url('./../../../../../public/images/24.jpg')`,
-    // background: `url('./../../../../../public/images/home-top-banner.png')`,
+    background: `url('./../../../../../public/images/home-top-banner.jpg')`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
     backgroundSize: 'cover',
@@ -17,8 +16,7 @@ export const StyledTopBanner = styled('div')(() => ({
 
   '&::after': {
     content: `""`,
-    background: `url('./../../../../../public/svgs/wave.svg')`,
-    // background: `url('./../../../../../public/images/homo-top-banner-wave.png')`,
+    background: `url('./../../../../../public/svgs/home-top-banner-wave.svg')`,
     position: 'absolute',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'contain',
