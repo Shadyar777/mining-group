@@ -6,6 +6,14 @@ export const StyledResources = styled('div')(() => ({
   width: '100%',
   height: '150px',
   padding: '20px 0',
+
+  '& .react-multi-carousel-item': {
+    marginRight: '40px',
+
+    // '& div:last-child': {
+    //   paddingRight: '10px',
+    // },
+  },
 }));
 
 const responsive = {
@@ -21,7 +29,7 @@ const responsive = {
       max: 464,
       min: 0,
     },
-    items: 1,
+    items: 2,
   },
   tablet: {
     breakpoint: {

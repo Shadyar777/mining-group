@@ -3,12 +3,12 @@ import { StyledLanguages } from './styled';
 
 const Languages = () => {
   const handleChange = () => {
-    console.log('sjdvnjds');
+    console.log('click');
   };
   return (
     <StyledLanguages fullWidth variant='outlined'>
       <Select
-        defaultValue={10}
+        defaultValue={1}
         onChange={handleChange}
         className='languages__select'
         inputProps={{ IconComponent: () => null }}
@@ -21,9 +21,9 @@ const Languages = () => {
             },
         }}
       >
-        <MenuItem value={10}>🇷🇺 RU</MenuItem>
-        <MenuItem value={20}>🇰🇿 KK</MenuItem>
-        <MenuItem value={30}>🇺🇸 ES</MenuItem>
+        <MenuItem value={1}>🇷🇺 RU</MenuItem>
+        <MenuItem value={2}>🇰🇿 KK</MenuItem>
+        <MenuItem value={3}>🇺🇸 ES</MenuItem>
       </Select>
     </StyledLanguages>
   );

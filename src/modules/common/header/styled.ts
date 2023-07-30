@@ -23,7 +23,7 @@ export const StyledHeader = styled('header')(() => ({
 }));
 
 export const StyledLanguages = styled(FormControl)(() => ({
-  '.languages__select': {
+  '& .languages__select': {
     boxShadow: 'none',
     color: 'white',
     borderRadius: '50px',
@@ -31,6 +31,15 @@ export const StyledLanguages = styled(FormControl)(() => ({
     '&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
       border: '2px solid white',
     },
+  },
+  '& .MuiSelect-select': {
+    padding: '5px 15px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  '& .MuiInputBase-input, .MuiOutlinedInput-input': {
+    paddingRight: '16px !important',
   },
 }));
 
