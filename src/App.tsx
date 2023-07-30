@@ -1,20 +1,16 @@
-import { useRoutes } from 'react-router-dom';
-import HomePage from './modules/landingPage /home';
-import AboutPage from './modules/landingPage /about';
+import Header from './modules/common/header/Header';
+import Footer from './modules/common/footer/Footer';
 
-const routers = [
-  {
-    path: '/',
-    element: <HomePage />,
-  },
-  {
-    path: '/about',
-    element: <AboutPage />,
-  },
-];
+import { useAppRoutes } from './routers/useAppRoutes';
 
 export function App() {
-  const element = useRoutes(routers);
+  const element = useAppRoutes();
 
-  return element;
+  return (
+    <>
+      <Header />
+      {element}
+      <Footer />
+    </>
+  );
 }

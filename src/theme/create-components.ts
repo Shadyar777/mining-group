@@ -1,5 +1,4 @@
-
-export function createComponents(){
+export function createComponents() {
   return {
     MuiCssBaseline: {
       styleOverrides: {
