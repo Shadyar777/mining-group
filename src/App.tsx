@@ -10,7 +10,7 @@ export function App() {
   const element = useAppRoutes();
 
   return (
-    <Box display='flex' flexDirection='column' height='100%'>
+    <Box display='flex' flexDirection='column' minHeight='100vh'>
       <Header />
       <Box flex='1 0 auto'>{element}</Box>
       <Footer />
