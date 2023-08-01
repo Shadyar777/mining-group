@@ -2,14 +2,15 @@ import { styled } from '@mui/material';
 
 const StyledFooter = styled('footer')(() => ({
   flex: '0 0 auto',
-  background: `url('./../../../../public/images/bg-footer.jpg')`,
+  background: `url('./../../../../public/images/bg-footer.png')`,
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'cover',
   // padding: '170px 0',
 
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'center',
+  justifyContent: 'end',
+  paddingBottom: '20px',
   height: '336px',
   '.footer__conteiner': {
     display: 'grid',

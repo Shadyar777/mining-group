@@ -14,12 +14,37 @@ export const StyledHeader = styled('header')(() => ({
     alignItems: 'center',
 
     '.header__language-and-logo': {
-      marginLeft: '100px',
+      marginLeft: '30px',
       display: 'flex',
       gap: '0 32px',
       alignItems: 'center',
     },
   },
+  '& .header-bg__wive': {
+    width: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    // height: '100px',
+    zIndex: '-20',
+
+    'img': {
+      width: '100%',
+      height: '100%',
+    }
+  },
+  // '&::after': {
+  //   content: `""`,
+  //   background: `url('./../../../../../public/svgs/home-top-banner-wave.svg')`,
+  //   position: 'absolute',
+  //   backgroundRepeat: 'no-repeat',
+  //   backgroundSize: 'contain',
+  //   top: 0,
+  //   left: 0,
+  //   width: '100%',
+  //   height: '1000px',
+  //   zIndex: '-1',
+  // },
 }));
 
 export const StyledLanguages = styled(FormControl)(() => ({

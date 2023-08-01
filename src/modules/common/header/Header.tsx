@@ -34,6 +34,9 @@ const Header = () => {
             </div>
           </div>
         </Container>
+        <div className='header-bg__wive'>
+          <img alt='' src='../../../../public/svgs/home-top-banner-wave.svg'/>
+        </div>
       </StyledHeader>
       <LeftDrawer isOpen={isOpen} onClose={onCloseDrawer} />
     </>

@@ -14,17 +14,17 @@ export const StyledTopBanner = styled('div')(() => ({
     backgroundSize: 'cover',
   },
 
-  '&::after': {
-    content: `""`,
-    background: `url('./../../../../../public/svgs/home-top-banner-wave.svg')`,
-    position: 'absolute',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'contain',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-  },
+  // '&::after': {
+  //   content: `""`,
+  //   background: `url('./../../../../../public/svgs/home-top-banner-wave.svg')`,
+  //   position: 'absolute',
+  //   backgroundRepeat: 'no-repeat',
+  //   backgroundSize: 'contain',
+  //   top: 0,
+  //   left: 0,
+  //   width: '100%',
+  //   height: '100%',
+  // },
 }));
 
 const TopBanner = () => {

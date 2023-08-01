@@ -1,8 +1,7 @@
 import { Button, Container, styled, Typography } from '@mui/material';
 
-export const StyledAboutCompany = styled('div')(() => ({
+export const StyledAboutCompany = styled('div')(({theme: {breakpoints}}) => ({
   width: '100%',
-  padding: '120px 0',
 
   '& .about-company__content': {
     display: 'flex',
@@ -42,8 +41,15 @@ export const StyledAboutCompany = styled('div')(() => ({
       alignSelf: 'center',
       background: '#FFB940',
       width: 'clamp(100px, 50%, 220px)',
-      // width: '220px',
       height: '56px',
+    },
+
+    [breakpoints.down('mobileSm')]: {
+      // '& .about-company__content': {
+      background: 'unset',
+      border: 'unset',
+      borderRadius: 'unset',
+      // }
     },
   },
 }));
@@ -54,7 +60,7 @@ const AboutCompany = () => {
       <Container maxWidth='md'>
         <div className='about-company__content'>
           <Typography variant='h3' className='content__title'>
-            ТОО «INVEST MINING GROUP»
+            ТОО «INVEST MINING GROUP» 22
           </Typography>
           <div className='content__text'>
             Казахстанская компания, основанная в 2020 году. На данный момент
