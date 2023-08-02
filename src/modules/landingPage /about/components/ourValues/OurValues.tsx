@@ -11,6 +11,7 @@ import OurValuesDesktop from './OurValuesDesktop.tsx';
 // const LazyActivityMobileCarousel = lazy(() => import('./OurValuesMobileCarousel.tsx'));
 
 export const StyledOurValues = styled('div')(({ theme: { breakpoints } }) => ({
+  padding: '40px 0',
   '& .ourValues__container': {
     display: 'flex',
     flexDirection: 'column',
@@ -21,22 +22,11 @@ export const StyledOurValues = styled('div')(({ theme: { breakpoints } }) => ({
     textAlign: 'center',
   },
   [breakpoints.down('mobileSm')]: {
+    background: '#FFF8EC',
     '& .ourValues__title': {
       fontSize: '24px',
     },
   },
-  // '& .ourValues__content': {
-  //   display: 'flex',
-  //   flexWrap: 'wrap',
-  //   gap: '30px',
-  //   height: 'auto',
-  //
-  //   '& .card': {
-  //     borderRadius: '20px',
-  //     flex: '1 1 31%',
-  //     padding: '20px 18px',
-  //   },
-  // },
 }));
 
 const OurValues = () => {

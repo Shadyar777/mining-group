@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 
 import { getLinks } from '../../../routers/useAppRoutes';
 import { StyledLeftDrawer } from './styled';
+import Languages from './Languages.tsx';
+import { useMediaQuery, useTheme } from '@mui/material';
 
 // setIsOpen: (value: boolean) => void
 const LeftDrawer = ({
@@ -12,6 +14,8 @@ const LeftDrawer = ({
   onClose: () => void;
 }) => {
   const links = getLinks();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('mobileSm'));
 
   return (
     <StyledLeftDrawer anchor={'left'} open={isOpen} onClose={onClose}>
@@ -24,6 +28,11 @@ const LeftDrawer = ({
           );
         })}
       </ul>
+      {isMobile && (
+        <div>
+          <Languages />
+        </div>
+      )}
     </StyledLeftDrawer>
   );
 };

@@ -39,13 +39,13 @@ const OurValuesMobileCarousel = () => {
       arrows={false}
       autoPlaySpeed={3000}
       centerMode={false}
-      className=""
-      containerClass="container"
-      dotListClass=""
+      className=''
+      containerClass='container'
+      dotListClass=''
       draggable
       focusOnSelect={false}
       infinite
-      itemClass=""
+      itemClass=''
       keyBoardControl
       minimumTouchDrag={80}
       partialVisible
@@ -59,7 +59,7 @@ const OurValuesMobileCarousel = () => {
       rtl={false}
       shouldResetAutoplay
       showDots={false}
-      sliderClass=""
+      sliderClass=''
       slidesToSlide={1}
       swipeable
     >

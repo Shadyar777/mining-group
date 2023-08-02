@@ -1,11 +1,11 @@
 import { styled } from '@mui/material';
 
-const StyledFooter = styled('footer')(() => ({
+const StyledFooter = styled('footer')(({ theme: { breakpoints } }) => ({
   flex: '0 0 auto',
   background: `url('./../../../../public/images/bg-footer.png')`,
+  backgroundColor: '#FFF8EC',
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'cover',
-  // padding: '170px 0',
 
   display: 'flex',
   flexDirection: 'column',
@@ -51,6 +51,23 @@ const StyledFooter = styled('footer')(() => ({
         color: 'white',
         textDecoration: 'none',
       },
+    },
+  },
+  [breakpoints.down('mobileSm')]: {
+    '& .footer__conteiner': {
+      gridTemplateAreas: `"logo" "list-links" "rights-reserved"`,
+      placeItems: 'start',
+      gap: '30px 0',
+    },
+    '& .footer__list-links': {
+      display: 'flex',
+      flexDirection: 'column',
+      fontSize: '12px',
+      gap: '8px',
+    },
+    '& .footer-text__rights-reserved': {
+      fontSize: '8px',
+      justifySelf: 'center',
     },
   },
 }));

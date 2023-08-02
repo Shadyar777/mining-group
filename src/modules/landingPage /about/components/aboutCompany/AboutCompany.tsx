@@ -41,7 +41,7 @@ export const StyledAboutCompany = styled('div')(
         textTransform: 'none',
         alignSelf: 'center',
         background: '#FFB940',
-        width: 'clamp(100px, 50%, 220px)',
+        width: 'clamp(100px, 100%, 220px)',
         height: '56px',
       },
 

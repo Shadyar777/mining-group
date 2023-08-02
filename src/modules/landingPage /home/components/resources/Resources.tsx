@@ -7,12 +7,10 @@ export const StyledResources = styled('div')(() => ({
   height: '150px',
   padding: '20px 0',
 
+  gridArea: 'Resources',
+
   '& .react-multi-carousel-item': {
     marginRight: '40px',
-
-    // '& div:last-child': {
-    //   paddingRight: '10px',
-    // },
   },
 }));
 

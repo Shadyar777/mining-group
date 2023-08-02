@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Container } from '@mui/material';
+import { Container, useMediaQuery, useTheme } from '@mui/material';
 import { StyledHeader } from './styled';
 import Languages from './Languages';
 
@@ -8,13 +8,16 @@ import LeftDrawer from './LeftDrawer';
 import Logo from './Logo.tsx';
 
 const Header = () => {
-  const [isOpen, setisOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('mobileSm'));
 
   const onClickMenu = () => {
-    setisOpen(true);
+    setIsOpen(true);
   };
   const onCloseDrawer = () => {
-    setisOpen(false);
+    setIsOpen(false);
   };
   return (
     <>
@@ -25,18 +28,25 @@ const Header = () => {
               <Menu onClick={onClickMenu} />
             </div>
             <div className='header__language-and-logo'>
-              <div>
-                <Languages />
-              </div>
+              {!isMobile && (
+                <div>
+                  <Languages />
+                </div>
+              )}
               <div>
                 <Logo />
               </div>
             </div>
           </div>
         </Container>
-        <div className='header-bg__wive'>
-          <img alt='' src='../../../../public/svgs/home-top-banner-wave.svg'/>
-        </div>
+        {!isMobile && (
+          <div className='header-bg__wive'>
+            <img
+              alt=''
+              src='../../../../public/svgs/home-top-banner-wave.svg'
+            />
+          </div>
+        )}
       </StyledHeader>
       <LeftDrawer isOpen={isOpen} onClose={onCloseDrawer} />
     </>

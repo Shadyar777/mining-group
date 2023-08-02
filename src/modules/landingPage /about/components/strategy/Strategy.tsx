@@ -2,7 +2,6 @@ import { Container, styled, Typography } from '@mui/material';
 
 export const StyledStrategy = styled('div')(({ theme: { breakpoints } }) => ({
   width: '100%',
-  // padding: '120px 0',
 
   '& .strategy__content': {
     display: 'flex',
@@ -34,6 +33,8 @@ export const StyledStrategy = styled('div')(({ theme: { breakpoints } }) => ({
     },
 
     [breakpoints.down('mobileSm')]: {
+      border: 'unset',
+      padding: '24px 0 0 0',
       '& .content__title': {
         fontSize: '20px',
       },

@@ -2,14 +2,14 @@ import { useRoutes } from 'react-router-dom';
 import HomePage from '../modules/landingPage /home/view/HomePage';
 import AboutPage from '../modules/landingPage /about/view/AboutPage.tsx';
 
-// export const appRoutes = {
-//   HOME: '/',
-//   ABOUT: '/about',
-//   CONTACTS: '/contacts',
-//   HOLDINGS: '/holdings', ??
-//   PRESS_CENTER: '/press-center',
-//   VARCANCIES: '/vacancies',
-// } as const;
+export const appRoutes = {
+  HOME: '/',
+  ABOUT: '/about',
+  CONTACTS: '/contacts',
+  HOLDINGS: '/holdings', // ??
+  PRESS_CENTER: '/press-center',
+  VARCANCIES: '/vacancies',
+} as const;
 
 export const routers = [
   {

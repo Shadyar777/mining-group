@@ -11,36 +11,45 @@ const responsive = {
     items: 3,
     // partialVisibilityGutter: 40
   },
-  mobile: {
-    breakpoint: {
-      max: 464,
-      min: 0,
-    },
-    items: 2,
-    partialVisibilityGutter: 30,
-  },
   tablet: {
     breakpoint: {
       max: 1024,
       min: 464,
     },
     items: 3,
-    partialVisibilityGutter: 30,
+  },
+  mobile: {
+    breakpoint: {
+      max: 464,
+      min: 0,
+    },
+    items: 1,
+    partialVisibilityGutter: 100,
   },
 };
 
-export const StyledFindOutMore = styled('div')(() => ({
-  width: '100%',
-  padding: '20px 0',
+export const StyledFindOutMore = styled('div')(
+  ({ theme: { breakpoints } }) => ({
+    width: '100%',
+    padding: '20px 0',
+    gridArea: 'FindOutMore',
 
-  '& .react-multi-carousel-item': {
-    marginRight: '5px',
+    '& .react-multi-carousel-item': {
+      marginRight: '5px',
 
-    '& div:last-child': {
-      paddingRight: '10px',
+      '& div:last-child': {
+        paddingRight: '10px',
+      },
     },
-  },
-}));
+    [breakpoints.down('mobileSm')]: {
+      '& .find-out-more__content': {},
+      '& .content__title': {
+        fontSize: '24px',
+        textAlign: 'center',
+      },
+    },
+  }),
+);
 const arr = Array.from({ length: 3 }, (_, index) => index + 1);
 const FindOutMore = () => {
   return (
@@ -52,17 +61,19 @@ const FindOutMore = () => {
           </Typography>
           <Carousel
             additionalTransfrom={0}
-            arrows
+            arrows={false}
             autoPlaySpeed={3000}
             centerMode={false}
+            className=''
             containerClass='container'
             dotListClass=''
             draggable
             focusOnSelect={false}
-            infinite={false}
+            // infinite
             itemClass=''
             keyBoardControl
             minimumTouchDrag={80}
+            partialVisible
             pauseOnHover
             renderArrowsWhenDisabled={false}
             renderButtonGroupOutside={false}

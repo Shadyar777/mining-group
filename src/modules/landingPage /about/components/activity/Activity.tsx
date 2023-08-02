@@ -21,6 +21,8 @@ export const StyledActivity = styled('div')(({ theme: { breakpoints } }) => ({
   },
 
   [breakpoints.down('mobileSm')]: {
+    background: '#FFF8EC',
+    padding: '40px 0',
     '& .activity__title': {
       marginBottom: '24px',
 
