@@ -1,6 +1,7 @@
 import { Container, styled, Typography } from '@mui/material';
 import Card from './Card.tsx';
 import Carousel from 'react-multi-carousel';
+import { getArray } from '../../../../../utils/getArray.ts';
 
 const responsive = {
   desktop: {
@@ -50,7 +51,7 @@ export const StyledFindOutMore = styled('div')(
     },
   }),
 );
-const arr = Array.from({ length: 3 }, (_, index) => index + 1);
+
 const FindOutMore = () => {
   return (
     <StyledFindOutMore>
@@ -88,7 +89,7 @@ const FindOutMore = () => {
             slidesToSlide={1}
             swipeable
           >
-            {arr.map(() => (
+            {getArray(3).map(() => (
               <Card />
             ))}
           </Carousel>

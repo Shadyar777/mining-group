@@ -1,5 +1,6 @@
 import { Container, styled, Typography } from '@mui/material';
 import Card from './Card.tsx';
+import { getArray } from '../../../../../utils/getArray.ts';
 
 export const StyledActivity = styled('div')(({ theme: { breakpoints } }) => ({
   '& .activity__title': {
@@ -31,7 +32,7 @@ export const StyledActivity = styled('div')(({ theme: { breakpoints } }) => ({
     },
   },
 }));
-const arr = Array.from({ length: 3 }, (_, index) => index + 1);
+
 const Activity = () => {
   return (
     <StyledActivity>
@@ -42,7 +43,7 @@ const Activity = () => {
               Виды деятельности и спектр услуг
             </Typography>
             <div className='activity__content'>
-              {arr.map((_, idx) => (
+              {getArray(3).map((_, idx) => (
                 <Card key={idx} />
               ))}
             </div>

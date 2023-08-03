@@ -1,6 +1,7 @@
 import Carousel from 'react-multi-carousel';
 import Card from './Card.tsx';
 import { styled } from '@mui/material';
+import { getArray } from '../../../../../utils/getArray.ts';
 
 export const StyledActivityMobileCarousel = styled(Carousel)(() => ({
   '& .card': {
@@ -29,8 +30,6 @@ const responsive = {
     partialVisibilityGutter: 120,
   },
 };
-
-const arr = Array.from({ length: 5 }, (_, index) => index + 1);
 
 const OurValuesMobileCarousel = () => {
   return (
@@ -63,7 +62,7 @@ const OurValuesMobileCarousel = () => {
       slidesToSlide={1}
       swipeable
     >
-      {arr.map((_, idx) => (
+      {getArray(5).map((_, idx) => (
         <Card key={idx} />
       ))}
     </StyledActivityMobileCarousel>

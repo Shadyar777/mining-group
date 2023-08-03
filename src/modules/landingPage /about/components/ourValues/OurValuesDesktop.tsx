@@ -1,5 +1,6 @@
 import { styled } from '@mui/material';
 import Card from './Card.tsx';
+import { getArray } from '../../../../../utils/getArray.ts';
 
 export const StyledActivityDesktop = styled('div')(() => ({
   // '& .activity__content': {
@@ -14,11 +15,10 @@ export const StyledActivityDesktop = styled('div')(() => ({
   },
   // },
 }));
-const arr = Array.from({ length: 5 }, (_, index) => index + 1);
 const OurValuesDesktop = () => {
   return (
     <StyledActivityDesktop>
-      {arr.map((_, idx) => (
+      {getArray(5).map((_, idx) => (
         <Card key={idx} />
       ))}
     </StyledActivityDesktop>

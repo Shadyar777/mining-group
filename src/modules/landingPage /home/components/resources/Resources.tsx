@@ -1,6 +1,7 @@
 import { styled } from '@mui/material';
 import CardResource from './CardResource.tsx';
 import Carousel from 'react-multi-carousel';
+import { getArray } from '../../../../../utils/getArray.ts';
 
 export const StyledResources = styled('div')(() => ({
   width: '100%',
@@ -45,8 +46,6 @@ const responsive = {
   },
 };
 
-const arr = Array.from({ length: 10 }, (_, index) => index + 1);
-
 const Resources = () => {
   return (
     <StyledResources>
@@ -82,7 +81,7 @@ const Resources = () => {
           swipeable
           transitionDuration={1000}
         >
-          {arr.map((_, key) => (
+          {getArray(10).map((_, key) => (
             <CardResource key={key} />
           ))}
         </Carousel>
