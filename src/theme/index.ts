@@ -11,6 +11,7 @@ function createTheme() {
     breakpoints: {
       values: {
         xs: 0,
+        mobileSm: 480,
         sm: 600,
         md: 980,
         lg: 1280,
@@ -23,6 +24,17 @@ function createTheme() {
     },
     typography,
   });
+}
+
+declare module '@mui/material/styles' {
+  interface BreakpointOverrides {
+    xs: true;
+    mobileSm: true;
+    sm: true;
+    md: true;
+    lg: true;
+    xl: true;
+  }
 }
 
 export const theme = createTheme();

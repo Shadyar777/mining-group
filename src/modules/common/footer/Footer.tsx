@@ -13,17 +13,17 @@ const Footer = () => {
           <div className='footer__logo'>
             <Logo />
           </div>
-          <div className='footer__list-links'>
-            <ul>
-              {links.map(({ name, path }, idx) => {
-                return (
-                  <li key={`name-${idx}`}>
-                    <Link to={path}>{name}</Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+          {/*<div className='footer__list-links'>*/}
+          <ul className='footer__list-links'>
+            {links.map(({ name, path }, idx) => {
+              return (
+                <li key={`name-${idx}`}>
+                  <Link to={path}>{name}</Link>
+                </li>
+              );
+            })}
+          </ul>
+          {/*</div>*/}
           <div className='footer-text__rights-reserved'>
             © TOO “Invest Mining Group” | All rights reserved.
           </div>

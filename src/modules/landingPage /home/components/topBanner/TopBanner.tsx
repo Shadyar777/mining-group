@@ -1,9 +1,12 @@
 import { styled } from '@mui/material';
 
-export const StyledTopBanner = styled('div')(() => ({
+export const StyledTopBanner = styled('div')(({ theme: { breakpoints } }) => ({
   width: '100%',
   height: '700px',
   position: 'relative',
+  marginTop: '-160px',
+
+  gridArea: 'TopBanner',
 
   '.top-banner-container': {
     width: '100%',
@@ -14,21 +17,15 @@ export const StyledTopBanner = styled('div')(() => ({
     backgroundSize: 'cover',
   },
 
-  '&::after': {
-    content: `""`,
-    background: `url('./../../../../../public/svgs/home-top-banner-wave.svg')`,
-    position: 'absolute',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'contain',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
+  [breakpoints.down('mobileSm')]: {
+    height: '100px',
+    '& .top-banner-container': {
+      background: 'unset',
+    },
   },
 }));
 
 const TopBanner = () => {
-  // return <StyledTopBanner>Home Page</StyledTopBanner>;
   return (
     <StyledTopBanner>
       <div className='top-banner-container' />

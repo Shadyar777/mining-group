@@ -1,19 +1,15 @@
-import { Button, Container, styled, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { appRoutes } from '../../../../../routers/useAppRoutes.tsx';
+import { Container, styled, Typography } from '@mui/material';
 
 export const StyledAboutCompany = styled('div')(
   ({ theme: { breakpoints } }) => ({
     width: '100%',
 
-    gridArea: 'AboutCompany',
     '& .about-company__content': {
       display: 'flex',
       flexDirection: 'column',
       gap: '1rem 0',
       padding: '32px 40px',
-      backgroundImage: `url('../../../../../../public/images/home-page-about-company-bg.jpg')`,
-      // backgroundColor: 'white',
+      background: 'white',
 
       borderRadius: '20px',
       border: '1px solid #F28A2E',
@@ -45,14 +41,11 @@ export const StyledAboutCompany = styled('div')(
         textTransform: 'none',
         alignSelf: 'center',
         background: '#FFB940',
-        width: 'clamp(100px, 50%, 220px)',
+        width: 'clamp(100px, 100%, 220px)',
         height: '56px',
       },
-    },
-    [breakpoints.down('mobileSm')]: {
-      backgroundImage: `url('../../../../../../public/images/home-page-about-company-bg.jpg')`,
-      padding: '32px 0',
-      '& .about-company__content': {
+
+      [breakpoints.down('mobileSm')]: {
         background: 'unset',
         border: 'unset',
         borderRadius: 'unset',
@@ -60,19 +53,9 @@ export const StyledAboutCompany = styled('div')(
 
         '& .content__title': {
           fontSize: '20px',
-          textAlign: 'center',
         },
         '& .content__text': {
           fontSize: '12px',
-        },
-
-        '& .content__img': {
-          margin: '0',
-        },
-        '& button': {
-          fontSize: '14px',
-          width: 'clamp(100px, 50%, 150px)',
-          height: '34px',
         },
       },
     },
@@ -80,7 +63,6 @@ export const StyledAboutCompany = styled('div')(
 );
 
 const AboutCompany = () => {
-  const navigate = useNavigate();
   return (
     <StyledAboutCompany>
       <Container maxWidth='md'>
@@ -97,6 +79,16 @@ const AboutCompany = () => {
             Мы продолжаем вкладывать в каждый из наших проектов на территории
             Республики Казахстан. К 2024 году все рудники INVEST MINING GROUPE
             будут работать на полную мощность
+            <br />
+            <br />
+            Казахстанская компания, основанная в 2020 году. На данный момент
+            компания уже имеет несколько действующих рудников, а также ряд
+            месторождений на стадии геологоразведки.
+            <br />
+            <br />
+            Мы продолжаем вкладывать в каждый из наших проектов на территории
+            Республики Казахстан. К 2024 году все рудники INVEST MINING GROUPE
+            будут работать на полную мощность
           </div>
           <div className='content__img'>
             <img
@@ -104,9 +96,6 @@ const AboutCompany = () => {
               src='../../../../../../public/mock-images/about-company.png'
             />
           </div>
-          <Button onClick={() => console.log(navigate(appRoutes.ABOUT))}>
-            Подробнее
-          </Button>
         </div>
       </Container>
     </StyledAboutCompany>
