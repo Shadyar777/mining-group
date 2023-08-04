@@ -4,5 +4,5 @@ export const appRoutes = {
   CONTACTS: '/contacts',
   HOLDINGS: '/assetsEnterprise',
   PRESS_CENTER: '/press-center',
-  VARCANCIES: '/vacancies',
+  VACANCIES: '/vacancies',
 } as const;

@@ -2,6 +2,7 @@ import { useRoutes } from 'react-router-dom';
 import HomePage from '../modules/landingPage /home/view/HomePage';
 import AboutPage from '../modules/landingPage /about/view/AboutPage.tsx';
 import AssetsEnterprisePage from '../modules/landingPage /assetsEnterprise/view/AssetsEnterprisePage.tsx';
+import VacanciesPage from '../modules/landingPage /vacancies/view/VacanciesPage.tsx';
 
 export const appRoutes = {
   HOME: '/',
@@ -9,7 +10,7 @@ export const appRoutes = {
   CONTACTS: '/contacts',
   ASSETS_ENTERPRISE: '/assets-enterprise',
   PRESS_CENTER: '/press-center',
-  VARCANCIES: '/vacancies',
+  VACANCIES: '/vacancies',
 } as const;
 
 export const routers = [
@@ -34,14 +35,14 @@ export const routers = [
     element: <AssetsEnterprisePage />,
   },
   {
+    name: 'Вакансии',
+    path: appRoutes.VACANCIES,
+    element: <VacanciesPage />,
+  },
+  {
     name: 'Контакты',
     path: '/contacts',
     element: <div>Контакты!</div>,
-  },
-  {
-    name: 'Вакансии',
-    path: '/vacancies',
-    element: <div>Вакансии!</div>,
   },
 ];
 

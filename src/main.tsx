@@ -7,8 +7,8 @@ import { CssBaseline } from '@mui/material';
 
 import { App } from './App.tsx';
 
-import { theme } from './theme/index.ts';
-import { store } from './store/index.ts';
+import { theme } from './theme';
+import { store } from './store';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
