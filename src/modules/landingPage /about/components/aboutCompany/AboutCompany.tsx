@@ -3,6 +3,7 @@ import { Container, styled, Typography } from '@mui/material';
 export const StyledAboutCompany = styled('div')(
   ({ theme: { breakpoints } }) => ({
     width: '100%',
+    padding: '40px 0',
 
     '& .about-company__content': {
       display: 'flex',

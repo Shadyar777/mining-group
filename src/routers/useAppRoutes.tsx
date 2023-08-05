@@ -3,6 +3,7 @@ import HomePage from '../modules/landingPage /home/view/HomePage';
 import AboutPage from '../modules/landingPage /about/view/AboutPage.tsx';
 import AssetsEnterprisePage from '../modules/landingPage /assetsEnterprise/view/AssetsEnterprisePage.tsx';
 import VacanciesPage from '../modules/landingPage /vacancies/view/VacanciesPage.tsx';
+import ContactsPage from '../modules/landingPage /contacts/view/ContactsPage.tsx';
 
 export const appRoutes = {
   HOME: '/',
@@ -42,7 +43,7 @@ export const routers = [
   {
     name: 'Контакты',
     path: '/contacts',
-    element: <div>Контакты!</div>,
+    element: <ContactsPage />,
   },
 ];
 

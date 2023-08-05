@@ -1,7 +1,7 @@
 import { styled } from '@mui/material';
 import React, { useState } from 'react';
 import TFilterPopoverProps from './FilterPopover.tsx';
-import SearchInput from "./SearchInput.tsx";
+import SearchInput from './SearchInput.tsx';
 
 const StyledMenuFilter = styled('div')(({ theme: { breakpoints } }) => ({
   display: 'flex',
@@ -25,7 +25,7 @@ const StyledMenuFilter = styled('div')(({ theme: { breakpoints } }) => ({
     fontWeight: 400,
   },
   '& .menu-filters__search': {
-    width:'100%',
+    width: '100%',
     borderRadius: '30px',
     background: 'rgba(255, 255, 255, 0.90)',
   },
@@ -51,7 +51,6 @@ const MenuFilters = () => {
     }, 20);
   };
 
-
   const handleSearchChange = (event) => {
     setSearchValue(event.target.value);
     // Дополнительные действия поиска, если нужно
@@ -71,7 +70,6 @@ const MenuFilters = () => {
       </div>
       <div className='menu-filters__search'>
         <SearchInput value={searchValue} onChange={handleSearchChange} />
-
       </div>
     </StyledMenuFilter>
   );

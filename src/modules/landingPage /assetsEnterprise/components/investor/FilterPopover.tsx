@@ -29,10 +29,10 @@ const StyledPopover = styled(Popover)(({ theme: { breakpoints } }) => ({
   },
   '& .Mui-expanded': {
     margin: '0 !important',
-    height: '0% !important'
+    height: '0% !important',
   },
   '& .MuiAccordionSummary-root, .MuiButtonBase-root': {
-    height: '0% !important'
+    height: '0% !important',
   },
 
   '& .filter__publication-date': {

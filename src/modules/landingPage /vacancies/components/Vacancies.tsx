@@ -1,8 +1,8 @@
-import {Container, styled, useMediaQuery, useTheme} from '@mui/material';
+import { Container, styled, useMediaQuery, useTheme } from '@mui/material';
 import { getArray } from '../../../../utils/getArray.ts';
 import VacancyCard from './VacancyCard.tsx';
 
-const StyledVacancyCard = styled('div')(({ theme: { breakpoints } }) => ({
+const StyledVacancies = styled('div')(({ theme: { breakpoints } }) => ({
   padding: '40px 0',
   '& .vacancies__container': {
     display: 'flex',
@@ -32,17 +32,20 @@ const maskProps = {
 
 const emptyArray = getArray(4);
 const Vacancies = () => {
-  const theme = useTheme();
+  const { breakpoints } = useTheme();
   return (
-    <StyledVacancyCard>
-      <Container maxWidth='md' disableGutters={useMediaQuery(theme.breakpoints.down('mobileSm'))}>
+    <StyledVacancies>
+      <Container
+        maxWidth='md'
+        disableGutters={useMediaQuery(breakpoints.down('mobileSm'))}
+      >
         <div className='vacancies__container'>
           {emptyArray.map(() => (
             <VacancyCard {...maskProps} />
           ))}
         </div>
       </Container>
-    </StyledVacancyCard>
+    </StyledVacancies>
   );
 };
 

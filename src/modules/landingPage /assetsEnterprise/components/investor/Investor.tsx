@@ -1,7 +1,7 @@
 import { Container, styled, Typography } from '@mui/material';
 import Card from './Card.tsx';
-import {getArray} from "../../../../../utils/getArray.ts";
-import MenuFilters from "./MenuFilters.tsx";
+import { getArray } from '../../../../../utils/getArray.ts';
+import MenuFilters from './MenuFilters.tsx';
 
 const StyledInvestor = styled('div')(({ theme: { breakpoints } }) => ({
   padding: '40px 0',
@@ -56,7 +56,7 @@ const Investor = () => {
           </Typography>
           <Typography className='sub-title'>Месторождения</Typography>
         </div>
-        <MenuFilters/>
+        <MenuFilters />
         {/*<div className='investor__filters'>*/}
         {/*  <div>*/}
         {/*    <div className='filters__icon'>*/}

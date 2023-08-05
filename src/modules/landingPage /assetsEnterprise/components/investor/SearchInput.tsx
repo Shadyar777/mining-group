@@ -19,13 +19,12 @@ const StyledTextField = styled(TextField)(({ theme: { breakpoints } }) => ({
     },
   },
 
-  '& .MuiTextField-root' : {
+  '& .MuiTextField-root': {
     height: '100%',
   },
-  '& .MuiOutlinedInput-input' : {
+  '& .MuiOutlinedInput-input': {
     height: '6px',
   },
-
 
   [breakpoints.down('sm')]: {
     // gap: '60px',

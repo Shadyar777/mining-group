@@ -108,7 +108,7 @@ const VacancyCard = ({
           <div className='tasks__text text'>{tasksText}</div>
         </div>
         <div className='card__mail'>
-          <div className='mail__icon'>
+          <div className='mail__icon icon'>
             <img alt='' src='../../../../../public/images/mail.svg' />
           </div>
           <a href={mailHref}>{mailHref}</a>
