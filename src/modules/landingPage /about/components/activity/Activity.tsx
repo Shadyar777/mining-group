@@ -1,6 +1,8 @@
 import { Container, styled, Typography } from '@mui/material';
 import Card from './Card.tsx';
 import { getArray } from '../../../../../utils/getArray.ts';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export const StyledActivity = styled('div')(({ theme: { breakpoints } }) => ({
   '& .activity__title': {
@@ -34,12 +36,22 @@ export const StyledActivity = styled('div')(({ theme: { breakpoints } }) => ({
 }));
 
 const Activity = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash === '#services') {
+      const element = document.getElementById('services');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
   return (
     <StyledActivity>
       <Container maxWidth='md'>
         <Container maxWidth='md'>
           <div className='activity__container'>
-            <Typography variant='h3' className='activity__title'>
+            <Typography id='services' variant='h3' className='activity__title'>
               Виды деятельности и спектр услуг
             </Typography>
             <div className='activity__content'>
