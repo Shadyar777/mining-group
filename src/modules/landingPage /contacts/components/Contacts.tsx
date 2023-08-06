@@ -1,5 +1,5 @@
 import { Container, styled, Typography } from '@mui/material';
-import GoogleMaps from './GoogleMaps.tsx';
+import GoogleMaps from './GoogleMaps/GoogleMaps.tsx';
 
 const StyledContacts = styled('div')(({ theme: { breakpoints } }) => ({
   padding: '40px 0 0 0',
