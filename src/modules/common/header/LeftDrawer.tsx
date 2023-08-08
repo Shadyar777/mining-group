@@ -1,19 +1,20 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-import { getLinks } from '../../../routers/useAppRoutes';
+import { getLinksAdmin, getLinksLanding } from '../../../routers/appRoutes.tsx';
 import { StyledLeftDrawer } from './styled';
 import Languages from './Languages.tsx';
 import { useMediaQuery, useTheme } from '@mui/material';
 
-// setIsOpen: (value: boolean) => void
 const LeftDrawer = ({
   isOpen,
   onClose,
+  isAdmin,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  isAdmin?: boolean;
 }) => {
-  const links = getLinks();
+  const links = isAdmin ? getLinksAdmin() : getLinksLanding();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('mobileSm'));
 
@@ -23,7 +24,7 @@ const LeftDrawer = ({
         {links.map(({ name, path }, idx) => {
           return (
             <li key={`name-${idx}`}>
-              <Link to={path}>{name}</Link>
+              <NavLink to={path}>{name}</NavLink>
             </li>
           );
         })}

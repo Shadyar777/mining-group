@@ -5,25 +5,25 @@ import AssetsEnterprisePage from '../assetsEnterprise/view/AssetsEnterprisePage.
 import VacanciesPage from '../vacancies/view/VacanciesPage.tsx';
 import ContactsPage from '../contacts/view/ContactsPage.tsx';
 
-export const appRoutes = {
+export const lendingRoutes = {
   HOME: '/',
-  ABOUT: '/about',
-  CONTACTS: '/contacts',
-  ASSETS_ENTERPRISE: '/assets-enterprise',
-  PRESS_CENTER: '/press-center',
-  VACANCIES: '/vacancies',
+  ABOUT: 'about',
+  PRESS_CENTER: 'press-center',
+  ASSETS_ENTERPRISE: 'assets-enterprise',
+  VACANCIES: 'vacancies',
+  CONTACTS: 'contacts',
 } as const;
 
 export const routersLanding = [
   {
     name: 'Главная',
     index: true,
-    path: appRoutes.HOME,
+    path: lendingRoutes.HOME,
     element: <HomePage />,
   },
   {
     name: 'О компании',
-    path: appRoutes.ABOUT,
+    path: lendingRoutes.ABOUT,
     element: <AboutPage />,
   },
   {
@@ -33,22 +33,22 @@ export const routersLanding = [
   },
   {
     name: 'Услуги',
-    path: `${appRoutes.ABOUT}#services`,
+    path: `${lendingRoutes.ABOUT}#services`,
     element: <PressCenterPage />,
   },
   {
     name: 'Активы предприятия',
-    path: appRoutes.ASSETS_ENTERPRISE,
+    path: lendingRoutes.ASSETS_ENTERPRISE,
     element: <AssetsEnterprisePage />,
   },
   {
     name: 'Вакансии',
-    path: appRoutes.VACANCIES,
+    path: lendingRoutes.VACANCIES,
     element: <VacanciesPage />,
   },
   {
     name: 'Контакты',
-    path: appRoutes.CONTACTS,
+    path: lendingRoutes.CONTACTS,
     element: <ContactsPage />,
   },
 ];

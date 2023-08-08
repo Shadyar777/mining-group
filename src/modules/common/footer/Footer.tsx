@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Container } from '@mui/material';
 import StyledFooter from './styled';
-import { getLinks } from '../../../routers/useAppRoutes';
+import { getLinksAdmin, getLinksLanding } from '../../../routers/appRoutes.tsx';
 import Logo from '../header/Logo.tsx';
 
-const Footer = () => {
-  const links = getLinks();
+const Footer = ({ isAdmin }: { isAdmin?: boolean }) => {
+  const links = isAdmin ? getLinksAdmin() : getLinksLanding();
   return (
     <StyledFooter>
       <Container maxWidth='lg'>
@@ -18,7 +18,7 @@ const Footer = () => {
             {links.map(({ name, path }, idx) => {
               return (
                 <li key={`name-${idx}`}>
-                  <Link to={path}>{name}</Link>
+                  <NavLink to={path}>{name}</NavLink>
                 </li>
               );
             })}

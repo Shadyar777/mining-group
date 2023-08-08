@@ -1,9 +1,11 @@
-
+import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
+  const navigate = useNavigate();
+  const goToAdmin = () => navigate('/admin/home', { replace: false });
   return (
     <div>
-      SignIn
+      <button onClick={goToAdmin}>sing in</button>
     </div>
   );
 };

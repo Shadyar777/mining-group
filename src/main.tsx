@@ -8,7 +8,7 @@ import { CssBaseline } from '@mui/material';
 import { theme } from './theme';
 import { store } from './store';
 
-import { routers } from './routers/useAppRoutes.tsx';
+import { routers } from './routers/appRoutes.tsx';
 
 import 'react-multi-carousel/lib/styles.css';
 

@@ -1,33 +1,37 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Layout from '../modules/common/layout';
+import { LayoutAdmin, LayoutLanding } from '../modules/common/layout';
 import { routersLanding } from '../modules/landingPage /routers';
 import SignIn from '../modules/admin/signIn/SignIn.tsx';
+import { routersAdmin } from '../modules/admin/routers';
 
-export const appRoutes = {
-  HOME: '/',
-  ABOUT: 'about',
-  CONTACTS: 'contacts',
-  ASSETS_ENTERPRISE: 'assets-enterprise',
-  PRESS_CENTER: 'press-center',
-  VACANCIES: 'vacancies',
-} as const;
 
 const landingMap = routersLanding.map(({ path, element, index }) => ({
   path,
   element,
   index: index ? index : false,
 }));
+const adminMap = routersAdmin.map(({ path, element }) => ({
+  path,
+  element,
+}));
 export const routers = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />,
+    element: <LayoutLanding />,
     children: landingMap,
   },
   {
     path: '/auth',
     element: <SignIn />,
   },
+  {
+    path: '/admin',
+    element: <LayoutAdmin />,
+    children: adminMap,
+  },
 ]);
 
-export const getLinks = () =>
+export const getLinksLanding = () =>
   routersLanding.map(({ name, path }) => ({ name, path }));
+export const getLinksAdmin = () =>
+  routersAdmin.map(({ name, path }) => ({ name, path }));

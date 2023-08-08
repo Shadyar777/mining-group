@@ -1,6 +1,8 @@
-import { useNavigate } from 'react-router-dom';
-import { Button, Container, styled, Typography } from '@mui/material';
-import { lendingRoutes } from '../../../routers';
+import { MouseEvent } from 'react';
+import { Container, styled, Typography } from '@mui/material';
+import LanguageSwitcher from '../../../../common/buttons/LanguageSwitcher.tsx';
+import UploadButton from '../../../../common/buttons/UploadButton.tsx';
+import PlusFile from '../../../../../svgs/PlusFile.tsx';
 
 export const StyledAboutCompany = styled('div')(
   ({ theme: { breakpoints } }) => ({
@@ -80,11 +82,19 @@ export const StyledAboutCompany = styled('div')(
 );
 
 const AboutCompany = () => {
-  const navigate = useNavigate();
+  const onSwitchLaunch = (event: MouseEvent<HTMLButtonElement>) => {
+    const buttonText = event.currentTarget.textContent;
+    console.log(buttonText);
+  };
+  const onUploadDate = () => {
+    console.log('onUploadDate');
+  };
+
   return (
     <StyledAboutCompany>
       <Container maxWidth='md'>
         <div className='about-company__content'>
+          <LanguageSwitcher onClick={onSwitchLaunch} />
           <Typography variant='h3' className='content__title'>
             ТОО «INVEST MINING GROUP» 22
           </Typography>
@@ -104,9 +114,11 @@ const AboutCompany = () => {
               src='../../../../../../public/mock-images/about-company.png'
             />
           </div>
-          <Button onClick={() => console.log(navigate(lendingRoutes.ABOUT))}>
-            Подробнее
-          </Button>
+          <UploadButton
+            text='Сохранить'
+            onClick={onUploadDate}
+            icon={<PlusFile />}
+          />
         </div>
       </Container>
     </StyledAboutCompany>
