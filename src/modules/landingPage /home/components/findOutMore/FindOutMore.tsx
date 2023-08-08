@@ -89,8 +89,8 @@ const FindOutMore = () => {
             slidesToSlide={1}
             swipeable
           >
-            {getArray(3).map(() => (
-              <Card />
+            {getArray(3).map((_, idx) => (
+              <Card key={idx} />
             ))}
           </Carousel>
         </div>

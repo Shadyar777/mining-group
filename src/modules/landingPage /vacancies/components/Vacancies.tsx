@@ -40,8 +40,8 @@ const Vacancies = () => {
         disableGutters={useMediaQuery(breakpoints.down('mobileSm'))}
       >
         <div className='vacancies__container'>
-          {emptyArray.map(() => (
-            <VacancyCard {...maskProps} />
+          {emptyArray.map((_, idx) => (
+            <VacancyCard {...maskProps} key={idx} />
           ))}
         </div>
       </Container>
