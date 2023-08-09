@@ -1,26 +1,16 @@
 import { styled } from '@mui/material';
 
-import AboutCompany from '../components/aboutCompany/AboutCompany.tsx';
+// import AboutCompany from '../components/aboutCompany/AboutCompany.tsx';
+import AboutCompany from '../../home/components/aboutCompany/AboutCompany.tsx';
 import Activity from '../components/activity/Activity.tsx';
 import Strategy from '../components/strategy/Strategy.tsx';
 import OurValues from '../components/ourValues/OurValues.tsx';
 
 const StyledAboutPage = styled('div')(({ theme: { breakpoints } }) => ({
-  // display: 'flex',
-  // flexDirection: 'column',
-  // gap: '40px 0',
-  // marginTop: '50px',
-
-  // [breakpoints.down('lg')]: {
-  //   marginTop: '160px',
-  // },
-  // [breakpoints.down('mobileSm')]: {
-  //   marginTop: '100px',
-  // },
-
   display: 'flex',
   flexDirection: 'column',
   gap: '120px',
+  marginTop: '90px',
   [breakpoints.down('sm')]: {
     gap: '60px',
   },

@@ -1,4 +1,5 @@
 import HomePage from '../home/view/HomePage.tsx';
+import AboutPage from "../about/view/AboutPage.tsx";
 
 export const adminRoutes = {
   HOME: '/admin/home',
@@ -16,11 +17,11 @@ export const routersAdmin = [
     path: adminRoutes.HOME,
     element: <HomePage />,
   },
-  // {
-  //   name: 'О компании',
-  //   path: adminRoutes.ABOUT,
-  //   element: <AboutPage />,
-  // },
+  {
+    name: 'О компании',
+    path: adminRoutes.ABOUT,
+    element: <AboutPage />,
+  },
   // {
   //   name: 'Для инвесторов',
   //   path: '/press-center',

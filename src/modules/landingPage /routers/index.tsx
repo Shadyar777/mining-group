@@ -1,5 +1,5 @@
 import HomePage from '../home/view/HomePage.tsx';
-import AboutPage from '../about/view/AboutPage.tsx';
+import AboutPage from '../../admin/about/view/AboutPage.tsx';
 import PressCenterPage from '../press-center/view/PressCenterPage.tsx';
 import AssetsEnterprisePage from '../assetsEnterprise/view/AssetsEnterprisePage.tsx';
 import VacanciesPage from '../vacancies/view/VacanciesPage.tsx';
