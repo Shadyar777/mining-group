@@ -42,7 +42,7 @@ const AboutCompany = () => {
       <Container maxWidth='md'>
         <div className='about-company__content'>
           <LanguageSwitcher onClick={onSwitchLaunch} />
-          <TitleEdit>Загаловок:</TitleEdit>
+          <TitleEdit>Заголовок:</TitleEdit>
           <Typography
             variant='h3'
             className='content__title'

@@ -1,7 +1,7 @@
 import { styled, Typography } from '@mui/material';
-import EditingTools from '../../../home/components/aboutCompany/EditingTools.tsx';
 import CustomModal from '../../../../common/CustomModal.tsx';
 import { useState } from 'react';
+import EditingToolsForOurValuesCard from './EditingToolsForOurValuesCard.tsx';
 
 export const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   width: 'clamp(150px, 100%, 250px)',
@@ -67,18 +67,15 @@ const Card = () => {
   const [openEditModal, setOpenEditModal] = useState(false);
 
   const onClickEdit = () => {
-    setOpenEditModal(true)
-  }
+    setOpenEditModal(true);
+  };
   const onCloseEditModal = () => {
     setOpenEditModal(false);
   };
   return (
     <>
       <StyledCard className='card'>
-        <div
-          className='card__edit'
-          onClick={onClickEdit}
-        >
+        <div className='card__edit' onClick={onClickEdit}>
           <img alt='' src='../../../../../../public/svgs/contract_edit.svg' />
         </div>
         <Typography variant='h5' className='card__title'>
@@ -94,7 +91,7 @@ const Card = () => {
         </div>
       </StyledCard>
       <CustomModal open={openEditModal} handleClose={onCloseEditModal}>
-        <EditingTools />
+        <EditingToolsForOurValuesCard />
       </CustomModal>
     </>
   );

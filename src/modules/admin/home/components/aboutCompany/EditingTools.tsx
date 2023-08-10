@@ -3,7 +3,7 @@ import TitleEdit from '../../../common/TitleEdit.tsx';
 import UploadButton from '../../../../common/buttons/UploadButton.tsx';
 import PlusFile from '../../../../../svgs/PlusFile.tsx';
 
-const StyledWrapper = styled('div')(({ theme: { shape } }) => ({
+const StyledEditingTools = styled('div')(({ theme: { shape } }) => ({
   color: '#6A6A6A',
   fontSize: '16px',
   fontWeight: 400,
@@ -43,8 +43,8 @@ const EditingTools = () => {
     console.log('EditingTools');
   };
   return (
-    <StyledWrapper>
-      <TitleEdit>Загаловок:</TitleEdit>
+    <StyledEditingTools>
+      <TitleEdit>Заголовок:</TitleEdit>
       <div className='edit__title'>Вакансии</div>
       <TitleEdit>Краткое описание:</TitleEdit>
       <div className='edit__text'>
@@ -70,7 +70,7 @@ const EditingTools = () => {
         onClick={onUploadDate}
         icon={<PlusFile />}
       />
-    </StyledWrapper>
+    </StyledEditingTools>
   );
 };
 
