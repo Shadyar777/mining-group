@@ -19,6 +19,7 @@ const EditIcon = ({ initialImage, setUploadedImage }: EditIconProps) => {
     useImageUploader({
       initialImage,
       textMessage: 'Пожалуйста, загрузите только SVG файл!',
+      allowedFormat: 'svg+xml'
     });
 
   useEffect(() => {

@@ -17,7 +17,6 @@ export const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
     fontStyle: 'normal',
     fontWeight: '600',
     lineHeight: 'normal',
-
     position: 'relative',
     zIndex: '1',
   },

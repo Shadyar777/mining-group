@@ -1,10 +1,10 @@
+import { useState } from 'react';
 import TitleEdit from '../../../common/TitleEdit.tsx';
 import { useEditableContent } from '../../../../../hooks/useEditableContent.ts';
 import { styled, Typography } from '@mui/material';
 import PlusFile from '../../../../../svgs/PlusFile.tsx';
 import UploadButton from '../../../../common/buttons/UploadButton.tsx';
 import EditIcon from './EditIcon.tsx';
-import { useState } from 'react';
 
 const StyledEditingToolsForOurValuesCard = styled('div')(() => ({
   display: 'flex',
@@ -17,6 +17,9 @@ const StyledEditingToolsForOurValuesCard = styled('div')(() => ({
     color: '#F28A2E',
     fontSize: '24px',
     fontWeight: 600,
+
+    padding: '4px',
+    borderBottom: '1px solid #F28A2E',
   },
   '& .edit__text': {
     color: '#000',

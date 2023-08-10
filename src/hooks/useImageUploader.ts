@@ -6,14 +6,18 @@ type ImageUploaderReturnType = {
   handleImageRemove: () => void;
 };
 
-type UseImageUploaderPorps = {
+type AllowedFormat = 'png' | 'jpeg' | 'svg+xml';
+
+type UseImageUploaderProps = {
   initialImage: string | null;
   textMessage: string;
+  allowedFormat?: AllowedFormat;
 };
 const useImageUploader = ({
   initialImage,
   textMessage,
-}: UseImageUploaderPorps): ImageUploaderReturnType => {
+  allowedFormat,
+}: UseImageUploaderProps): ImageUploaderReturnType => {
   const [uploadedImage, setUploadedImage] = useState<
     string | ArrayBuffer | null
   >(initialImage);
@@ -25,7 +29,7 @@ const useImageUploader = ({
       return;
     }
     const file = e.target.files[0];
-    if (file.type !== 'image/svg+xml') {
+    if (file.type === `image/${allowedFormat ?? '*'}`) {
       alert(textMessage);
       return;
     }
