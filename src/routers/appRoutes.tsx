@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { LayoutAdmin, LayoutLanding } from '../modules/common/layout';
-import { routersLanding } from '../modules/landingPage /routers';
+import { routersLanding } from '../modules/landingPage/routers';
 import SignIn from '../modules/admin/signIn/SignIn.tsx';
 import { routersAdmin } from '../modules/admin/routers';
 
