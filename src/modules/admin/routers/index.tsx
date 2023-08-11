@@ -1,10 +1,11 @@
 import HomePage from '../home/view/HomePage.tsx';
 import AboutPage from '../about/view/AboutPage.tsx';
+import AssetsEnterprisePage from '../assetsEnterprise/view/AssetsEnterprisePage.tsx';
 
 export const adminRoutes = {
   HOME: '/admin/home',
   ABOUT: '/admin/about',
-  // ASSETS_ENTERPRISE: '/admin/assets-enterprise',
+  ASSETS_ENTERPRISE: '/admin/assets-enterprise',
   // PRESS_CENTER: '/admin/press-center',
   VACANCIES: '/admin/vacancies',
   CONTACTS: '/admin/contacts',
@@ -22,6 +23,11 @@ export const routersAdmin = [
     path: adminRoutes.ABOUT,
     element: <AboutPage />,
   },
+  {
+    name: 'Активы предприятия',
+    path: adminRoutes.ASSETS_ENTERPRISE,
+    element: <AssetsEnterprisePage />,
+  },
   // {
   //   name: 'Для инвесторов',
   //   path: '/press-center',
@@ -31,11 +37,6 @@ export const routersAdmin = [
   //   name: 'Услуги',
   //   path: `${adminRoutes.ABOUT}#services`,
   //   element: <PressCenterPage />,
-  // },
-  // {
-  //   name: 'Активы предприятия',
-  //   path: adminRoutes.ASSETS_ENTERPRISE,
-  //   element: <AssetsEnterprisePage />,
   // },
   // {
   //   name: 'Вакансии',
