@@ -1,4 +1,11 @@
 import { Container, styled, Typography } from '@mui/material';
+import { MouseEvent, useState } from 'react';
+import LanguageSwitcher from '../../../../common/buttons/LanguageSwitcher.tsx';
+import PlusFile from '../../../../../svgs/PlusFile.tsx';
+import UploadButton from '../../../../common/buttons/UploadButton.tsx';
+import TitleEdit from '../../../common/TitleEdit.tsx';
+import { useEditableContent } from '../../../../../hooks/useEditableContent.ts';
+import EditImage from '../../../common/EditImage.tsx';
 
 export const StyledStrategy = styled('div')(({ theme: { breakpoints } }) => ({
   width: '100%',
@@ -32,6 +39,11 @@ export const StyledStrategy = styled('div')(({ theme: { breakpoints } }) => ({
       },
     },
 
+    '& .upload-button': {
+      width: '200px',
+      alignSelf: 'center',
+    },
+
     [breakpoints.down('mobileSm')]: {
       border: 'unset',
       padding: '24px 0 0 0',
@@ -44,30 +56,71 @@ export const StyledStrategy = styled('div')(({ theme: { breakpoints } }) => ({
     },
   },
 }));
+
+const maskText =
+  'Основной стратегией развития компании является управление\n' +
+  '            горно-рудными проектами на всех стадиях развития: от начальной\n' +
+  '            стадии поиска и разведки, технико-экономического обоснования,\n' +
+  '            проектирования и строительства, до управления на этапе производства.\n' +
+  '            <br />\n' +
+  '            <br />\n' +
+  '            Дополнительной стратегией развития является сопровождение сделок по\n' +
+  '            продажам и слиянию активов.';
 const Strategy = () => {
+  const [uploadedImage, setUploadedImage] = useState<
+    string | ArrayBuffer | null
+  >(null);
+  const {
+    content: contentTitle,
+    ref: contentRefTitle,
+    handleBlur: handleContentTitle,
+  } = useEditableContent(`Стратегия`);
+
+  const {
+    content: contentText,
+    ref: contentRefText,
+    handleBlur: handleContentText,
+  } = useEditableContent(maskText);
+  const onSwitchLaunch = (event: MouseEvent<HTMLButtonElement>) => {
+    const buttonText = event.currentTarget.textContent;
+    console.log(buttonText);
+  };
+  const onUploadDate = () => {
+    console.log(contentTitle, contentText, uploadedImage);
+  };
   return (
     <StyledStrategy>
       <Container maxWidth='md'>
         <div className='strategy__content'>
-          <Typography variant='h4' className='content__title'>
-            Стратегия
-          </Typography>
-          <div className='content__text'>
-            Основной стратегией развития компании является управление
-            горно-рудными проектами на всех стадиях развития: от начальной
-            стадии поиска и разведки, технико-экономического обоснования,
-            проектирования и строительства, до управления на этапе производства.
-            <br />
-            <br />
-            Дополнительной стратегией развития является сопровождение сделок по
-            продажам и слиянию активов.
-          </div>
+          <LanguageSwitcher onClick={onSwitchLaunch} />
+          <TitleEdit>Заголовок:</TitleEdit>
+          <Typography
+            variant='h3'
+            className='content__title'
+            contentEditable={true}
+            onBlur={handleContentTitle}
+            ref={contentRefTitle}
+            dangerouslySetInnerHTML={{ __html: contentTitle }}
+          />
+          <TitleEdit>Основной текст:</TitleEdit>
+          <div
+            className='content__text'
+            contentEditable={true}
+            onBlur={handleContentText}
+            ref={contentRefText}
+            dangerouslySetInnerHTML={{ __html: contentText }}
+          />
           <div className='content__img'>
-            <img
-              alt=''
-              src='../../../../../../public/mock-images/about-company.png'
+            <EditImage
+              setUploadedImage={setUploadedImage}
+              urlImag='../../../../../../public/mock-images/about-company.png'
             />
           </div>
+          <UploadButton
+            text='Сохранить'
+            onClick={onUploadDate}
+            icon={<PlusFile />}
+          />
         </div>
       </Container>
     </StyledStrategy>

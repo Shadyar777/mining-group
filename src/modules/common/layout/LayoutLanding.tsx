@@ -15,4 +15,4 @@ const LayoutLanding = () => {
   );
 };
 
-export { LayoutLanding }
+export { LayoutLanding };

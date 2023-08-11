@@ -33,7 +33,7 @@ type LanguageSwitcherProps = {
 
 const LanguageSwitcher = ({ onClick }: LanguageSwitcherProps) => {
   return (
-    <StyledLanguageSwitcher>
+    <StyledLanguageSwitcher className='language-switcher'>
       {languages.map(({ language, icon }, idx) => (
         <LanguageButton
           onClick={onClick}

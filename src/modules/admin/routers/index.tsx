@@ -1,5 +1,5 @@
 import HomePage from '../home/view/HomePage.tsx';
-import AboutPage from "../about/view/AboutPage.tsx";
+import AboutPage from '../about/view/AboutPage.tsx';
 
 export const adminRoutes = {
   HOME: '/admin/home',

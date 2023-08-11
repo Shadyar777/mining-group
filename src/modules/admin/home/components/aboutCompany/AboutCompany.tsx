@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, useState } from 'react';
 import { Container, Typography } from '@mui/material';
 import LanguageSwitcher from '../../../../common/buttons/LanguageSwitcher.tsx';
 import UploadButton from '../../../../common/buttons/UploadButton.tsx';
@@ -6,6 +6,7 @@ import PlusFile from '../../../../../svgs/PlusFile.tsx';
 import { StyledAboutCompany } from './styled.ts';
 import TitleEdit from '../../../common/TitleEdit.tsx';
 import { useEditableContent } from '../../../../../hooks/useEditableContent.ts';
+import EditImage from '../../../common/EditImage.tsx';
 
 const maskText = `Казахстанская компания, основанная в 2020 году. На данный момент
     компания уже имеет несколько действующих рудников, а также ряд
@@ -17,6 +18,9 @@ const maskText = `Казахстанская компания, основанн�
     будут работать на полную мощность`;
 
 const AboutCompany = () => {
+  const [uploadedImage, setUploadedImage] = useState<
+    string | ArrayBuffer | null
+  >(null);
   const {
     content: contentTitle,
     ref: contentRefTitle,
@@ -34,7 +38,7 @@ const AboutCompany = () => {
   };
 
   const onUploadDate = () => {
-    console.log('onUploadDate');
+    console.log(contentTitle, contentText, uploadedImage);
   };
 
   return (
@@ -60,9 +64,9 @@ const AboutCompany = () => {
             dangerouslySetInnerHTML={{ __html: contentText }}
           />
           <div className='content__img'>
-            <img
-              alt=''
-              src='../../../../../../public/mock-images/about-company.png'
+            <EditImage
+              setUploadedImage={setUploadedImage}
+              urlImag='../../../../../../public/mock-images/about-company.png'
             />
           </div>
           <UploadButton

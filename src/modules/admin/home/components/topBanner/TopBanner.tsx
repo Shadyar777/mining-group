@@ -25,7 +25,6 @@ export const StyledTopBanner = styled('div')(({ theme: { breakpoints } }) => ({
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
     backgroundSize: 'cover',
-
   },
 
   [breakpoints.down('mobileSm')]: {

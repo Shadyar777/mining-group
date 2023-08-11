@@ -1,4 +1,10 @@
-import {Container, styled, Typography, useMediaQuery, useTheme,} from '@mui/material';
+import {
+  Container,
+  styled,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import OurValuesMobileCarousel from './OurValuesMobileCarousel.tsx';
 import OurValuesDesktop from './OurValuesDesktop.tsx';
 // import {lazy} from "react";

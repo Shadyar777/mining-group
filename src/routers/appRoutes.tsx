@@ -4,7 +4,6 @@ import { routersLanding } from '../modules/landingPage /routers';
 import SignIn from '../modules/admin/signIn/SignIn.tsx';
 import { routersAdmin } from '../modules/admin/routers';
 
-
 const landingMap = routersLanding.map(({ path, element, index }) => ({
   path,
   element,

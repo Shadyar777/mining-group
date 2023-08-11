@@ -34,8 +34,7 @@ const StyledSlider = styled('div')(({ theme: { breakpoints, shape } }) => ({
   [breakpoints.down('sm')]: {},
   [breakpoints.down('mobileSm')]: {
     padding: '32px 0',
-    '& .container[dir="ltr"]': {
-    },
+    '& .container[dir="ltr"]': {},
   },
 }));
 

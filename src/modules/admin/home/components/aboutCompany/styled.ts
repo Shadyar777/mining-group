@@ -11,7 +11,6 @@ export const StyledAboutCompany = styled('div')(
       gap: '1rem 0',
       padding: '32px 40px',
       backgroundImage: `url('../../../../../../public/images/home-page-about-company-bg.jpg')`,
-      // backgroundColor: 'white',
 
       borderRadius: '20px',
       border: '1px solid #F28A2E',
@@ -34,17 +33,13 @@ export const StyledAboutCompany = styled('div')(
           width: '100%',
         },
       },
-      '& button': {
+      '& .upload-button': {
         color: '#FFF',
         fontSize: '24px',
         fontStyle: 'normal',
         fontWeight: '600',
-        lineHeight: 'normal',
-        textTransform: 'none',
         alignSelf: 'center',
-        background: '#FFB940',
-        width: 'clamp(100px, 50%, 220px)',
-        height: '56px',
+        width: '200px',
       },
     },
     [breakpoints.down('mobileSm')]: {
@@ -67,7 +62,7 @@ export const StyledAboutCompany = styled('div')(
         '& .content__img': {
           margin: '0',
         },
-        '& button': {
+        '& .upload-button': {
           fontSize: '14px',
           width: 'clamp(100px, 50%, 150px)',
           height: '34px',

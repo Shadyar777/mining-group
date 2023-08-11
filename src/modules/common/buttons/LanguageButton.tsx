@@ -20,6 +20,7 @@ const LanguageButton = ({ text, onClick, icon }: LanguageButtonProps) => {
         color: '#2A2A2A',
         borderRadius: '50px',
         border: '1px solid #000',
+        width: '100%',
       }}
       startIcon={icon}
     >
