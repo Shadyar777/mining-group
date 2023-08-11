@@ -3,6 +3,7 @@ import Card from './Card.tsx';
 import { getArray } from '../../../../../utils/getArray.ts';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import NewCard from './NewCard.tsx';
 
 export const StyledActivity = styled('div')(({ theme: { breakpoints } }) => ({
   '& .activity__title': {
@@ -58,6 +59,7 @@ const Activity = () => {
               {getArray(3).map((_, idx) => (
                 <Card key={idx} />
               ))}
+              <NewCard />
             </div>
           </div>
         </Container>
