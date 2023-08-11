@@ -8,6 +8,7 @@ const StyledMapOfKazakhstan = styled('div')(({ theme: { breakpoints } }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '120px',
+  marginTop: '50px',
 
   '& .map__content': {
     display: 'flex',
@@ -64,11 +65,6 @@ const StyledMapOfKazakhstan = styled('div')(({ theme: { breakpoints } }) => ({
       },
     },
   },
-  // [breakpoints.down('mobileSm')]: {
-  //   flexDirection: 'unset',
-  //   display: 'unset',
-  //   gap: 'unset',
-  // },
 }));
 
 const MapOfKazakhstan = () => {
