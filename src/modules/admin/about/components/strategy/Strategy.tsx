@@ -1,5 +1,5 @@
+import { useState } from 'react';
 import { Container, styled, Typography } from '@mui/material';
-import { MouseEvent, useState } from 'react';
 import LanguageSwitcher from '../../../../common/buttons/LanguageSwitcher.tsx';
 import PlusFile from '../../../../../svgs/PlusFile.tsx';
 import UploadButton from '../../../../common/buttons/UploadButton.tsx';
@@ -81,9 +81,8 @@ const Strategy = () => {
     ref: contentRefText,
     handleBlur: handleContentText,
   } = useEditableContent(maskText);
-  const onSwitchLaunch = (event: MouseEvent<HTMLButtonElement>) => {
-    const buttonText = event.currentTarget.textContent;
-    console.log(buttonText);
+  const onSwitchLaunch = (language: string) => {
+    console.log(language);
   };
   const onUploadDate = () => {
     console.log(contentTitle, contentText, uploadedImage);

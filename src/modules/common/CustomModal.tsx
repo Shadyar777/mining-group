@@ -1,5 +1,5 @@
 import { Modal, styled } from '@mui/material';
-import { FC, MouseEvent } from 'react';
+import { FC } from 'react';
 import LanguageSwitcher from './buttons/LanguageSwitcher.tsx';
 
 type CustomModalProps = {
@@ -39,8 +39,8 @@ export const StyledModal = styled(Modal)(({ theme: { shape } }) => ({
 }));
 
 const CustomModal: FC<CustomModalProps> = ({ open, handleClose, children }) => {
-  const onSwitchLanguage = (event: MouseEvent<HTMLButtonElement>) => {
-    console.log(event.currentTarget.textContent);
+  const onSwitchLanguage = (language: string) => {
+    console.log(language);
   };
 
   return (

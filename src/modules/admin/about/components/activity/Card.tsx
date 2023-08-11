@@ -38,6 +38,11 @@ export const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   },
 }));
 
+const emptyContent = {
+  title: 'Развитие активов:',
+  text: 'Проведение технического аудита Оценка запасов по стандарту JORC. Разработка стратегии дальнейшего развития. Разработка проектной документации по международным стандартам. Управление проектами.',
+};
+
 const Card = () => {
   const [openEditModal, setOpenEditModal] = useState(false);
 
@@ -63,7 +68,7 @@ const Card = () => {
         </p>
       </StyledCard>
       <CustomModal open={openEditModal} handleClose={onCloseEditModal}>
-        <EditingToolsForActivityCard />
+        <EditingToolsForActivityCard content={{ ...emptyContent }} />
       </CustomModal>
     </>
   );

@@ -31,20 +31,26 @@ const StyledEditingToolsForOurValuesCard = styled('div')(() => ({
     alignSelf: 'center',
   },
 }));
-
-const EditingToolsForOurValuesCard = () => {
+type EditingToolsForOurValuesCardProps = {
+  content: {
+    title: string;
+    text: string;
+    icon: string | null;
+  };
+};
+const EditingToolsForOurValuesCard = ({
+  content,
+}: EditingToolsForOurValuesCardProps) => {
   const {
     content: contentHeadings,
     ref: contentHeadingsRef,
     handleBlur: handleContentHeadings,
-  } = useEditableContent(`Экология`);
+  } = useEditableContent(content.title);
   const {
     content: contentShortDescription,
     ref: contentShortDescriptionRef,
     handleBlur: handleContentShortDescription,
-  } = useEditableContent(
-    `Приоритет компании — защита и сохранение экологии. Мы делаем конкретные шаги для минимизация влияния золотодобывающего производства на окружающую среду.`,
-  );
+  } = useEditableContent(content.text);
   const [uploadedImage, setUploadedImage] = useState<
     string | ArrayBuffer | null
   >(null);
@@ -72,7 +78,7 @@ const EditingToolsForOurValuesCard = () => {
       />
       <EditIcon
         setUploadedImage={setUploadedImage}
-        initialImage={'../../../../../../public/mock-images/eco.svg'} // TODO - заменить на url
+        initialImage={content.icon}
       />
       <UploadButton
         text='Сохранить'

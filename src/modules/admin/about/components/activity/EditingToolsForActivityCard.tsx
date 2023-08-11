@@ -31,19 +31,26 @@ const StyledEditingToolsForActivityCard = styled('div')(() => ({
   },
 }));
 
-const EditingToolsForActivityCard = () => {
+type EditingToolsForActivityCardProps = {
+  content: {
+    title: string;
+    text: string;
+  };
+};
+
+const EditingToolsForActivityCard = ({
+  content,
+}: EditingToolsForActivityCardProps) => {
   const {
     content: contentHeadings,
     ref: contentHeadingsRef,
     handleBlur: handleContentHeadings,
-  } = useEditableContent(`Развитие активов:`);
+  } = useEditableContent(content.title);
   const {
     content: contentShortDescription,
     ref: contentShortDescriptionRef,
     handleBlur: handleContentShortDescription,
-  } = useEditableContent(
-    `Проведение технического аудита Оценка запасов по стандарту JORC. Разработка стратегии дальнейшего развития. Разработка проектной документации по международным стандартам. Управление проектами.`,
-  );
+  } = useEditableContent(content.text);
 
   const onUploadDate = () => {
     console.log(contentHeadings, contentShortDescription);

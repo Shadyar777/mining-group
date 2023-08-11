@@ -60,7 +60,11 @@ export const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   },
 }));
 
-// type
+const emptyContent = {
+  title: 'Экология',
+  text: 'Приоритет компании — защита и сохранение экологии. Мы делаем конкретные шаги для минимизация влияния золотодобывающего производства на окружающую среду.',
+  icon: '../../../../../../public/mock-images/eco.svg',
+};
 
 const Card = () => {
   const [openEditModal, setOpenEditModal] = useState(false);
@@ -90,7 +94,7 @@ const Card = () => {
         </div>
       </StyledCard>
       <CustomModal open={openEditModal} handleClose={onCloseEditModal}>
-        <EditingToolsForOurValuesCard />
+        <EditingToolsForOurValuesCard content={{ ...emptyContent }} />
       </CustomModal>
     </>
   );

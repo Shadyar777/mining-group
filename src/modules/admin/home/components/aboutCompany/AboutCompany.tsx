@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from 'react';
+import { useState } from 'react';
 import { Container, Typography } from '@mui/material';
 import LanguageSwitcher from '../../../../common/buttons/LanguageSwitcher.tsx';
 import UploadButton from '../../../../common/buttons/UploadButton.tsx';
@@ -32,9 +32,8 @@ const AboutCompany = () => {
     handleBlur: handleContentText,
   } = useEditableContent(maskText);
 
-  const onSwitchLaunch = (event: MouseEvent<HTMLButtonElement>) => {
-    const buttonText = event.currentTarget.textContent;
-    console.log(buttonText);
+  const onSwitchLaunch = (language: string) => {
+    console.log(language);
   };
 
   const onUploadDate = () => {

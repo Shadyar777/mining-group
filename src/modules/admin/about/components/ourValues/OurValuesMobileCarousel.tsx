@@ -2,6 +2,7 @@ import Carousel from 'react-multi-carousel';
 import Card from './Card.tsx';
 import { styled } from '@mui/material';
 import { getArray } from '../../../../../utils/getArray.ts';
+import NewCard from './NewCard.tsx';
 
 export const StyledActivityMobileCarousel = styled(Carousel)(() => ({
   '& .card': {
@@ -65,6 +66,7 @@ const OurValuesMobileCarousel = () => {
       {getArray(5).map((_, idx) => (
         <Card key={idx} />
       ))}
+      <NewCard />
     </StyledActivityMobileCarousel>
   );
 };

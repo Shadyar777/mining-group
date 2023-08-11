@@ -1,8 +1,8 @@
+import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import { styled } from '@mui/material';
 import CustomModal from '../../../../common/CustomModal.tsx';
-import EditingToolsForActivityCard from './EditingToolsForActivityCard.tsx';
-import { useState } from 'react';
+import EditingToolsForOurValuesCard from './EditingToolsForOurValuesCard.tsx';
 
 const StyledNewCard = styled('div')(() => ({
   height: 'auto',
@@ -28,6 +28,7 @@ const StyledNewCard = styled('div')(() => ({
 const emptyContent = {
   title: '',
   text: '',
+  icon: null,
 };
 const NewCard = () => {
   const [openNewCardModal, setOpenNewCardModal] = useState(false);
@@ -47,7 +48,7 @@ const NewCard = () => {
         </div>
       </StyledNewCard>
       <CustomModal open={openNewCardModal} handleClose={onCloseNewCard}>
-        <EditingToolsForActivityCard content={{ ...emptyContent }} />
+        <EditingToolsForOurValuesCard content={{ ...emptyContent }} />
       </CustomModal>
     </>
   );
