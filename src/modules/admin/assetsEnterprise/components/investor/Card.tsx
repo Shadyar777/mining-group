@@ -1,11 +1,13 @@
+import { useState } from 'react';
 import { Divider, styled } from '@mui/material';
-
 import { getArray } from '../../../../../utils/getArray.ts';
 
 // mock
 import goldImg from '@public/mock-images/gold.png';
 import CubeImg from '@public/svgs/icon-filters/cube.svg';
 import CardActionsMenu from './CardActionsMenu.tsx';
+import CustomModal from '../../../../common/CustomModal.tsx';
+import EditResourceCardForm from './EditResourceCardForm.tsx';
 
 const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   borderRadius: '32px',
@@ -84,34 +86,49 @@ const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
 }));
 
 const Card = () => {
+  const [openCardModal, onCloseCardModal] = useState<boolean>(false);
+
   const handleEdit = () => {
-    console.log('Open the edit modal or any edit action');
-    // Откройте модальное окно для редактирования здесь, если это необходимо
+    onCloseCardModal(true);
   };
 
   const handleDelete = () => {
     console.log('Delete the item');
   };
+  const handleClose = () => {
+    onCloseCardModal(false);
+  };
   return (
-    <StyledCard className='card'>
-      <div className='card__img'>
-        <CardActionsMenu onEdit={handleEdit} onDelete={handleDelete} />
-        <img src={goldImg} alt='' />
-      </div>
-      <div className='card__content'>
-        <div className='card__id'>ID объекта: 36557</div>
-        <div className='card__geolocation'>Месторождение рассыпного золота</div>
-        <div className='card__resource'>
-          {getArray(3).map((_, key) => (
-            <ResourceName key={key} name='Золото рассыпное' iconSrc={CubeImg} />
-          ))}
+    <>
+      <StyledCard className='card'>
+        <div className='card__img'>
+          <CardActionsMenu onEdit={handleEdit} onDelete={handleDelete} />
+          <img src={goldImg} alt='' />
         </div>
+        <div className='card__content'>
+          <div className='card__id'>ID объекта: 36557</div>
+          <div className='card__geolocation'>
+            Месторождение рассыпного золота
+          </div>
+          <div className='card__resource'>
+            {getArray(3).map((_, key) => (
+              <ResourceName
+                key={key}
+                name='Золото рассыпное'
+                iconSrc={CubeImg}
+              />
+            ))}
+          </div>
 
-        <Divider className='card__divider' />
-        <div className='card__price'>Цена: по запросу</div>
-        <div className='card__date'>Опубликовано 19.06.2023</div>
-      </div>
-    </StyledCard>
+          <Divider className='card__divider' />
+          <div className='card__price'>Цена: по запросу</div>
+          <div className='card__date'>Опубликовано 19.06.2023</div>
+        </div>
+      </StyledCard>
+      <CustomModal open={openCardModal} handleClose={handleClose}>
+        <EditResourceCardForm />
+      </CustomModal>
+    </>
   );
 };
 
