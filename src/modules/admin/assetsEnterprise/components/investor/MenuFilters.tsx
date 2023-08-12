@@ -2,6 +2,7 @@ import { styled } from '@mui/material';
 import React, { useState } from 'react';
 import TFilterPopoverProps from './FilterPopover.tsx';
 import SearchInput from './SearchInput.tsx';
+import iconFilter from '@public/svgs/icon-filter.svg';
 
 const StyledMenuFilter = styled('div')(({ theme: { breakpoints } }) => ({
   display: 'flex',
@@ -60,7 +61,7 @@ const MenuFilters = () => {
     <StyledMenuFilter className='investor__menu-filters'>
       <div className='menu-filters' onClick={onOpenPopoverFilters}>
         <div className='menu-filters__icon'>
-          <img alt='' src='../../../../../../public/svgs/icon-filter.svg' />
+          <img alt='' src={iconFilter} />
         </div>
         <div className='menu-filters__label'>Фильтры</div>
         <TFilterPopoverProps

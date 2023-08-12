@@ -10,6 +10,7 @@ import { store } from './store';
 
 import { routers } from './routers/appRoutes.tsx';
 
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-multi-carousel/lib/styles.css';
 
 createRoot(document.getElementById('root')!).render(

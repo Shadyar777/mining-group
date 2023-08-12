@@ -1,5 +1,11 @@
 import { Divider, styled } from '@mui/material';
+
 import { getArray } from '../../../../../utils/getArray.ts';
+
+// mock
+import goldImg from '@public/mock-images/gold.png';
+import CubeImg from '@public/svgs/icon-filters/cube.svg';
+import CardActionsMenu from './CardActionsMenu.tsx';
 
 const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   borderRadius: '32px',
@@ -21,14 +27,16 @@ const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
       objectFit: 'cover',
     },
 
-    '& .img__arrow-icon': {
+    '& .img__more-vert': {
       position: 'absolute',
       top: '16px',
       right: '16px',
-      width: '32px',
-      height: '32px',
       cursor: 'pointer',
       zIndex: '1',
+      borderRadius: '50px',
+      background: 'rgba(255, 255, 255, 0.90)',
+      display: 'flex',
+      padding: '3px',
     },
   },
   '& .card__id': {
@@ -75,37 +83,31 @@ const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   [breakpoints.down('sm')]: {},
 }));
 
-const onClick = () => {
-  console.log('click on card');
-};
-
 const Card = () => {
+  const handleEdit = () => {
+    console.log('Open the edit modal or any edit action');
+    // Откройте модальное окно для редактирования здесь, если это необходимо
+  };
+
+  const handleDelete = () => {
+    console.log('Delete the item');
+  };
   return (
     <StyledCard className='card'>
       <div className='card__img'>
-        <img src='../../../../../../public/mock-images/gold.png' alt='' />
-        <img
-          className='img__arrow-icon'
-          src='../../../../../../public/svgs/arrow-forward-sharp.svg'
-          alt=''
-          onClick={onClick}
-        />
+        <CardActionsMenu onEdit={handleEdit} onDelete={handleDelete} />
+        <img src={goldImg} alt='' />
       </div>
       <div className='card__content'>
         <div className='card__id'>ID объекта: 36557</div>
         <div className='card__geolocation'>Месторождение рассыпного золота</div>
         <div className='card__resource'>
           {getArray(3).map((_, key) => (
-            <ResourceName
-              key={key}
-              name='Золото рассыпное'
-              iconSrc='../../../../../../public/svgs/icon-filters/cube.svg'
-            />
+            <ResourceName key={key} name='Золото рассыпное' iconSrc={CubeImg} />
           ))}
         </div>
 
         <Divider className='card__divider' />
-        {/*<Divider variant='middle' />*/}
         <div className='card__price'>Цена: по запросу</div>
         <div className='card__date'>Опубликовано 19.06.2023</div>
       </div>

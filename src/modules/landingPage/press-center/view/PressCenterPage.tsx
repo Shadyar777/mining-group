@@ -1,6 +1,6 @@
 import { styled } from '@mui/material';
 import PressCenterTitle from '../components/pressCenterPage/PressCenterTitle.tsx';
-import PdfViewer from '../components/pdfViewer/PdfViewer.tsx';
+// import PdfViewer from '../components/pdfViewer/PdfViewer.tsx';
 import Slider from '../components/slider/Slider.tsx';
 
 const StyledPressCenterPage = styled('div')(({ theme: { breakpoints } }) => ({
@@ -15,7 +15,7 @@ const PressCenterPage = () => {
   return (
     <StyledPressCenterPage>
       <PressCenterTitle />
-      <PdfViewer />
+      {/*<PdfViewer />*/}
       <Slider />
     </StyledPressCenterPage>
   );

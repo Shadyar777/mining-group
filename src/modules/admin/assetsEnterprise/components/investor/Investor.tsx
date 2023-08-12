@@ -2,6 +2,7 @@ import { Container, styled, Typography } from '@mui/material';
 import Card from './Card.tsx';
 import { getArray } from '../../../../../utils/getArray.ts';
 import MenuFilters from './MenuFilters.tsx';
+import NewCard from './NewCard.tsx';
 
 const StyledInvestor = styled('div')(({ theme: { breakpoints } }) => ({
   padding: '40px 0',
@@ -18,18 +19,6 @@ const StyledInvestor = styled('div')(({ theme: { breakpoints } }) => ({
       fontWeight: 400,
     },
   },
-  // '& .investor__filters': {
-  //   '& .filters__icon': {},
-  //   '& .filters__label': {
-  //     color: '#000',
-  //     fontSize: '16px',
-  //     fontWeight: 400,
-  //   },
-  //   '& .filters__search': {
-  //     borderRadius: '30px',
-  //     background: 'rgba(255, 255, 255, 0.90)',
-  //   },
-  // },
   '& .investor__content': {
     display: 'flex',
     flexWrap: 'wrap',
@@ -57,18 +46,8 @@ const Investor = () => {
           <Typography className='sub-title'>Месторождения</Typography>
         </div>
         <MenuFilters />
-        {/*<div className='investor__filters'>*/}
-        {/*  <div>*/}
-        {/*    <div className='filters__icon'>*/}
-        {/*      <img alt='' src='../../../../../../public/svgs/icon-filter.svg' />*/}
-        {/*    </div>*/}
-        {/*    <div className='filters__label'>Фильтры</div>*/}
-        {/*  </div>*/}
-        {/*  <div className='filters__search'>*/}
-        {/*    <input type='text' />*/}
-        {/*  </div>*/}
-        {/*</div>*/}
         <div className='investor__content'>
+          <NewCard />
           {getArray(6).map((_, key) => (
             <Card key={key} />
           ))}
