@@ -7,7 +7,7 @@ import Menu from './Menu';
 import LeftDrawer from './LeftDrawer';
 import Logo from './Logo.tsx';
 
-const Header = () => {
+const Header = ({ isAdmin }: { isAdmin?: boolean }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const theme = useTheme();
@@ -48,7 +48,7 @@ const Header = () => {
           </div>
         )}
       </StyledHeader>
-      <LeftDrawer isOpen={isOpen} onClose={onCloseDrawer} />
+      <LeftDrawer isOpen={isOpen} onClose={onCloseDrawer} isAdmin={isAdmin} />
     </>
   );
 };

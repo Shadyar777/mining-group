@@ -8,3 +8,4 @@ docker-compose*
 src/store/rootReducer.ts
 webpack.dev.ts
 webpack.test.ts
+/.husky

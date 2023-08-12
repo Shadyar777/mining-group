@@ -23,7 +23,7 @@ const Languages = () => {
       >
         <MenuItem value={1}>🇷🇺 RU</MenuItem>
         <MenuItem value={2}>🇰🇿 KK</MenuItem>
-        <MenuItem value={3}>🇺🇸 ES</MenuItem>
+        <MenuItem value={3}>🇺🇸 EN</MenuItem>
       </Select>
     </StyledLanguages>
   );
