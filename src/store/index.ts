@@ -4,10 +4,11 @@ import {
   ThunkAction,
   configureStore,
 } from '@reduxjs/toolkit';
-import userSlice from './userSlice';
+import adminSlice from '../modules/admin/signIn/slice.ts';
+
 export const store = configureStore({
   reducer: {
-    userSlice,
+    admin: adminSlice,
   },
 });
 

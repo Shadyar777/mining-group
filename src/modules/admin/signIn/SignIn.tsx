@@ -2,6 +2,9 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Grid, Paper, TextField, Typography, Box } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useForm } from 'react-hook-form';
+import { useAppSelector } from '../../../store/hooks.ts';
+import { getAdmin } from './slice.ts';
+import { useState } from 'react';
 
 type Form = {
   login: string;
@@ -9,6 +12,9 @@ type Form = {
 };
 
 const SignIn = () => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { admin } = useAppSelector(getAdmin);
+  const { login, password } = admin;
   const navigate = useNavigate();
   const goToAdmin = () => navigate('/admin/home', { replace: false });
   const {
@@ -18,8 +24,11 @@ const SignIn = () => {
   } = useForm<Form>();
 
   const onSubmit = (data: Form) => {
-    console.log(data);
-    goToAdmin();
+    if (data.login === login && data.password === password) {
+      goToAdmin();
+    } else {
+      setErrorMessage('Неверный логин или пароль!');
+    }
   };
 
   return (
@@ -27,18 +36,24 @@ const SignIn = () => {
       container
       justifyContent='center'
       alignItems='center'
-      style={{ height: '100vh' }}
+      style={{ height: '100vh', backgroundColor: '#f4f4f4' }}
     >
       <Box component={Paper} elevation={3} p={4} minWidth={320}>
         <Grid container direction='column' spacing={3} alignItems='center'>
           <Grid item>
-            <LockOutlinedIcon fontSize='large' />
+            <LockOutlinedIcon fontSize='large' color='primary' />
           </Grid>
           <Grid item>
-            <Typography variant='h5' gutterBottom>
+            <Typography variant='h5' gutterBottom color='textPrimary'>
               Вход
             </Typography>
           </Grid>
+
+          {errorMessage && (
+            <Grid item>
+              <Typography color='error'>{errorMessage}</Typography>
+            </Grid>
+          )}
 
           <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%' }}>
             <Box mb={2}>
