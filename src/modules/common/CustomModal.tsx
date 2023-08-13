@@ -7,45 +7,60 @@ type CustomModalProps = {
   open: boolean;
   handleClose: () => void;
   children: JSX.Element | string;
+  maxwidth?: string;
 };
-export const StyledModal = styled(Modal)(({ theme: { shape } }) => ({
-  '& .modal__container': {
-    position: 'relative',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    maxWidth: '400px',
-    width: '100%',
-    height: '100%',
-    maxHeight: '600px',
-    overflow: 'auto',
-    // border: '2px solid #000',
-    borderRadius: shape.borderRadius,
-    padding: '38px 20px 8px',
-    background: 'white',
-    display: 'flex',
-    flexDirection: 'column',
 
-    '& .modal__icon-cancel': {
-      position: 'absolute',
-      top: '10px',
-      right: '20px',
-      zIndex: '2',
-      cursor: 'pointer',
+type StyledModalProps = {
+  maxwidth?: string;
+};
+
+export const StyledModal = styled(Modal)<StyledModalProps>(
+  ({ theme: { shape }, maxwidth }) => ({
+    '& .modal__container': {
+      position: 'relative',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      // maxWidth: '400px',
+      maxWidth: maxwidth ?? '400px',
+      width: '100%',
+      height: '100%',
+      maxHeight: '600px',
+      overflow: 'auto',
+      // border: '2px solid #000',
+      borderRadius: shape.borderRadius,
+      padding: '38px 20px 8px',
+      background: 'white',
+      display: 'flex',
+      flexDirection: 'column',
+
+      '& .modal__icon-cancel': {
+        position: 'absolute',
+        top: '10px',
+        right: '20px',
+        zIndex: '2',
+        cursor: 'pointer',
+      },
     },
-  },
-  '& .modal__content': {
-    color: '#000',
-  },
-}));
+    '& .modal__content': {
+      color: '#000',
+    },
+  }),
+);
 
-const CustomModal: FC<CustomModalProps> = ({ open, handleClose, children }) => {
+const CustomModal: FC<CustomModalProps> = ({
+  open,
+  handleClose,
+  children,
+  maxwidth,
+}) => {
   const onSwitchLanguage = (language: string) => {
     console.log(language);
   };
 
   return (
     <StyledModal
+      maxwidth={maxwidth}
       open={open}
       aria-labelledby='modal-modal-title'
       aria-describedby='modal-modal-description'

@@ -15,7 +15,9 @@ import { getListIconResources } from '../../../../common/utls/getListIconResourc
 import EditImage from '../../../common/EditImage.tsx';
 import EditPDF from './EditPDF.tsx';
 
-// import pdfSample from '../../../../../../public/mock-pdf/sample.pdf';
+// TODO: удалить когда будет бэк
+import imgSrcAboutCompany from '@public/mock-images/about-company.png';
+import imgSrcGold from '@public/mock-images/gold.png';
 
 const schema = yup.object().shape({
   title: yup.string().required('Заголовок обязателен'),
@@ -42,10 +44,7 @@ type FormData = {
   mapLink: string;
 };
 
-const imagesToPass = [
-  { src: '../../../../../../public/mock-images/about-company.png' },
-  { src: '../../../../../../public/mock-images/gold.png' },
-]; // TODO: удалить когда будет бэк
+const imagesToPass = [{ src: imgSrcAboutCompany }, { src: imgSrcGold }]; // TODO: удалить когда будет бэк
 
 const initialResources = getListIconResources().map((resource) => ({
   ...resource,
@@ -153,7 +152,7 @@ const EditResourceCardForm = () => {
       <div className='content__img'>
         <EditImage
           setUploadedImage={setUploadedImage}
-          urlImag='../../../../../../public/mock-images/about-company.png'
+          urlImag={imgSrcAboutCompany}
         />
       </div>
 
