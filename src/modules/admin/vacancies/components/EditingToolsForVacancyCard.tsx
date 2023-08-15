@@ -14,6 +14,7 @@ import {
   colorForColorPicker,
   ColorForColorPickerType,
 } from '../utils/colorForColorPicker.ts';
+import { useAddJobMutation, useUpdateJobMutation } from '../../../../rtk-query';
 
 const StyledForm = styled('form')(() => ({
   display: 'flex',
@@ -38,7 +39,7 @@ const validationSchema = yup.object().shape({
     .required('Цвет обязателен'),
   title: yup.string().required('Заголовок не может быть пустым'),
   tasks: yup.string().required('Задачи не могут быть пустыми'),
-  contacts: yup.string(),
+  phone: yup.string(),
   mail: yup.string().email('Недопустимый адрес электронной почты'),
 });
 
@@ -46,25 +47,33 @@ type FormData = {
   backgroundColor: ColorForColorPickerType;
   title: string;
   tasks: string;
-  contacts?: string;
+  phone?: string;
   mail?: string;
 };
 
 type EditingToolsForVacancyCardProps = {
-  id?: string | number;
+  jobContent?: {
+    jobId: number;
+    title: string;
+    conditions: string;
+    tasks: string;
+    mail: string;
+    backgroundColor: string;
+    phone: string;
+  };
 };
 
-const initialData = {
-  backgroundColor: '#004B8F',
-  title: 'Начальный заголовок',
-  tasks: 'Начальные задачи',
-  contacts: 'Начальные контакты',
-  mail: 'info@imgkz.com',
-} as const;
-
-type InitialDataKeys = keyof typeof initialData;
+// const initialData = {
+//   backgroundColor: '#004B8F',
+//   title: 'Начальный заголовок',
+//   tasks: 'Начальные задачи',
+//   phone: 'Начальные контакты',
+//   mail: 'info@imgkz.com',
+// } as const;
+//
+// type InitialDataKeys = keyof typeof initialData;
 const EditingToolsForVacancyCard = ({
-  id,
+  jobContent,
 }: EditingToolsForVacancyCardProps) => {
   const { control, handleSubmit, setValue } = useForm<FormData>({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -72,22 +81,44 @@ const EditingToolsForVacancyCard = ({
     resolver: yupResolver(validationSchema),
   });
 
+  const [addJob] = useAddJobMutation();
+  const [updateJob] = useUpdateJobMutation();
+
   const onSubmit = (data: FormData) => {
     console.log(data);
+    const { backgroundColor, mail, tasks, phone, title } = data;
+    // Добавление
+    if (!jobContent?.jobId) {
+      addJob({
+        backgroundColor,
+        title,
+        mail: mail || '',
+        tasks,
+        phone: phone || '',
+        conditions: tasks,
+      });
+      return;
+    }
+    // Редактирование
+    updateJob({
+      id: jobContent.jobId,
+      backgroundColor,
+      title,
+      mail: mail || '',
+      tasks,
+      phone: phone || '',
+      conditions: tasks,
+    });
   };
 
   useEffect(() => {
-    console.log(id);
     // Заполняем начальные данные
-    if (id) {
-      for (const key in initialData) {
-        setValue(
-          key as InitialDataKeys,
-          initialData[key as keyof typeof initialData],
-        );
+    if (jobContent?.jobId) {
+      for (const key in jobContent) {
+        setValue(key as any, jobContent[key as keyof typeof jobContent]);
       }
     }
-  }, [id, setValue]);
+  }, [jobContent, jobContent?.jobId, setValue]);
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <TitleEdit>Фоновый цвет:</TitleEdit>
@@ -126,7 +157,7 @@ const EditingToolsForVacancyCard = ({
       />
       <TitleEdit>Контакты:</TitleEdit>
       <Controller
-        name='contacts'
+        name='phone'
         control={control}
         render={({ field, fieldState }) => (
           <EditCustomInput

@@ -1,15 +1,23 @@
 import {
-  createAsyncThunk,
   Action,
-  ThunkAction,
   configureStore,
+  createAsyncThunk,
+  ThunkAction,
 } from '@reduxjs/toolkit';
 import adminSlice from '../modules/admin/signIn/slice.ts';
+import commonSlice from '../modules/common/sliceCommon/slice.ts';
+import { goodsApi } from './rtkQuery.ts';
+import { jobsApi } from '../rtk-query';
 
 export const store = configureStore({
   reducer: {
     admin: adminSlice,
+    common: commonSlice,
+    [goodsApi.reducerPath]: goodsApi.reducer,
+    [jobsApi.reducerPath]: jobsApi.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat([goodsApi.middleware, jobsApi.middleware]),
 });
 
 export type AppDispatch = typeof store.dispatch;

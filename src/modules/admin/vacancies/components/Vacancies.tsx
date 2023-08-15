@@ -1,7 +1,9 @@
 import { Container, styled, useMediaQuery, useTheme } from '@mui/material';
-import { getArray } from '../../../../utils/getArray.ts';
 import VacancyCard from './VacancyCard.tsx';
 import AddNewVacancy from './AddNewVacancy.tsx';
+import { useGetAllJobsQuery } from '../../../../rtk-query';
+import { getAddGlobalLanguages } from '../../../common/sliceCommon/slice.ts';
+import { useAppSelector } from '../../../../store/hooks.ts';
 
 const StyledVacancies = styled('div')(({ theme: { breakpoints } }) => ({
   padding: '40px 0',
@@ -22,18 +24,33 @@ const StyledVacancies = styled('div')(({ theme: { breakpoints } }) => ({
   },
 }));
 
-const maskProps = {
-  title: 'Главный экономист предприятия',
-  termsText: 'График 5/2 оффлайн, город Шымкент',
-  tasksText:
-    'Сознание экономического блока. Сознание системы бюджетирование и планирования 5/2 оффлайн, город Шымкент',
-  mailHref: 'info@imgkz.com',
-  baColor: '#004B8F',
-};
+// const maskProps = {
+//   title: 'Главный экономист предприятия',
+//   termsText: 'График 5/2 оффлайн, город Шымкент',
+//   tasksText:
+//     'Сознание экономического блока. Сознание системы бюджетирование и планирования 5/2 оффлайн, город Шымкент',
+//   mailHref: 'info@imgkz.com',
+//   baColor: '#004B8F',
+// };
 
-const emptyArray = getArray(4);
+// const emptyArray = getArray(4);
 const Vacancies = () => {
+  const lng = useAppSelector(getAddGlobalLanguages);
   const { breakpoints } = useTheme();
+
+  const { data } = useGetAllJobsQuery(lng);
+
+  const jobs =
+    data &&
+    data.data.list.map((job) => ({
+      title: job.title,
+      backgroundColor: job.backgroundColor,
+      tasks: job.tasks,
+      conditions: job.conditions,
+      mail: job.mail,
+      phone: job.phone,
+      jobId: job.id,
+    }));
 
   return (
     <StyledVacancies>
@@ -42,9 +59,10 @@ const Vacancies = () => {
         disableGutters={useMediaQuery(breakpoints.down('mobileSm'))}
       >
         <div className='vacancies__container'>
-          {emptyArray.map((_, idx) => (
-            <VacancyCard {...maskProps} key={idx} />
-          ))}
+          {jobs &&
+            jobs.map((job, idx) => (
+              <VacancyCard {...job} key={`${idx}-${job.title}`} />
+            ))}
           <AddNewVacancy />
         </div>
       </Container>

@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import path from 'node:path';
@@ -27,8 +26,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@public': '/public',
-      '@src': '/src'
-    }
+      '@src': '/src',
+    },
   },
   server: {
     host: '0.0.0.0',

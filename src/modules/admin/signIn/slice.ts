@@ -10,8 +10,8 @@ export interface Admin {
 
 const initialState: Admin = {
   admin: {
-    login: 'qwerty',
-    password: 'qwerty',
+    login: 'user',
+    password: 'password',
   },
 };
 const adminSlice = createSlice({
