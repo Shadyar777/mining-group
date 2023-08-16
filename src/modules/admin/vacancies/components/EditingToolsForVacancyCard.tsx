@@ -107,7 +107,7 @@ const EditingToolsForVacancyCard = ({
 
   useEffect(() => {
     if (isSuccessAddJob || isSuccessUpdate) {
-      setOpenEdit(false)
+      setOpenEdit(false);
     }
   }, [setOpenEdit, isSuccessAddJob, isSuccessUpdate]);
 

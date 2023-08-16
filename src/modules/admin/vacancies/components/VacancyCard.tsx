@@ -164,7 +164,10 @@ const VacancyCard = ({
         </div>
       </StyledVacancyCard>
       <CustomModal maxwidth='900px' open={openEdit} handleClose={onCloseEdit}>
-        <EditingToolsForVacancyCard jobContent={job}  setOpenEdit={setOpenEdit}/>
+        <EditingToolsForVacancyCard
+          jobContent={job}
+          setOpenEdit={setOpenEdit}
+        />
       </CustomModal>
     </>
   );
