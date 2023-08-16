@@ -50,7 +50,7 @@ const AddNewVacancy = () => {
         open={openAddNewVacancyModal}
         handleClose={onCloseNewCard}
       >
-        <EditingToolsForVacancyCard />
+        <EditingToolsForVacancyCard setOpenEdit={setOpenAddNewVacancyModal} />
       </CustomModal>
     </>
   );

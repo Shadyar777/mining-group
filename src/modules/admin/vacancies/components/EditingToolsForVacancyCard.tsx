@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -61,28 +61,22 @@ type EditingToolsForVacancyCardProps = {
     backgroundColor: string;
     phone: string;
   };
+  setOpenEdit: Dispatch<SetStateAction<boolean>>;
 };
 
-// const initialData = {
-//   backgroundColor: '#004B8F',
-//   title: 'Начальный заголовок',
-//   tasks: 'Начальные задачи',
-//   phone: 'Начальные контакты',
-//   mail: 'info@imgkz.com',
-// } as const;
-//
-// type InitialDataKeys = keyof typeof initialData;
 const EditingToolsForVacancyCard = ({
   jobContent,
+  setOpenEdit,
 }: EditingToolsForVacancyCardProps) => {
+  console.log('setOpenEdit', setOpenEdit);
   const { control, handleSubmit, setValue } = useForm<FormData>({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore FIXME
     resolver: yupResolver(validationSchema),
   });
 
-  const [addJob] = useAddJobMutation();
-  const [updateJob] = useUpdateJobMutation();
+  const [addJob, { isSuccess: isSuccessAddJob }] = useAddJobMutation();
+  const [updateJob, { isSuccess: isSuccessUpdate }] = useUpdateJobMutation();
 
   const onSubmit = (data: FormData) => {
     console.log(data);
@@ -110,6 +104,12 @@ const EditingToolsForVacancyCard = ({
       conditions: tasks,
     });
   };
+
+  useEffect(() => {
+    if (isSuccessAddJob || isSuccessUpdate) {
+      setOpenEdit(false)
+    }
+  }, [setOpenEdit, isSuccessAddJob, isSuccessUpdate]);
 
   useEffect(() => {
     // Заполняем начальные данные
