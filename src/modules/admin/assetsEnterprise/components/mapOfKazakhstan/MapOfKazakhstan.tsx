@@ -3,6 +3,7 @@ import UploadButton from '../../../../common/buttons/UploadButton.tsx';
 import PlusFile from '../../../../../svgs/PlusFile.tsx';
 import EditImage from '../../../../admin/common/EditImage.tsx';
 import { useState } from 'react';
+import { useEditableContent } from '../../../../../hooks/useEditableContent.ts';
 
 const StyledMapOfKazakhstan = styled('div')(({ theme: { breakpoints } }) => ({
   display: 'flex',
@@ -76,6 +77,21 @@ const MapOfKazakhstan = () => {
     console.log(uploadedImage);
   };
 
+  const {
+    content: contentAuthor,
+    ref: contentRefAuthor,
+    handleBlur: handleContentAuthor,
+  } = useEditableContent(`К.Сатпаев`);
+
+  const {
+    content: contentText,
+    ref: contentRefText,
+    handleBlur: handleContentText,
+  } = useEditableContent(
+    ' «Мы обязаны не только разрабатывать наши кладовые подземных\n' +
+      '              ископаемых, но и беречь их!»',
+  );
+
   return (
     <StyledMapOfKazakhstan>
       <Container maxWidth='md'>
@@ -93,11 +109,20 @@ const MapOfKazakhstan = () => {
             />
           </div>
           <div className='map__text'>
-            <Typography className='text__quote'>
-              «Мы обязаны не только разрабатывать наши кладовые подземных
-              ископаемых, но и беречь их!»
-            </Typography>
-            <Typography className='text__author'>К.Сатпаев</Typography>
+            <Typography
+              className='text__quote'
+              contentEditable={true}
+              onBlur={handleContentText}
+              ref={contentRefText}
+              dangerouslySetInnerHTML={{ __html: contentText }}
+            />
+            <Typography
+              className='text__author'
+              contentEditable={true}
+              onBlur={handleContentAuthor}
+              ref={contentRefAuthor}
+              dangerouslySetInnerHTML={{ __html: contentAuthor }}
+            />
           </div>
         </div>
       </Container>

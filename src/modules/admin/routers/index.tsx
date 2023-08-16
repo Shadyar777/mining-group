@@ -34,14 +34,14 @@ export const routersAdmin = [
     path: adminRoutes.VACANCIES,
     element: <VacanciesPage />,
   },
+  {
+    name: 'Услуги',
+    path: `${adminRoutes.ABOUT}#services`,
+    // element: <PressCenterPage />,
+  },
   // {
   //   name: 'Для инвесторов',
   //   path: '/press-center',
-  //   element: <PressCenterPage />,
-  // },
-  // {
-  //   name: 'Услуги',
-  //   path: `${adminRoutes.ABOUT}#services`,
   //   element: <PressCenterPage />,
   // },
   // {

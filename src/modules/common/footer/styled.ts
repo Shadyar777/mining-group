@@ -51,6 +51,10 @@ const StyledFooter = styled('footer')(({ theme: { breakpoints } }) => ({
         color: 'white',
         textDecoration: 'none',
       },
+
+      '& .link-react-scroll': {
+        cursor: 'pointer',
+      },
     },
   },
   [breakpoints.down('mobileSm')]: {

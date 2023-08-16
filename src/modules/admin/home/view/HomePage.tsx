@@ -3,7 +3,7 @@ import Resources from '../components/resources/Resources.tsx';
 import AboutCompany from '../components/aboutCompany/AboutCompany.tsx';
 import FindOutMore from '../components/findOutMore/FindOutMore.tsx';
 import { styled } from '@mui/material';
-import { useGetPostsQuery } from '../../../../store/rtkQuery.ts';
+// import { useGetPostsQuery } from '../../../../store/rtkQuery.ts';
 
 export const StyledHomePage = styled('div')(({ theme: { breakpoints } }) => ({
   display: 'flex',
@@ -23,11 +23,11 @@ export const StyledHomePage = styled('div')(({ theme: { breakpoints } }) => ({
 }));
 
 const HomePage = () => {
-  const { data, error, isLoading } = useGetPostsQuery();
-  console.log('isLoading', isLoading);
-  console.log('data', data);
-  console.log('error', error);
-  console.log('isLoading', isLoading);
+  // const { data, error, isLoading } = useGetPostsQuery();
+  // console.log('isLoading', isLoading);
+  // console.log('data', data);
+  // console.log('error', error);
+  // console.log('isLoading', isLoading);
   return (
     <StyledHomePage>
       <TopBanner />

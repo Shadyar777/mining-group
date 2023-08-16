@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { stripHTML } from '../modules/common/utls/stripHTML.ts';
 
 const useEditableContent = (initialValue: string) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -6,7 +7,7 @@ const useEditableContent = (initialValue: string) => {
 
   const handleBlur = () => {
     if (ref.current) {
-      setContent(ref.current.innerHTML);
+      setContent(stripHTML(ref.current.innerHTML));
     }
   };
 

@@ -29,6 +29,7 @@ const emptyContent = {
   title: '',
   text: '',
 };
+
 const NewCard = () => {
   const [openNewCardModal, setOpenNewCardModal] = useState(false);
 
@@ -47,7 +48,10 @@ const NewCard = () => {
         </div>
       </StyledNewCard>
       <CustomModal open={openNewCardModal} handleClose={onCloseNewCard}>
-        <EditingToolsForActivityCard content={{ ...emptyContent }} />
+        <EditingToolsForActivityCard
+          setOpenEditModal={setOpenNewCardModal}
+          content={{ ...emptyContent }}
+        />
       </CustomModal>
     </>
   );

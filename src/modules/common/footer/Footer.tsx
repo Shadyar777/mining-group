@@ -6,6 +6,7 @@ import Logo from '../header/Logo.tsx';
 
 const Footer = ({ isAdmin }: { isAdmin?: boolean }) => {
   const links = isAdmin ? getLinksAdmin() : getLinksLanding();
+
   return (
     <StyledFooter>
       <Container maxWidth='lg'>
@@ -18,7 +19,22 @@ const Footer = ({ isAdmin }: { isAdmin?: boolean }) => {
             {links.map(({ name, path }, idx) => {
               return (
                 <li key={`name-${idx}`}>
-                  <NavLink to={path}>{name}</NavLink>
+                  {path.includes('#services') ? (
+                    <NavLink
+                      onClick={() => {
+                        setTimeout(() => {
+                          const element = document.getElementById('services');
+                          if (element)
+                            element.scrollIntoView({ behavior: 'smooth' });
+                        }, 200);
+                      }}
+                      to={path}
+                    >
+                      {name}
+                    </NavLink>
+                  ) : (
+                    <NavLink to={path}>{name}</NavLink>
+                  )}
                 </li>
               );
             })}

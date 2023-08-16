@@ -8,6 +8,8 @@ import adminSlice from '../modules/admin/signIn/slice.ts';
 import commonSlice from '../modules/common/sliceCommon/slice.ts';
 import { goodsApi } from './rtkQuery.ts';
 import { jobsApi } from '../rtk-query';
+import { activitiesApi } from '../rtk-query/activitiesApi.ts';
+import { rtkMiddleWares } from './middleWares.ts';
 
 export const store = configureStore({
   reducer: {
@@ -15,9 +17,10 @@ export const store = configureStore({
     common: commonSlice,
     [goodsApi.reducerPath]: goodsApi.reducer,
     [jobsApi.reducerPath]: jobsApi.reducer,
+    [activitiesApi.reducerPath]: activitiesApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([goodsApi.middleware, jobsApi.middleware]),
+    getDefaultMiddleware().concat([...rtkMiddleWares]),
 });
 
 export type AppDispatch = typeof store.dispatch;

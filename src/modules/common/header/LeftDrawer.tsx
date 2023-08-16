@@ -1,5 +1,4 @@
 import { NavLink } from 'react-router-dom';
-
 import { getLinksAdmin, getLinksLanding } from '../../../routers/appRoutes.tsx';
 import { StyledLeftDrawer } from './styled';
 import Languages from './Languages.tsx';
@@ -24,7 +23,25 @@ const LeftDrawer = ({
         {links.map(({ name, path }, idx) => {
           return (
             <li key={`name-${idx}`}>
-              <NavLink to={path}>{name}</NavLink>
+              {path.includes('#services') ? (
+                <NavLink
+                  onClick={() => {
+                    onClose();
+                    setTimeout(() => {
+                      const element = document.getElementById('services');
+                      if (element)
+                        element.scrollIntoView({ behavior: 'smooth' });
+                    }, 200);
+                  }}
+                  to={path}
+                >
+                  {name}
+                </NavLink>
+              ) : (
+                <NavLink onClick={onClose} to={path}>
+                  {name}
+                </NavLink>
+              )}
             </li>
           );
         })}

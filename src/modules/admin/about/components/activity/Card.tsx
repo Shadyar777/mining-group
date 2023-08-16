@@ -3,6 +3,8 @@ import { useState } from 'react';
 import CustomModal from '../../../../common/CustomModal.tsx';
 import EditingToolsForActivityCard from './EditingToolsForActivityCard.tsx';
 
+import editSrc from '@public/svgs/contract_edit.svg';
+
 export const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   height: 'auto',
   backgroundColor: 'white',
@@ -38,13 +40,14 @@ export const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   },
 }));
 
-const emptyContent = {
-  title: 'Развитие активов:',
-  text: 'Проведение технического аудита Оценка запасов по стандарту JORC. Разработка стратегии дальнейшего развития. Разработка проектной документации по международным стандартам. Управление проектами.',
+type CardProps = {
+  id: string;
+  title: string;
+  text: string;
 };
-
-const Card = () => {
+const Card = ({ title, text, id }: CardProps) => {
   const [openEditModal, setOpenEditModal] = useState(false);
+  const editContent = { title, text, id };
 
   const onClickEdit = () => {
     setOpenEditModal(true);
@@ -56,19 +59,18 @@ const Card = () => {
     <>
       <StyledCard className='card'>
         <div className='card__edit' onClick={onClickEdit}>
-          <img alt='' src='../../../../../../public/svgs/contract_edit.svg' />
+          <img alt='' src={editSrc} />
         </div>
         <Typography variant='h5' className='card__title'>
-          Развитие активов:
+          {title}
         </Typography>
-        <p className='card__text'>
-          Проведение технического аудита Оценка запасов по стандарту JORC.
-          Разработка стратегии дальнейшего развития. Разработка проектной
-          документации по международным стандартам. Управление проектами.
-        </p>
+        <p className='card__text'>{text}</p>
       </StyledCard>
       <CustomModal open={openEditModal} handleClose={onCloseEditModal}>
-        <EditingToolsForActivityCard content={{ ...emptyContent }} />
+        <EditingToolsForActivityCard
+          setOpenEditModal={setOpenEditModal}
+          content={{ ...editContent }}
+        />
       </CustomModal>
     </>
   );

@@ -1,8 +1,13 @@
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { styled, Typography } from '@mui/material';
 import TitleEdit from '../../../common/TitleEdit.tsx';
 import { useEditableContent } from '../../../../../hooks/useEditableContent.ts';
 import PlusFile from '../../../../../svgs/PlusFile.tsx';
 import UploadButton from '../../../../common/buttons/UploadButton.tsx';
+import {
+  useAddActivitiesMutation,
+  useUpdateActivitiesMutation,
+} from '../../../../../rtk-query/activitiesApi.ts';
 
 const StyledEditingToolsForActivityCard = styled('div')(() => ({
   display: 'flex',
@@ -33,19 +38,27 @@ const StyledEditingToolsForActivityCard = styled('div')(() => ({
 
 type EditingToolsForActivityCardProps = {
   content: {
+    id?: string;
     title: string;
     text: string;
   };
+  setOpenEditModal: Dispatch<SetStateAction<boolean>>;
 };
 
 const EditingToolsForActivityCard = ({
   content,
+  setOpenEditModal,
 }: EditingToolsForActivityCardProps) => {
+  const [addActivities, { isSuccess: isSuccessAddActivities }] =
+    useAddActivitiesMutation();
+  const [updateActivities, { isSuccess: isSuccessUpdateActivities }] =
+    useUpdateActivitiesMutation();
   const {
     content: contentHeadings,
     ref: contentHeadingsRef,
     handleBlur: handleContentHeadings,
   } = useEditableContent(content.title);
+
   const {
     content: contentShortDescription,
     ref: contentShortDescriptionRef,
@@ -53,8 +66,26 @@ const EditingToolsForActivityCard = ({
   } = useEditableContent(content.text);
 
   const onUploadDate = () => {
-    console.log(contentHeadings, contentShortDescription);
+    if (content.id) {
+      updateActivities({
+        id: content.id,
+        title: contentHeadings,
+        text: contentShortDescription,
+      });
+    } else {
+      addActivities({
+        title: contentHeadings,
+        text: contentShortDescription,
+      });
+    }
   };
+
+  useEffect(() => {
+    if (isSuccessAddActivities || isSuccessUpdateActivities) {
+      setOpenEditModal(false);
+    }
+  }, [isSuccessAddActivities, isSuccessUpdateActivities, setOpenEditModal]);
+
   return (
     <StyledEditingToolsForActivityCard>
       <TitleEdit>Заголовок:</TitleEdit>
