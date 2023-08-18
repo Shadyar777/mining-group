@@ -57,12 +57,14 @@ const EditingToolsForActivityCard = ({
     content: contentHeadings,
     ref: contentHeadingsRef,
     handleBlur: handleContentHeadings,
+    handlePaste: handlePasteContentHeadings,
   } = useEditableContent(content.title);
 
   const {
     content: contentShortDescription,
     ref: contentShortDescriptionRef,
     handleBlur: handleContentShortDescription,
+    handlePaste: handlePasteShortDescription,
   } = useEditableContent(content.text);
 
   const onUploadDate = () => {
@@ -94,6 +96,7 @@ const EditingToolsForActivityCard = ({
         className='edit__title'
         contentEditable={true}
         onBlur={handleContentHeadings}
+        onPaste={handlePasteContentHeadings}
         ref={contentHeadingsRef}
         dangerouslySetInnerHTML={{ __html: contentHeadings }}
       />
@@ -102,6 +105,7 @@ const EditingToolsForActivityCard = ({
         className='edit__text'
         contentEditable={true}
         onBlur={handleContentShortDescription}
+        onPaste={handlePasteShortDescription}
         ref={contentShortDescriptionRef}
         dangerouslySetInnerHTML={{ __html: contentShortDescription }}
       />
