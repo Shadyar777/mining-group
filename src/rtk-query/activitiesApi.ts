@@ -19,13 +19,20 @@ type BodyActivities = {
 
 export const activitiesApi = createApi({
   reducerPath: 'activitiesApi',
-  tagTypes: ['Jobs'],
+  tagTypes: ['Activities'],
   baseQuery: fetchBaseQuery({
     ...configFetchBaseQuery,
   }),
   endpoints: (build) => ({
     getAllActivities: build.query<ActivitiesResponse, TLanguage>({
       query: () => `activities/getAll`,
+      providesTags: (result) =>
+        result
+          ? result.data.map((activity) => ({
+              type: 'Activities',
+              id: activity.id,
+            }))
+          : [],
     }),
     addActivities: build.mutation<void, BodyActivities>({
       query: (body) => ({
@@ -33,7 +40,7 @@ export const activitiesApi = createApi({
         method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: 'Jobs', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Activities', id: 'LIST' }],
     }),
     updateActivities: build.mutation<
       void,
@@ -46,9 +53,9 @@ export const activitiesApi = createApi({
         method: 'PATCH',
         body,
       }),
-      invalidatesTags: [{ type: 'Jobs', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Activities', id: 'LIST' }],
     }),
-    deleteJob: build.mutation<
+    deleteActivity: build.mutation<
       void,
       {
         id: string | number;
@@ -58,7 +65,7 @@ export const activitiesApi = createApi({
         url: `activities/delete/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: [{ type: 'Jobs', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Activities', id: 'LIST' }],
     }),
   }),
 });
@@ -67,5 +74,5 @@ export const {
   useGetAllActivitiesQuery,
   useAddActivitiesMutation,
   useUpdateActivitiesMutation,
-  useDeleteJobMutation,
+  useDeleteActivityMutation,
 } = activitiesApi;
