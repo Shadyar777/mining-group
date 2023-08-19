@@ -24,7 +24,8 @@
     "format": "npx prettier --write ./src",
     "lint": "eslint . --ext .ts,.tsx",
     "preview": "vite preview",
-    "postinstall": "husky install && npx husky add .husky/pre-commit 'npm run format' && npx husky add .husky/pre-push 'npm run format'"
+    "postinstall": "husky install"
+
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
