@@ -3,7 +3,7 @@ import Card from './Card.tsx';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import NewCard from './NewCard.tsx';
-import { useGetAllActivitiesQuery } from '../../../../../rtk-query/activitiesApi.ts';
+import { useGetAllActivitiesQuery } from '../../../../../rtk-query';
 import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 

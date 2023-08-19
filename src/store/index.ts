@@ -7,7 +7,13 @@ import {
 import adminSlice from '../modules/admin/signIn/slice.ts';
 import commonSlice from '../modules/common/sliceCommon/slice.ts';
 import { goodsApi } from './rtkQuery.ts';
-import { activitiesApi, jobsApi, strategyApi, valuesApi } from '../rtk-query';
+import {
+  activitiesApi,
+  homeApi,
+  jobsApi,
+  strategyApi,
+  valuesApi,
+} from '../rtk-query';
 import { rtkMiddleWares } from './middleWares.ts';
 
 export const store = configureStore({
@@ -19,6 +25,7 @@ export const store = configureStore({
     [activitiesApi.reducerPath]: activitiesApi.reducer,
     [strategyApi.reducerPath]: strategyApi.reducer,
     [valuesApi.reducerPath]: valuesApi.reducer,
+    [homeApi.reducerPath]: homeApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([...rtkMiddleWares]),

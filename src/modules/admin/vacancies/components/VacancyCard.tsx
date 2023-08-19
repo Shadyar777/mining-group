@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { styled } from '@mui/material';
+import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
+import PhoneRoundedIcon from '@mui/icons-material/PhoneRounded';
 import EditFileIcon from '../../../../svgs/EditFileIcon.tsx';
 import UploadButton from '../../../common/buttons/UploadButton.tsx';
 import CustomModal from '../../../common/CustomModal.tsx';
 import EditingToolsForVacancyCard from './EditingToolsForVacancyCard.tsx';
-import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
-import PhoneRoundedIcon from '@mui/icons-material/PhoneRounded';
 
 type StyledVacancyCardProps = {
   bgColor: string;

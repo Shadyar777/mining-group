@@ -7,7 +7,7 @@ import UploadButton from '../../../../common/buttons/UploadButton.tsx';
 import {
   useAddActivitiesMutation,
   useUpdateActivitiesMutation,
-} from '../../../../../rtk-query/activitiesApi.ts';
+} from '../../../../../rtk-query';
 
 const StyledEditingToolsForActivityCard = styled('div')(() => ({
   display: 'flex',
