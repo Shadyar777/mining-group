@@ -5,6 +5,8 @@ import UploadButton from '../../../../common/buttons/UploadButton.tsx';
 import PlusFile from '../../../../../svgs/PlusFile.tsx';
 import EditImage from './EditImage.tsx';
 import { useEditableContent } from '../../../../../hooks/useEditableContent.ts';
+import { useUpdateTitleMutation } from '../../../../../rtk-query';
+import { base64ToFile, createFormData } from '../../../../../utils';
 
 const StyledEditingTools = styled('div')(({ theme: { shape } }) => ({
   color: '#6A6A6A',
@@ -47,21 +49,42 @@ const StyledEditingTools = styled('div')(({ theme: { shape } }) => ({
     alignSelf: 'center',
   },
 }));
-const EditingTools = () => {
+
+type EditingToolsProps = {
+  id: string | number;
+  title: string;
+  text: string;
+  file?: string | null;
+};
+const EditingTools = ({ id, title, text, file }: EditingToolsProps) => {
+  const [updateTitle] = useUpdateTitleMutation();
+
   const {
     content: contentHeadings,
     ref: contentHeadingsRef,
     handleBlur: handleContentHeadings,
-  } = useEditableContent(`Вакансии`);
+  } = useEditableContent(title);
   const {
     content: contentShortDescription,
     ref: contentShortDescriptionRef,
     handleBlur: handleContentShortDescription,
-  } = useEditableContent(`Виды деятельности. Стратегия`);
+  } = useEditableContent(text);
   const [uploadedImage, setUploadedImage] = useState<
     string | ArrayBuffer | null
   >(null);
-  const onUploadDate = () => {
+  const onUploadDate = async () => {
+    if (id) {
+      const data = {
+        id: id,
+        title: contentHeadings,
+        text: contentShortDescription,
+        file: uploadedImage
+          ? await base64ToFile(uploadedImage as string, 'image/png')
+          : null,
+      };
+      const formData = createFormData(data);
+      updateTitle(formData);
+    }
     console.log(contentHeadings, contentShortDescription, uploadedImage);
   };
   return (

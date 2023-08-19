@@ -95,7 +95,6 @@ const TopBanner = () => {
   };
 
   const onDeleteImage = () => {
-    console.log('onDeleteImage');
     if (backgroundImageUrl) {
       URL.revokeObjectURL(backgroundImageUrl);
       setBackgroundImageUrl(null);

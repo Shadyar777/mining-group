@@ -1,7 +1,9 @@
 import { Container, styled, Typography } from '@mui/material';
 import Card from './Card.tsx';
 import Carousel from 'react-multi-carousel';
-import { getArray } from '../../../../../utils/getArray.ts';
+import { useGetTitleQuery } from '../../../../../rtk-query';
+import { useAppSelector } from '../../../../../store/hooks.ts';
+import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 
 const responsive = {
   desktop: {
@@ -53,48 +55,54 @@ export const StyledFindOutMore = styled('div')(
 );
 
 const FindOutMore = () => {
+  const lng = useAppSelector(getAddGlobalLanguages);
+  const { data } = useGetTitleQuery(lng);
+
+  console.log('data', data);
   return (
     <StyledFindOutMore>
-      <Container maxWidth='md'>
-        <div className='find-out-more__content'>
-          <Typography variant='h3' className='content__title'>
-            Узнать больше
-          </Typography>
-          <Carousel
-            additionalTransfrom={0}
-            arrows={false}
-            autoPlaySpeed={3000}
-            centerMode={false}
-            className=''
-            containerClass='container'
-            dotListClass=''
-            draggable
-            focusOnSelect={false}
-            // infinite
-            itemClass=''
-            keyBoardControl
-            minimumTouchDrag={80}
-            partialVisible
-            pauseOnHover
-            renderArrowsWhenDisabled={false}
-            renderButtonGroupOutside={false}
-            renderDotsOutside={false}
-            responsive={responsive}
-            rewind={false}
-            rewindWithAnimation={false}
-            rtl={false}
-            shouldResetAutoplay
-            showDots={false}
-            sliderClass=''
-            slidesToSlide={1}
-            swipeable
-          >
-            {getArray(3).map((_, idx) => (
-              <Card key={idx} />
-            ))}
-          </Carousel>
-        </div>
-      </Container>
+      {data && (
+        <Container maxWidth='md'>
+          <div className='find-out-more__content'>
+            <Typography variant='h3' className='content__title'>
+              Узнать больше
+            </Typography>
+            <Carousel
+              additionalTransfrom={0}
+              arrows={false}
+              autoPlaySpeed={3000}
+              centerMode={false}
+              className=''
+              containerClass='container'
+              dotListClass=''
+              draggable
+              focusOnSelect={false}
+              // infinite
+              itemClass=''
+              keyBoardControl
+              minimumTouchDrag={80}
+              partialVisible
+              pauseOnHover
+              renderArrowsWhenDisabled={false}
+              renderButtonGroupOutside={false}
+              renderDotsOutside={false}
+              responsive={responsive}
+              rewind={false}
+              rewindWithAnimation={false}
+              rtl={false}
+              shouldResetAutoplay
+              showDots={false}
+              sliderClass=''
+              slidesToSlide={1}
+              swipeable
+            >
+              {data.data.map((title) => (
+                <Card {...title} key={title.id} />
+              ))}
+            </Carousel>
+          </div>
+        </Container>
+      )}
     </StyledFindOutMore>
   );
 };

@@ -12,6 +12,7 @@ import {
   homeApi,
   jobsApi,
   strategyApi,
+  titleApi,
   valuesApi,
 } from '../rtk-query';
 import { rtkMiddleWares } from './middleWares.ts';
@@ -26,6 +27,7 @@ export const store = configureStore({
     [strategyApi.reducerPath]: strategyApi.reducer,
     [valuesApi.reducerPath]: valuesApi.reducer,
     [homeApi.reducerPath]: homeApi.reducer,
+    [titleApi.reducerPath]: titleApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([...rtkMiddleWares]),

@@ -4,6 +4,7 @@ import {
   homeApi,
   jobsApi,
   strategyApi,
+  titleApi,
   valuesApi,
 } from '../rtk-query';
 
@@ -14,4 +15,5 @@ export const rtkMiddleWares = [
   strategyApi.middleware,
   valuesApi.middleware,
   homeApi.middleware,
+  titleApi.middleware,
 ];
