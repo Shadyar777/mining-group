@@ -48,7 +48,10 @@ const NewCard = () => {
         </div>
       </StyledNewCard>
       <CustomModal open={openNewCardModal} handleClose={onCloseNewCard}>
-        <EditingToolsForOurValuesCard content={{ ...emptyContent }} />
+        <EditingToolsForOurValuesCard
+          content={{ ...emptyContent }}
+          onCloseEditModal={onCloseNewCard}
+        />
       </CustomModal>
     </>
   );

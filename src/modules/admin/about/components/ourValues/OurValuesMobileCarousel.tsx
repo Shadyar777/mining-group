@@ -1,8 +1,11 @@
 import Carousel from 'react-multi-carousel';
 import Card from './Card.tsx';
 import { styled } from '@mui/material';
-import { getArray } from '../../../../../utils/getArray.ts';
 import NewCard from './NewCard.tsx';
+import { useAppSelector } from '../../../../../store/hooks.ts';
+import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
+import { useGetValuesQuery } from '../../../../../rtk-query';
+import { parseImgBase64 } from '../../../../../utils/parseImgBase64.ts';
 
 export const StyledActivityMobileCarousel = styled(Carousel)(() => ({
   '& .card': {
@@ -33,6 +36,8 @@ const responsive = {
 };
 
 const OurValuesMobileCarousel = () => {
+  const lng = useAppSelector(getAddGlobalLanguages);
+  const { data } = useGetValuesQuery(lng);
   return (
     <StyledActivityMobileCarousel
       additionalTransfrom={0}
@@ -63,9 +68,25 @@ const OurValuesMobileCarousel = () => {
       slidesToSlide={1}
       swipeable
     >
-      {getArray(5).map((_, idx) => (
-        <Card key={idx} />
-      ))}
+      {data?.data &&
+        data.data.map(({ text, id, title, file }) => {
+          const parsedIconBase64 = data?.data
+            ? parseImgBase64({
+                data: file.data || '',
+                type: file.type || '',
+              })
+            : null;
+
+          return (
+            <Card
+              title={title}
+              text={text}
+              icon={parsedIconBase64}
+              id={id}
+              key={id}
+            />
+          );
+        })}
       <NewCard />
     </StyledActivityMobileCarousel>
   );

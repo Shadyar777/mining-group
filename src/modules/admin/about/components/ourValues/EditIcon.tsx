@@ -19,7 +19,7 @@ const EditIcon = ({ initialImage, setUploadedImage }: EditIconProps) => {
     useImageUploader({
       initialImage,
       textMessage: 'Пожалуйста, загрузите только SVG файл!',
-      allowedFormat: 'svg+xml',
+      // allowedFormat: 'png',
     });
 
   useEffect(() => {
@@ -59,7 +59,8 @@ const EditIcon = ({ initialImage, setUploadedImage }: EditIconProps) => {
         <input
           type='file'
           // accept='image/*'
-          accept='image/svg+xml'
+          accept='.png, .jpg, .jpeg'
+          // accept='image/svg+xml'
           onChange={handleImageUpload}
           style={{ display: 'none' }}
           id='upload-input'

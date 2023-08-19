@@ -12,8 +12,7 @@ import {
 } from '../../../../../rtk-query';
 import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
-import { parseImgBase64 } from '../../../../../utils/parseImgBase64.ts';
-import { base64ToFile } from '../../../../../utils/base64ToFile.ts';
+import { parseImgBase64, base64ToFile } from '../../../../../utils';
 
 export const StyledStrategy = styled('div')(({ theme: { breakpoints } }) => ({
   width: '100%',

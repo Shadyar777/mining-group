@@ -7,7 +7,7 @@ type ImageUploaderReturnType = {
   setUploadedImage: Dispatch<SetStateAction<string | ArrayBuffer | null>>;
 };
 
-type AllowedFormat = 'png' | 'jpeg' | 'svg+xml';
+type AllowedFormat = 'png' | 'jpeg' | 'svg+xml' | 'svg';
 
 type UseImageUploaderProps = {
   initialImage: string | null;
