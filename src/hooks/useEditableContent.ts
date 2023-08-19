@@ -27,7 +27,7 @@ const useEditableContent = (initialValue: string) => {
     }
   };
 
-  return { content, ref, handleBlur, handlePaste };
+  return { content, ref, handleBlur, handlePaste, setContent };
 };
 
 export { useEditableContent };

@@ -87,17 +87,3 @@ export const jobsApi = createApi({
 
 export const { useGetAllJobsQuery, useAddJobMutation, useUpdateJobMutation } =
   jobsApi;
-
-// providesTags: (result) => {
-//   console.log('result.data.list', result.data)
-//   console.log('')
-//   return result
-//     ? [
-//         ...result.data.list?.map(({ id }) => ({
-//           type: 'Jobs' as const,
-//           id,
-//         })),
-//         { type: 'Jobs' as const, id: 'LIST' },
-//       ]
-//     : [{ type: 'Jobs' as const, id: 'LIST' }];
-// },
