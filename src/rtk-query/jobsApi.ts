@@ -40,6 +40,19 @@ export const jobsApi = createApi({
   endpoints: (build) => ({
     getAllJobs: build.query<JobsResponse, TLanguage>({
       query: () => `jobs/getAll`,
+      providesTags: (result: JobsResponse | undefined) => {
+        if (result) {
+          return [
+            ...result.data.list.map(({ id }) => ({
+              type: 'Jobs' as const,
+              id,
+            })),
+            { type: 'Jobs', id: 'LIST' },
+          ];
+        } else {
+          return [{ type: 'Jobs', id: 'LIST' }];
+        }
+      },
     }),
     addJob: build.mutation<void, BodyJob>({
       query: (body) => ({
@@ -62,13 +75,8 @@ export const jobsApi = createApi({
       }),
       invalidatesTags: [{ type: 'Jobs', id: 'LIST' }],
     }),
-    deleteJob: build.mutation<
-      void,
-      {
-        id: string | number;
-      }
-    >({
-      query: ({ id }) => ({
+    deleteJob: build.mutation<void, any>({
+      query: (id) => ({
         url: `jobs/delete/${id}`,
         method: 'DELETE',
       }),
