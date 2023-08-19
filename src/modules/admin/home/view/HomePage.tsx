@@ -23,11 +23,6 @@ export const StyledHomePage = styled('div')(({ theme: { breakpoints } }) => ({
 }));
 
 const HomePage = () => {
-  // const { data, error, isLoading } = useGetPostsQuery();
-  // console.log('isLoading', isLoading);
-  // console.log('data', data);
-  // console.log('error', error);
-  // console.log('isLoading', isLoading);
   return (
     <StyledHomePage>
       <TopBanner />

@@ -48,8 +48,6 @@ const AboutCompany = () => {
     console.log(language);
   };
 
-  console.log('data', data);
-
   const onUploadDate = async () => {
     const data = {
       title: contentTitle,

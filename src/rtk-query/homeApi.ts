@@ -46,11 +46,6 @@ export const homeApi = createApi({
       providesTags: (result) =>
         result?.data ? [{ type: 'Home', id: result.data.id }] : [],
     }),
-    getBackground: build.query<BackgroundResponse, TLanguage>({
-      query: () => `main/getBackground`,
-      providesTags: (result) =>
-        result?.data ? [{ type: 'Home', id: result.data.id }] : [],
-    }),
     updateHome: build.mutation<void, BodyHeme>({
       query: (body) => ({
         url: 'main/update',
@@ -59,13 +54,18 @@ export const homeApi = createApi({
       }),
       invalidatesTags: [{ type: 'Home', id: 'LIST' }],
     }),
+    getBackground: build.query<BackgroundResponse, TLanguage>({
+      query: () => `main/getBackground`,
+      providesTags: (result) =>
+        result?.data ? [{ type: 'Home', id: result.data.id }] : [],
+    }),
     updateHomeBackground: build.mutation<void, BodyHeme>({
       query: (body) => ({
         url: 'main/uploadBackground',
-        method: 'PATCH',
+        method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: 'Home', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Home', id: 'IMAGE' }],
     }),
   }),
 });
