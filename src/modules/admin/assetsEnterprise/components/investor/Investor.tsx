@@ -31,7 +31,7 @@ const StyledInvestor = styled('div')(({ theme: { breakpoints } }) => ({
   },
 
   [breakpoints.down('sm')]: {
-    // gap: '60px',
+    backgroundColor: '#FFF8EC',
   },
 }));
 

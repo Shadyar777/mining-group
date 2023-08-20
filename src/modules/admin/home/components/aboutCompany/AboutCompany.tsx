@@ -35,7 +35,7 @@ const AboutCompany = () => {
     handleBlur: handleContentTitle,
     handlePaste: handlePasteHeadings,
     setContent: setContentTitle,
-  } = useEditableContent(`ТОО «INVEST MINING GROUP» 22`);
+  } = useEditableContent(``);
   const {
     content: contentText,
     ref: contentRefText,

@@ -1,4 +1,8 @@
 import { Container, styled, Typography } from '@mui/material';
+import { useAppSelector } from '../../../../../store/hooks.ts';
+import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
+import { useGetGeoProdQuery } from '../../../../../rtk-query';
+import { parseImgBase64 } from '../../../../../utils';
 
 const StyledMapOfKazakhstan = styled('div')(({ theme: { breakpoints } }) => ({
   display: 'flex',
@@ -9,6 +13,7 @@ const StyledMapOfKazakhstan = styled('div')(({ theme: { breakpoints } }) => ({
     display: 'flex',
     flexDirection: 'column',
     placeItems: 'center',
+    marginTop: '50px',
   },
   '& .map__image': {
     width: 'clamp(100%, 50%, 700px)',
@@ -18,7 +23,7 @@ const StyledMapOfKazakhstan = styled('div')(({ theme: { breakpoints } }) => ({
     },
   },
   '& .map__text': {
-    marginTop: '120px',
+    marginTop: '60px',
     display: 'flex',
     flexDirection: 'column',
     '& .text__quote': {
@@ -38,7 +43,9 @@ const StyledMapOfKazakhstan = styled('div')(({ theme: { breakpoints } }) => ({
   [breakpoints.down('sm')]: {
     gap: '60px',
 
-    '& .map__content': {},
+    '& .map__content': {
+      marginTop: '0px',
+    },
     '& .map__image': {
       img: {},
     },
@@ -53,30 +60,35 @@ const StyledMapOfKazakhstan = styled('div')(({ theme: { breakpoints } }) => ({
       },
     },
   },
-  // [breakpoints.down('mobileSm')]: {
-  //   flexDirection: 'unset',
-  //   display: 'unset',
-  //   gap: 'unset',
-  // },
 }));
 
 const MapOfKazakhstan = () => {
+  const lng = useAppSelector(getAddGlobalLanguages);
+  const { data } = useGetGeoProdQuery(lng);
+
+  if (!data) {
+    return;
+  }
+
+  const parsedIconBase64 = data?.data
+    ? parseImgBase64({
+        data: data.data.file.data || '',
+        type: data.data.file.type || '',
+      })
+    : 'null';
   return (
     <StyledMapOfKazakhstan>
       <Container maxWidth='md'>
         <div className='map__content'>
+          <Typography className='text__title' variant='h3'>
+            {data.data.title}
+          </Typography>
           <div className='map__image'>
-            <img
-              alt=''
-              src='../../../../../../public/images/map-of-kazakhstan.png'
-            />
+            <img alt={data.data.title} src={parsedIconBase64} />
           </div>
           <div className='map__text'>
-            <Typography className='text__quote'>
-              «Мы обязаны не только разрабатывать наши кладовые подземных
-              ископаемых, но и беречь их!»
-            </Typography>
-            <Typography className='text__author'>К.Сатпаев</Typography>
+            <Typography className='text__quote'>{data.data.quotes}</Typography>
+            <Typography className='text__author'>{data.data.author}</Typography>
           </div>
         </div>
       </Container>

@@ -1,5 +1,7 @@
 import { styled } from '@mui/material';
 
+import imgSrcCompany from '@public/images/home-page-about-company-bg.jpg';
+
 export const StyledAboutCompany = styled('div')(
   ({ theme: { breakpoints } }) => ({
     width: '100%',
@@ -10,7 +12,7 @@ export const StyledAboutCompany = styled('div')(
       flexDirection: 'column',
       gap: '1rem 0',
       padding: '32px 40px',
-      backgroundImage: `url('../../../../../../public/images/home-page-about-company-bg.jpg')`,
+      backgroundImage: `url(${imgSrcCompany})`,
 
       borderRadius: '20px',
       border: '1px solid #F28A2E',
@@ -43,7 +45,7 @@ export const StyledAboutCompany = styled('div')(
       },
     },
     [breakpoints.down('mobileSm')]: {
-      backgroundImage: `url('../../../../../../public/images/home-page-about-company-bg.jpg')`,
+      backgroundImage: `url(${imgSrcCompany})`,
       padding: '32px 0',
       '& .about-company__content': {
         background: 'unset',
