@@ -7,11 +7,17 @@ type Data = {
   title: string;
   text: string;
   language: string;
-  file: null;
+  file: {
+    id: string;
+    name: string;
+    type: string;
+    data: string;
+    fieldsId: string;
+  };
   type: string;
 };
 
-type TitleResponse = {
+export type TitleResponse = {
   message: string;
   data: Data[];
 };

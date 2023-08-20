@@ -1,12 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { styled, Typography } from '@mui/material';
 import TitleEdit from '../../../common/TitleEdit.tsx';
 import UploadButton from '../../../../common/buttons/UploadButton.tsx';
 import PlusFile from '../../../../../svgs/PlusFile.tsx';
 import EditImage from './EditImage.tsx';
 import { useEditableContent } from '../../../../../hooks/useEditableContent.ts';
-import { useUpdateTitleMutation } from '../../../../../rtk-query';
-import { base64ToFile, createFormData } from '../../../../../utils';
+import {
+  TitleResponse,
+  useUpdateTitleMutation,
+} from '../../../../../rtk-query';
+import {
+  base64ToFile,
+  createFormData,
+  parseImgBase64,
+} from '../../../../../utils';
 
 const StyledEditingTools = styled('div')(({ theme: { shape } }) => ({
   color: '#6A6A6A',
@@ -54,10 +61,24 @@ type EditingToolsProps = {
   id: string | number;
   title: string;
   text: string;
-  file?: string | null;
+  file?: TitleResponse['data']['0']['file'] | null;
+  onCloseEditModal: () => void;
 };
-const EditingTools = ({ id, title, text, file }: EditingToolsProps) => {
-  const [updateTitle] = useUpdateTitleMutation();
+const EditingTools = ({
+  id,
+  title,
+  text,
+  file,
+  onCloseEditModal,
+}: EditingToolsProps) => {
+  const [updateTitle, { isSuccess: isSuccessUpdateTitle }] =
+    useUpdateTitleMutation();
+  const parsedIconBase64 = file
+    ? parseImgBase64({
+        data: file.data || '',
+        type: file.type || '',
+      })
+    : null;
 
   const {
     content: contentHeadings,
@@ -85,8 +106,14 @@ const EditingTools = ({ id, title, text, file }: EditingToolsProps) => {
       const formData = createFormData(data);
       updateTitle(formData);
     }
-    console.log(contentHeadings, contentShortDescription, uploadedImage);
   };
+
+  useEffect(() => {
+    if (isSuccessUpdateTitle) {
+      onCloseEditModal();
+    }
+  }, [isSuccessUpdateTitle, onCloseEditModal]);
+
   return (
     <StyledEditingTools>
       <TitleEdit>Заголовок:</TitleEdit>
@@ -110,7 +137,7 @@ const EditingTools = ({ id, title, text, file }: EditingToolsProps) => {
       <TitleEdit>Фоновое изображение:</TitleEdit>
       <EditImage
         setUploadedImage={setUploadedImage}
-        urlImag='../../../../../../public/images/home-top-banner.jpg'
+        urlImag={parsedIconBase64}
       />
       <UploadButton
         text='Сохранить'

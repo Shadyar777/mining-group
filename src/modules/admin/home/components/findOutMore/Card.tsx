@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { styled, Typography } from '@mui/material';
 import CustomModal from '../../../../common/CustomModal.tsx';
-import { useState } from 'react';
-import EditingTools from '../aboutCompany/EditingTools.tsx';
+import EditingTools from './EditingTools.tsx';
 
 import srcEditIcon from '@public/images/contract_edit.png';
+import { TitleResponse } from '../../../../../rtk-query';
+import { parseImgBase64 } from '../../../../../utils';
 
 export const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   // width: '100%',
@@ -67,13 +69,21 @@ type CardProps = {
   id: string | number;
   title: string;
   text: string;
-  file?: string | null;
+  file?: TitleResponse['data']['0']['file'] | null;
 };
 const Card = ({ id, text, title, file }: CardProps) => {
   const [openEditModal, setOpenEditModal] = useState(false);
+
+  const parsedIconBase64 = file
+    ? parseImgBase64({
+        data: file.data || '',
+        type: file.type || '',
+      })
+    : '';
   const onClickEdit = () => {
     setOpenEditModal(true);
   };
+
   const onCloseEditModal = () => {
     setOpenEditModal(false);
   };
@@ -81,11 +91,7 @@ const Card = ({ id, text, title, file }: CardProps) => {
     <>
       <StyledCard>
         <div className='card__img'>
-          <img
-            alt=''
-            src={file || undefined}
-            // src='../../../../../../public/mock-images/about-company.png'
-          />
+          <img alt='' src={parsedIconBase64} />
           <div className='card__edit' onClick={onClickEdit}>
             <img alt='edit' src={srcEditIcon} />
           </div>
@@ -98,7 +104,13 @@ const Card = ({ id, text, title, file }: CardProps) => {
         </Typography>
       </StyledCard>
       <CustomModal open={openEditModal} handleClose={onCloseEditModal}>
-        <EditingTools id={id} text={text} title={title} file={file} />
+        <EditingTools
+          id={id}
+          text={text}
+          title={title}
+          file={file}
+          onCloseEditModal={onCloseEditModal}
+        />
       </CustomModal>
     </>
   );

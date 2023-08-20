@@ -58,7 +58,6 @@ const FindOutMore = () => {
   const lng = useAppSelector(getAddGlobalLanguages);
   const { data } = useGetTitleQuery(lng);
 
-  console.log('data', data);
   return (
     <StyledFindOutMore>
       {data && (

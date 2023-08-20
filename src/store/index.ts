@@ -9,6 +9,7 @@ import commonSlice from '../modules/common/sliceCommon/slice.ts';
 import { goodsApi } from './rtkQuery.ts';
 import {
   activitiesApi,
+  geoProdApi,
   homeApi,
   jobsApi,
   strategyApi,
@@ -28,6 +29,7 @@ export const store = configureStore({
     [valuesApi.reducerPath]: valuesApi.reducer,
     [homeApi.reducerPath]: homeApi.reducer,
     [titleApi.reducerPath]: titleApi.reducer,
+    [geoProdApi.reducerPath]: geoProdApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([...rtkMiddleWares]),
