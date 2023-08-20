@@ -1,14 +1,11 @@
 import { styled, Typography } from '@mui/material';
+import { TitleResponse } from '../../../../../rtk-query';
+import { parseImgBase64 } from '../../../../../utils';
 
 export const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
-  // width: '100%',
   padding: '20px 0',
-  // width: 'clamp(150px, 50%, 300px)',
-
   display: 'flex',
   flexDirection: 'column',
-  // gap: '20px 0',
-
   '& .card__img': {
     width: 'clamp(150px, 100%, 300px)',
     height: '300px',
@@ -54,20 +51,30 @@ export const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   },
 }));
 
-const Card = () => {
+type CardProps = {
+  id: string | number;
+  title: string;
+  text: string;
+  file?: TitleResponse['data']['0']['file'] | null;
+};
+
+const Card = ({ title, text, file }: CardProps) => {
+  const parsedIconBase64 = file
+    ? parseImgBase64({
+        data: file.data || '',
+        type: file.type || '',
+      })
+    : '';
   return (
     <StyledCard>
       <div className='card__img'>
-        <img
-          alt=''
-          src='../../../../../../public/mock-images/about-company.png'
-        />
+        <img alt='' src={parsedIconBase64} />
       </div>
       <Typography variant='h4' className='card__title'>
-        О компании
+        {title}
       </Typography>
       <Typography variant='body1' className='card__text'>
-        Виды деятельности. Стратегия
+        {text}
       </Typography>
     </StyledCard>
   );

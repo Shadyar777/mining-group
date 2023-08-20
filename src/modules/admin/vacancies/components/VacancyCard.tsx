@@ -129,8 +129,6 @@ const VacancyCard = ({
     setOpenEdit(false);
   };
 
-  const phoneHref = `tel:${phone}`;
-
   return (
     <>
       <StyledVacancyCard bgColor={backgroundColor}>
@@ -152,7 +150,7 @@ const VacancyCard = ({
             )}
             {phone && (
               <div className='contacts__tel '>
-                <PhoneRoundedIcon /> <a href={phoneHref}>{phone}</a>
+                <PhoneRoundedIcon /> <a href={`tel:${phone}`}>{phone}</a>
               </div>
             )}
           </div>

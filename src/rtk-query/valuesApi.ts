@@ -18,7 +18,7 @@ export interface File {
   fieldsId: any;
 }
 
-type ValuesResponse = {
+export type ValuesResponse = {
   message: string;
   data: Data[];
 };

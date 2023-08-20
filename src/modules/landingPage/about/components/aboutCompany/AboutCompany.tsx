@@ -1,4 +1,8 @@
 import { Container, styled, Typography } from '@mui/material';
+import { useAppSelector } from '../../../../../store/hooks.ts';
+import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
+import { useGetAllHomeQuery } from '../../../../../rtk-query';
+import { parseImgBase64 } from '../../../../../utils';
 
 export const StyledAboutCompany = styled('div')(
   ({ theme: { breakpoints } }) => ({
@@ -64,38 +68,28 @@ export const StyledAboutCompany = styled('div')(
 );
 
 const AboutCompany = () => {
+  const lng = useAppSelector(getAddGlobalLanguages);
+  const { data } = useGetAllHomeQuery(lng);
+
+  if (!data) {
+    return;
+  }
+  const parsedBase64Img = data?.data
+    ? parseImgBase64({
+        data: data.data.file.data || '',
+        type: data.data.file.type || '',
+      })
+    : '';
   return (
     <StyledAboutCompany>
       <Container maxWidth='md'>
         <div className='about-company__content'>
           <Typography variant='h3' className='content__title'>
-            ТОО «INVEST MINING GROUP» 22
+            {data?.data?.title || ''}
           </Typography>
-          <div className='content__text'>
-            Казахстанская компания, основанная в 2020 году. На данный момент
-            компания уже имеет несколько действующих рудников, а также ряд
-            месторождений на стадии геологоразведки.
-            <br />
-            <br />
-            Мы продолжаем вкладывать в каждый из наших проектов на территории
-            Республики Казахстан. К 2024 году все рудники INVEST MINING GROUPE
-            будут работать на полную мощность
-            <br />
-            <br />
-            Казахстанская компания, основанная в 2020 году. На данный момент
-            компания уже имеет несколько действующих рудников, а также ряд
-            месторождений на стадии геологоразведки.
-            <br />
-            <br />
-            Мы продолжаем вкладывать в каждый из наших проектов на территории
-            Республики Казахстан. К 2024 году все рудники INVEST MINING GROUPE
-            будут работать на полную мощность
-          </div>
+          <div className='content__text'>{data?.data?.text || ''}</div>
           <div className='content__img'>
-            <img
-              alt=''
-              src='../../../../../../public/mock-images/about-company.png'
-            />
+            <img alt='' src={parsedBase64Img} />
           </div>
         </div>
       </Container>

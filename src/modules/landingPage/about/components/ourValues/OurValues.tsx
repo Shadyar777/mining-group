@@ -7,6 +7,9 @@ import {
 } from '@mui/material';
 import OurValuesMobileCarousel from './OurValuesMobileCarousel.tsx';
 import OurValuesDesktop from './OurValuesDesktop.tsx';
+import { useAppSelector } from '../../../../../store/hooks.ts';
+import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
+import { useGetValuesQuery } from '../../../../../rtk-query';
 // import {lazy} from "react";
 // const LazyActivityMobileCarousel = lazy(() => import('./OurValuesMobileCarousel.tsx'));
 
@@ -33,6 +36,12 @@ const OurValues = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+  const lng = useAppSelector(getAddGlobalLanguages);
+  const { data } = useGetValuesQuery(lng);
+
+  if (!data) {
+    return;
+  }
   return (
     <StyledOurValues>
       <Container maxWidth='md'>
@@ -40,7 +49,11 @@ const OurValues = () => {
           <Typography variant='h3' className='ourValues__title'>
             Наши ценности
           </Typography>
-          {isMobile ? <OurValuesMobileCarousel /> : <OurValuesDesktop />}
+          {isMobile ? (
+            <OurValuesMobileCarousel data={data.data} />
+          ) : (
+            <OurValuesDesktop data={data.data} />
+          )}
         </div>
       </Container>
     </StyledOurValues>

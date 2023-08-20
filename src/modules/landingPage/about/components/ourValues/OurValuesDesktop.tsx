@@ -1,6 +1,7 @@
 import { styled } from '@mui/material';
 import Card from './Card.tsx';
-import { getArray } from '../../../../../utils/getArray.ts';
+import { ValuesResponse } from '../../../../../rtk-query';
+import { parseImgBase64 } from '../../../../../utils';
 
 export const StyledActivityDesktop = styled('div')(() => ({
   display: 'flex',
@@ -13,12 +14,27 @@ export const StyledActivityDesktop = styled('div')(() => ({
     padding: '20px 18px',
   },
 }));
-const OurValuesDesktop = () => {
+const OurValuesDesktop = ({ data }: { data: ValuesResponse['data'] }) => {
   return (
     <StyledActivityDesktop>
-      {getArray(5).map((_, idx) => (
-        <Card key={idx} />
-      ))}
+      {data.map(({ text, id, title, file }) => {
+        const parsedIconBase64 = data
+          ? parseImgBase64({
+              data: file.data || '',
+              type: file.type || '',
+            })
+          : null;
+
+        return (
+          <Card
+            title={title}
+            text={text}
+            icon={parsedIconBase64}
+            id={id}
+            key={id}
+          />
+        );
+      })}
     </StyledActivityDesktop>
   );
 };

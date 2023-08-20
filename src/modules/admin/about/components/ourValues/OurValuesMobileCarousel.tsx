@@ -5,7 +5,7 @@ import NewCard from './NewCard.tsx';
 import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 import { useGetValuesQuery } from '../../../../../rtk-query';
-import { parseImgBase64 } from '../../../../../utils/parseImgBase64.ts';
+import { parseImgBase64 } from '../../../../../utils';
 
 export const StyledActivityMobileCarousel = styled(Carousel)(() => ({
   '& .card': {

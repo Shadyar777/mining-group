@@ -28,18 +28,19 @@ export const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   },
 }));
 
-const Card = () => {
+type CardProps = {
+  id: string;
+  title: string;
+  text: string;
+};
+const Card = ({ title, text }: CardProps) => {
   return (
     <>
       <StyledCard className='card'>
         <Typography variant='h5' className='card__title'>
-          Развитие активов:
+          {title}
         </Typography>
-        <p className='card__text'>
-          Проведение технического аудита Оценка запасов по стандарту JORC.
-          Разработка стратегии дальнейшего развития. Разработка проектной
-          документации по международным стандартам. Управление проектами.
-        </p>
+        <p className='card__text'>{text}</p>
       </StyledCard>
     </>
   );

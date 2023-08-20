@@ -35,9 +35,10 @@ const StyledVacancies = styled('div')(({ theme: { breakpoints } }) => ({
 
 // const emptyArray = getArray(4);
 const Vacancies = () => {
-  const lng = useAppSelector(getAddGlobalLanguages);
   const { breakpoints } = useTheme();
+  const isMobile = useMediaQuery(breakpoints.down('mobileSm'));
 
+  const lng = useAppSelector(getAddGlobalLanguages);
   const { data } = useGetAllJobsQuery(lng);
 
   const jobs =
@@ -54,10 +55,7 @@ const Vacancies = () => {
 
   return (
     <StyledVacancies>
-      <Container
-        maxWidth='md'
-        disableGutters={useMediaQuery(breakpoints.down('mobileSm'))}
-      >
+      <Container maxWidth='md' disableGutters={isMobile}>
         <div className='vacancies__container'>
           {jobs &&
             jobs.map((job, idx) => (

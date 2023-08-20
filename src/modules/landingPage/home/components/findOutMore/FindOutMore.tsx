@@ -1,7 +1,9 @@
 import { Container, styled, Typography } from '@mui/material';
 import Card from './Card.tsx';
 import Carousel from 'react-multi-carousel';
-import { getArray } from '../../../../../utils/getArray.ts';
+import { useAppSelector } from '../../../../../store/hooks.ts';
+import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
+import { useGetTitleQuery } from '../../../../../rtk-query';
 
 const responsive = {
   desktop: {
@@ -53,6 +55,12 @@ export const StyledFindOutMore = styled('div')(
 );
 
 const FindOutMore = () => {
+  const lng = useAppSelector(getAddGlobalLanguages);
+  const { data } = useGetTitleQuery(lng);
+
+  if (!data) {
+    return;
+  }
   return (
     <StyledFindOutMore>
       <Container maxWidth='md'>
@@ -70,7 +78,6 @@ const FindOutMore = () => {
             dotListClass=''
             draggable
             focusOnSelect={false}
-            // infinite
             itemClass=''
             keyBoardControl
             minimumTouchDrag={80}
@@ -89,8 +96,8 @@ const FindOutMore = () => {
             slidesToSlide={1}
             swipeable
           >
-            {getArray(3).map((_, idx) => (
-              <Card key={idx} />
+            {data.data.map((title) => (
+              <Card {...title} key={title.id} />
             ))}
           </Carousel>
         </div>
