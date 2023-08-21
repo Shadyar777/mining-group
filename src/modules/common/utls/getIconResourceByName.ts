@@ -11,11 +11,11 @@ import Gas from '../../../svgs/ResourscesIcon/Gas.tsx';
 export const getIconResourceByName = (name: string) => {
   const resources = {
     'золото рассыпное': Gold,
-    'серебро': Silver,
-    'медь': Copper,
+    серебро: Silver,
+    медь: Copper,
     'железная руда': IronOre,
-    'нефть': Oil,
-    'уголь': Coal,
+    нефть: Oil,
+    уголь: Coal,
     'руды цветных металлов': OresOfNonFerrousMetals,
     'воды подземные питьевые': UndergroundDrinkingWater,
     'природный газ': Gas,
