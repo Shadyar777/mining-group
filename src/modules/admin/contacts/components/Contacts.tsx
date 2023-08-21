@@ -149,7 +149,7 @@ const Contacts = () => {
       setContentMail(data.data.mail || '');
     }
   }, [data, setContentLocation, setContentMail, setContentTel]);
-  console.log('data?.data.location', data?.data.location);
+
   return (
     <StyledContacts>
       <Container maxWidth='md'>

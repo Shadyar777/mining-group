@@ -20,6 +20,7 @@ export const configFetchBaseQuery: configFetchBaseQuery = {
     // headers.set('Content-Type', 'application/json');
     headers.set('Authorization', getBasicAuthHeader(login, password));
     headers.set('Accept-Language', globalLanguages.toUpperCase());
+    headers.set('password', '123456'); // TODO - Удалить когда бек сделает ручку
     return headers;
   },
 };

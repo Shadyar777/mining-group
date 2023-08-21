@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Box, styled } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -14,10 +14,8 @@ import { Resource, ResourceList } from './resource/ResourceList.tsx';
 import { getListIconResources } from '../../../../common/utls/getListIconResources.tsx';
 import EditImage from '../../../common/EditImage.tsx';
 import EditPDF from './EditPDF.tsx';
-import { useGetFieldsByIdQuery } from '../../../../../rtk-query';
-import LoadingSpinner from '../../../../common/loadingSpinner';
-import { parseImgBase64 } from '../../../../../utils';
-import { convertBase64ToPdfDataUrl } from '../../../../../utils/convertBase64ToPdfDataUrl.ts';
+import { useAddFieldsMutation } from '../../../../../rtk-query';
+import { CreateBodyFields } from '../../../../../rtk-query/types/fields-types.ts';
 
 const schema = yup.object().shape({
   title: yup.string().required('Заголовок обязателен'),
@@ -44,8 +42,6 @@ type FormData = {
   mapLink: string;
 };
 
-// const imagesToPass = [{ src: imgSrcAboutCompany }, { src: imgSrcGold }]; // TODO: удалить когда будет бэк
-
 const initialResources = getListIconResources().map((resource) => ({
   ...resource,
   isChecked: false,
@@ -67,14 +63,10 @@ const StyledForm = styled('form')(({ theme: { shape } }) => ({
   },
 }));
 
-type EditResourceCardFormProps = {
-  id: number;
-};
-
-const EditResourceCardForm = ({ id }: EditResourceCardFormProps) => {
-  const { data, isLoading } = useGetFieldsByIdQuery({ id });
+const CreateResourceCardForm = () => {
+  const [addFields] = useAddFieldsMutation();
   const [moreImages, setImages] = useState<TImageGallery[]>([]);
-  const { control, handleSubmit, setValue } = useForm<FormData>({
+  const { control, handleSubmit } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
   const [uploadedImage, setUploadedImage] = useState<
@@ -85,56 +77,25 @@ const EditResourceCardForm = ({ id }: EditResourceCardFormProps) => {
     useState<Resource[]>(initialResources);
 
   const onSubmit = (data: FormData) => {
+    const body: CreateBodyFields = {
+      backgroundImageFiles: uploadedImage,
+      images: moreImages,
+      location: data.mapLink,
+      mainFile: urlPdf,
+      resources: resourceData.map((resource) => resource.name).join(),
+    };
+    addFields(body);
+
     // console.log('moreImages', moreImages);
-    // console.log('resourceData', resourceData);
+    // console.log(
+    //   'resourceData',
+    //   resourceData.map((resource) => resource.name),
+    // );
     // console.log('uploadedImage', uploadedImage);
     // console.log('urlPdf', urlPdf);
-    console.log(data);
+    // console.log(data);
   };
 
-  console.log('useGetFieldsByIdQuery', data);
-
-  const srcImagesBase64 =
-    data?.data?.images.map((image) => ({
-      src: parseImgBase64({
-        data: image.data || '',
-        type: image.type || '',
-      }),
-    })) ?? [];
-
-  useEffect(() => {
-    if (data) {
-      const parsedBgImgFiles = data.data.backgroundImageFiles
-        ? parseImgBase64({
-            data: data.data.backgroundImageFiles.data || '',
-            type: data.data.backgroundImageFiles.type || '',
-          })
-        : null;
-
-      setValue('title', 'data.data.title');
-      setValue('objectId', data.data.id as unknown as string);
-      setValue('projectPassword', data.data.password);
-      setValue('price', data.data.price);
-      setValue('mapLink', data.data.location);
-      // reset({
-      //   title: data.data.title,
-      //   objectId: data.data.id as unknown as string,
-      //   price: data.data.price,
-      //   projectPassword: data.data.password,
-      //   mapLink: data.data.location,
-      // });
-      setUploadedImage(() => parsedBgImgFiles);
-      if (data.data?.mainFile) {
-        setUploadedPdf(() =>
-          convertBase64ToPdfDataUrl(data.data.mainFile.data),
-        );
-      }
-    }
-  }, [data, data?.data, setValue]);
-
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <TitleEdit>Заголовок:</TitleEdit>
@@ -211,7 +172,7 @@ const EditResourceCardForm = ({ id }: EditResourceCardFormProps) => {
 
       <TitleEdit>Загрузить дополнительные изображения:</TitleEdit>
       <Box m={2} margin='14px 0 14px 0'>
-        <ImageGallery onChange={setImages} initialImages={srcImagesBase64} />
+        <ImageGallery onChange={setImages} initialImages={[]} />
       </Box>
 
       <TitleEdit>Ссылка локации на карте:</TitleEdit>
@@ -233,4 +194,4 @@ const EditResourceCardForm = ({ id }: EditResourceCardFormProps) => {
   );
 };
 
-export default EditResourceCardForm;
+export default CreateResourceCardForm;

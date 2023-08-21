@@ -53,7 +53,7 @@ const StyledEditImage = styled('div')({
 });
 
 type EditImageProps = {
-  urlImag: string | null;
+  urlImag: string | ArrayBuffer | null;
   setUploadedImage: Dispatch<SetStateAction<string | ArrayBuffer | null>>;
 };
 
@@ -64,7 +64,7 @@ const EditImage = ({ urlImag, setUploadedImage }: EditImageProps) => {
     handleImageRemove,
     setUploadedImage: setImageWithBase64,
   } = useImageUploader({
-    initialImage: urlImag,
+    initialImage: urlImag as string,
     textMessage: 'Неправильный формат изображения!',
   });
 

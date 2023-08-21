@@ -1,8 +1,17 @@
 import { styled } from '@mui/material';
-import React, { useState } from 'react';
+import React, {
+  ChangeEvent,
+  Dispatch,
+  memo,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 import TFilterPopoverProps from './FilterPopover.tsx';
 import SearchInput from './SearchInput.tsx';
 import iconFilter from '@public/svgs/icon-filter.svg';
+import { QueryFieldsParams } from '../../../../../rtk-query/types/fields-types.ts';
+import { useDebounce } from '../../../../../hooks/useDebounce.ts';
 
 const StyledMenuFilter = styled('div')(({ theme: { breakpoints } }) => ({
   display: 'flex',
@@ -31,14 +40,17 @@ const StyledMenuFilter = styled('div')(({ theme: { breakpoints } }) => ({
     background: 'rgba(255, 255, 255, 0.90)',
   },
 
-  [breakpoints.down('sm')]: {
-    // gap: '60px',
-  },
+  [breakpoints.down('sm')]: {},
 }));
 
-const MenuFilters = () => {
+type MenuFiltersProps = {
+  setFieldsParams: Dispatch<SetStateAction<QueryFieldsParams>>;
+};
+
+const MenuFilters = memo(({ setFieldsParams }: MenuFiltersProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [searchValue, setSearchValue] = useState('');
+  const debouncedSearchValue = useDebounce(searchValue, 1000);
   const onOpenPopoverFilters = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -46,16 +58,22 @@ const MenuFilters = () => {
   const onClosePopoverFilter = () => {
     // setAnchorEl(() => null)
     // FIXME: Тут не понятный баг. Если использовать setState, почему-то значение не обнуляется
-    //  Пришлось обойти баг при помощью макрозадачей. Может быть и за batching-га реакта
+    //  Пришлось обойти баг при помощью макрозадачей. Может быть из за batching-га react-та
     setTimeout(() => {
       setAnchorEl(() => null);
     }, 20);
   };
 
-  const handleSearchChange = (event) => {
+  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
-    // Дополнительные действия поиска, если нужно
   };
+
+  useEffect(() => {
+    setFieldsParams((prevState) => ({
+      ...prevState,
+      title: debouncedSearchValue,
+    }));
+  }, [debouncedSearchValue, setFieldsParams]);
 
   return (
     <StyledMenuFilter className='investor__menu-filters'>
@@ -65,6 +83,7 @@ const MenuFilters = () => {
         </div>
         <div className='menu-filters__label'>Фильтры</div>
         <TFilterPopoverProps
+          setFieldsParams={setFieldsParams}
           anchorEl={anchorEl}
           handlePopoverClose={onClosePopoverFilter}
         />
@@ -74,6 +93,6 @@ const MenuFilters = () => {
       </div>
     </StyledMenuFilter>
   );
-};
+});
 
 export default MenuFilters;

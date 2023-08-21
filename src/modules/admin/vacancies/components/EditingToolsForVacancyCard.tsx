@@ -79,7 +79,6 @@ const EditingToolsForVacancyCard = ({
   const [updateJob, { isSuccess: isSuccessUpdate }] = useUpdateJobMutation();
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
     const { backgroundColor, mail, tasks, phone, title } = data;
     // Добавление
     if (!jobContent?.jobId) {

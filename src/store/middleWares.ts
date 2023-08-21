@@ -1,6 +1,7 @@
 import { goodsApi } from './rtkQuery.ts';
 import {
   activitiesApi,
+  fieldsApi,
   contactsApi,
   geoProdApi,
   homeApi,
@@ -20,4 +21,5 @@ export const rtkMiddleWares = [
   titleApi.middleware,
   geoProdApi.middleware,
   contactsApi.middleware,
+  fieldsApi.middleware,
 ];

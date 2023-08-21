@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import { styled } from '@mui/material';
 import CustomModal from '../../../../common/CustomModal.tsx';
-import EditResourceCardForm from './EditResourceCardForm.tsx';
+import CreateResourceCardForm from './CreateResourceCardForm.tsx';
 
 const StyledNewCard = styled('div')(() => ({
   height: 'auto',
@@ -29,7 +29,7 @@ const StyledNewCard = styled('div')(() => ({
   },
 }));
 
-const NewCard = () => {
+const NewCard = memo(() => {
   const [openNewCardModal, setOpenNewCardModal] = useState<boolean>(false);
 
   const onClickNewCard = () => {
@@ -47,10 +47,10 @@ const NewCard = () => {
         </div>
       </StyledNewCard>
       <CustomModal open={openNewCardModal} handleClose={onCloseNewCard}>
-        <EditResourceCardForm />
+        <CreateResourceCardForm />
       </CustomModal>
     </>
   );
-};
+});
 
 export default NewCard;

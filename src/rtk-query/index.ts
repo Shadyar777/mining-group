@@ -6,3 +6,4 @@ export * from './homeApi.ts';
 export * from './titleApi.ts';
 export * from './geoProdApi.ts';
 export * from './contactsApi.ts';
+export * from './fieldsApi.ts';

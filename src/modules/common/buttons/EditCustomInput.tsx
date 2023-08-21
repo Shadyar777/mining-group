@@ -51,6 +51,12 @@ const EditCustomInput: FC<CustomInputProps> = forwardRef(
         onChange(event.target.value);
       }
     };
+    // const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    //   setValue(event.target.value);
+    //   if (onChange) {
+    //     onChange(event.target.value);
+    //   }
+    // };
 
     return (
       <StyledEditCustomInput
