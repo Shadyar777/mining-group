@@ -1,6 +1,6 @@
 import { Container, styled, Typography } from '@mui/material';
 import Card from './Card.tsx';
-import { getArray } from '../../../../../utils/getArray.ts';
+import { getArray } from '../../../../../utils';
 import MenuFilters from './MenuFilters.tsx';
 
 const StyledInvestor = styled('div')(({ theme: { breakpoints } }) => ({

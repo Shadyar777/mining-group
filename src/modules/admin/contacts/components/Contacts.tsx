@@ -109,7 +109,6 @@ const Contacts = () => {
   const [updateContacts] = useUpdateContactsMutation();
   const [inputValue, setInputValue] = useState('');
   const [isValid, setIsValid] = useState(true);
-  // const [locationGoogle, setLocationGoogle] = useState('');
 
   const {
     content: contentLocation,
@@ -168,7 +167,6 @@ const Contacts = () => {
                 setIsValid={setIsValid}
               />
               <GoogleMaps srcGoogle={inputValue || data?.data.location || ''} />
-              {/*<GoogleMaps srcGoogle={data?.data.location || ''} />*/}
             </div>
             <div className='content__text'>
               <TitleEdit>Адрес:</TitleEdit>
