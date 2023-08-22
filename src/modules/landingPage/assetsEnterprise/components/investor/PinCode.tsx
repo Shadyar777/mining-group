@@ -20,7 +20,7 @@ type PinCodeProps = {
   length?: number;
   setPinCode: (value: string) => void;
 };
-const PinCode = ({ length = 4, setPinCode }: PinCodeProps) => {
+const PinCode = ({ length = 6, setPinCode }: PinCodeProps) => {
   return (
     <PinInput
       length={length}

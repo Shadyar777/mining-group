@@ -24,7 +24,7 @@ export default function CustomModal({ id, open, onClose }: CustomModalProps) {
   const [getFieldsById, { isSuccess, isError }] =
     useLazyGetFieldsPrivateByIdQuery();
   const sendPinCode = () => {
-    if (Number(pinCode.length) === 4) {
+    if (Number(pinCode.length) === 6) {
       dispatch(
         addPassword({
           password: pinCode,
@@ -88,7 +88,7 @@ export default function CustomModal({ id, open, onClose }: CustomModalProps) {
         </div>
         <Button
           style={{ color: 'white' }}
-          disabled={Number(pinCode.length) !== 4}
+          disabled={Number(pinCode.length) !== 6}
           onClick={sendPinCode}
         >
           Отправить
