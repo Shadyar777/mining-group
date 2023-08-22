@@ -11,6 +11,7 @@ import {
   activitiesApi,
   contactsApi,
   fieldsApi,
+  fieldsPrivateByIdApi,
   geoProdApi,
   homeApi,
   jobsApi,
@@ -34,6 +35,7 @@ export const store = configureStore({
     [geoProdApi.reducerPath]: geoProdApi.reducer,
     [contactsApi.reducerPath]: contactsApi.reducer,
     [fieldsApi.reducerPath]: fieldsApi.reducer,
+    [fieldsPrivateByIdApi.reducerPath]: fieldsPrivateByIdApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([...rtkMiddleWares]),

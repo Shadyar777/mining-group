@@ -3,18 +3,21 @@ import {
   AccordionDetails,
   AccordionSummary,
   Checkbox,
-  FormControlLabel,
   Popover,
   styled,
   Typography,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
+import { QueryFieldsParams } from '../../../../../rtk-query/types/fields-types.ts';
+import { getListIconResources } from '../../../../common/utls/getListIconResources.tsx';
+import { getSelectedResources } from '../../../../common/utls/getSelectedResources.ts';
 
 type TFilterPopoverProps = {
   anchorEl: HTMLElement | null;
   handlePopoverClose: () => void;
+  setFieldsParams: Dispatch<SetStateAction<QueryFieldsParams>>;
 };
 
 const StyledPopover = styled(Popover)(({ theme: { breakpoints } }) => ({
@@ -58,9 +61,12 @@ const StyledPopover = styled(Popover)(({ theme: { breakpoints } }) => ({
   [breakpoints.down('sm')]: {},
 }));
 
+const resourcesList = getListIconResources();
+
 const FilterPopover = ({
   anchorEl,
   handlePopoverClose,
+  setFieldsParams,
 }: TFilterPopoverProps) => {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
@@ -69,9 +75,14 @@ const FilterPopover = ({
 
   const watchAllFields = watch();
 
+  const onClickNewOrOld = (value: 'new' | 'old') => {
+    setFieldsParams((prevState) => ({ ...prevState, orderBy: value }));
+  };
+
   useEffect(() => {
-    console.log(watchAllFields);
-  }, [watchAllFields]);
+    const resources = getSelectedResources(watchAllFields);
+    setFieldsParams((prevState) => ({ ...prevState, resources }));
+  }, [setFieldsParams, watchAllFields]);
 
   return (
     <div>
@@ -98,8 +109,8 @@ const FilterPopover = ({
               По дате публикации:
             </Typography>
             <div className='filter__new-old'>
-              <div>Новые</div>
-              <div>Старые</div>
+              <div onClick={() => onClickNewOrOld('new')}>Новые</div>
+              <div onClick={() => onClickNewOrOld('old')}>Старые</div>
             </div>
           </AccordionDetails>
         </Accordion>
@@ -109,17 +120,31 @@ const FilterPopover = ({
               Полезные ископаемые
             </Typography>
           </AccordionSummary>
-          <AccordionDetails>
-            <FormControlLabel
-              className='filter__common'
-              control={<Checkbox {...register('Ископаемое 1')} />}
-              label='Ископаемое 1'
-            />
-            <FormControlLabel
-              className='filter__common'
-              control={<Checkbox {...register('Ископаемое 2')} />}
-              label='Ископаемое 2'
-            />
+          <AccordionDetails
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              flexWrap: 'wrap',
+            }}
+          >
+            {resourcesList.map((resource) => (
+              <label
+                key={resource.id}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  marginRight: '20px',
+                  marginBottom: '10px',
+                  cursor: 'pointer',
+                }}
+              >
+                <Checkbox {...register(resource.name)} />
+                {resource.icon}
+                <Typography style={{ marginLeft: '10px' }}>
+                  {resource.name}
+                </Typography>
+              </label>
+            ))}
           </AccordionDetails>
         </Accordion>
       </StyledPopover>

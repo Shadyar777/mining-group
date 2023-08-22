@@ -1,5 +1,12 @@
 import { Divider, styled } from '@mui/material';
-import { getArray } from '../../../../../utils/getArray.ts';
+import { memo } from 'react';
+import { BackgroundImageFiles } from '../../../../../rtk-query/types/fields-types.ts';
+import { parseImgBase64 } from '../../../../../utils';
+import { getIconForResource } from '../../../../common/utls/getIconForResource.ts';
+import { currencyFormat } from '../../../../common/utls/currencyFormat.ts';
+import { formatDate } from '../../../../common/utls/formatDate.ts';
+
+import arrowIcon from '@public/svgs/arrow-forward-sharp.svg';
 
 const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   borderRadius: '32px',
@@ -75,50 +82,84 @@ const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   [breakpoints.down('sm')]: {},
 }));
 
-const onClick = () => {
-  console.log('click on card');
+type CardProps = {
+  id: number;
+  title: string;
+  resources: string[];
+  price: number;
+  createdDate: string;
+  backgroundImageFiles?: BackgroundImageFiles;
+  handleOpenModal: (value: number) => void;
 };
 
-const Card = () => {
-  return (
-    <StyledCard className='card'>
-      <div className='card__img'>
-        <img src='../../../../../../public/mock-images/gold.png' alt='' />
-        <img
-          className='img__arrow-icon'
-          src='../../../../../../public/svgs/arrow-forward-sharp.svg'
-          alt=''
-          onClick={onClick}
-        />
-      </div>
-      <div className='card__content'>
-        <div className='card__id'>ID объекта: 36557</div>
-        <div className='card__geolocation'>Месторождение рассыпного золота</div>
-        <div className='card__resource'>
-          {getArray(3).map((_, key) => (
-            <ResourceName
-              key={key}
-              name='Золото рассыпное'
-              iconSrc='../../../../../../public/svgs/icon-filters/cube.svg'
-            />
-          ))}
+const Card = memo(
+  ({
+    id,
+    title,
+    backgroundImageFiles,
+    resources,
+    createdDate,
+    price,
+    handleOpenModal,
+  }: CardProps) => {
+    const parsedImgBase64 = backgroundImageFiles
+      ? parseImgBase64({
+          data: backgroundImageFiles.data || '',
+          type: backgroundImageFiles.type || '',
+        })
+      : '';
+
+    return (
+      <StyledCard className='card'>
+        <div className='card__img'>
+          <img src={parsedImgBase64} alt={title} />
+          <img
+            className='img__arrow-icon'
+            src={arrowIcon}
+            alt=''
+            onClick={() => handleOpenModal(id)}
+          />
         </div>
+        <div className='card__content'>
+          <div className='card__id'>ID объекта: {id}</div>
+          <div className='card__geolocation'>{title}</div>
+          <div className='card__resource'>
+            {resources.map((resource, key) => (
+              <ResourceName
+                name={resource}
+                iconSrc={getIconForResource(resource)}
+                key={`${resource}-${key}`}
+              />
+            ))}
+          </div>
 
-        <Divider className='card__divider' />
-        {/*<Divider variant='middle' />*/}
-        <div className='card__price'>Цена: по запросу</div>
-        <div className='card__date'>Опубликовано 19.06.2023</div>
-      </div>
-    </StyledCard>
-  );
-};
+          <Divider className='card__divider' />
+          {/*<Divider variant='middle' />*/}
+          <div className='card__price'>
+            Цена: {currencyFormat(Number(price))}
+          </div>
+          <div className='card__date'>
+            Опубликовано {formatDate(createdDate)}
+          </div>
+        </div>
+      </StyledCard>
+    );
+  },
+);
 
 export default Card;
 
-function ResourceName({ name, iconSrc }: { name: string; iconSrc: string }) {
+function ResourceName({
+  name,
+  iconSrc,
+}: {
+  name: string;
+  iconSrc: JSX.Element | null;
+}) {
   return (
     <div className='card__resource-name'>
-      <img src={iconSrc} alt='' />
+      {/*<img src={iconSrc} alt='' />*/}
+      {iconSrc ?? 'icon ('}
       <div>{name}</div>
     </div>
   );

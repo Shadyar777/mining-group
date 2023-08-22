@@ -80,7 +80,7 @@ const MapOfKazakhstan = () => {
     <StyledMapOfKazakhstan>
       <Container maxWidth='md'>
         <div className='map__content'>
-          <Typography className='text__title' variant='h3'>
+          <Typography marginBottom='20px' className='text__title' variant='h3'>
             {data.data.title}
           </Typography>
           <div className='map__image'>

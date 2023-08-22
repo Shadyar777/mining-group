@@ -150,6 +150,7 @@ const MapOfKazakhstan = () => {
           <Typography
             className='text__title'
             variant='h3'
+            marginBottom='20px'
             contentEditable={true}
             onBlur={handleContentTitle}
             onPaste={handlePasteTitle}

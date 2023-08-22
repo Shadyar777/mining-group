@@ -5,7 +5,7 @@ import { getAdmin } from '../modules/admin/signIn/slice.ts';
 
 export const baseUrl = 'http://16.170.229.114/';
 
-function getBasicAuthHeader(login: string, password: string): string {
+export function getBasicAuthHeader(login: string, password: string): string {
   const encodedCredentials = btoa(`${login}:${password}`);
   return `Basic ${encodedCredentials}`;
 }

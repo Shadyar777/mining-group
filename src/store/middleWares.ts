@@ -9,6 +9,7 @@ import {
   strategyApi,
   titleApi,
   valuesApi,
+  fieldsPrivateByIdApi,
 } from '../rtk-query';
 
 export const rtkMiddleWares = [
@@ -22,4 +23,5 @@ export const rtkMiddleWares = [
   geoProdApi.middleware,
   contactsApi.middleware,
   fieldsApi.middleware,
+  fieldsPrivateByIdApi.middleware,
 ];
