@@ -13,7 +13,7 @@ export const fieldsPrivateByIdApi = createApi({
     prepareHeaders: (headers, { getState }) => {
       const state = getState() as AppState;
       const { login, password } = getAdmin(state).admin;
-      const privatePassword = getAdmin(state).password;
+      const privatePassword = getAdmin(state).private.password;
       const globalLanguages = getAddGlobalLanguages(state);
       headers.set('Authorization', getBasicAuthHeader(login, password));
       headers.set('Accept-Language', globalLanguages.toUpperCase());
@@ -24,7 +24,7 @@ export const fieldsPrivateByIdApi = createApi({
   endpoints: (build) => ({
     getFieldsPrivateById: build.query<
       FieldsCommonResponse<DataById>,
-      { id: number }
+      { id: number; lng?: string }
     >({
       query: ({ id }) => ({
         url: `fields/getById/${id}`,

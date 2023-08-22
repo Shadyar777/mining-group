@@ -6,7 +6,10 @@ export interface Admin {
     login: string;
     password: string;
   };
-  password: string;
+  private: {
+    password: string;
+    id: number;
+  };
 }
 
 const initialState: Admin = {
@@ -14,7 +17,10 @@ const initialState: Admin = {
     login: 'user',
     password: 'password',
   },
-  password: '',
+  private: {
+    password: '',
+    id: 0,
+  },
 };
 const adminSlice = createSlice({
   name: 'admin',
@@ -23,8 +29,8 @@ const adminSlice = createSlice({
     addAdmin: (state, { payload }: PayloadAction<Admin>) => {
       state.admin = payload.admin;
     },
-    addPassword: (state, { payload }: PayloadAction<string>) => {
-      state.password = payload;
+    addPassword: (state, { payload }: PayloadAction<Admin['private']>) => {
+      state.private = payload;
     },
   },
 });

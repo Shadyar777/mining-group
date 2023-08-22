@@ -25,14 +25,17 @@ export default function CustomModal({ id, open, onClose }: CustomModalProps) {
     useLazyGetFieldsPrivateByIdQuery();
   const sendPinCode = () => {
     if (Number(pinCode.length) === 4) {
-      dispatch(addPassword(pinCode));
-      console.log('id', id);
+      dispatch(
+        addPassword({
+          password: pinCode,
+          id: id,
+        }),
+      );
       getFieldsById({ id });
     }
   };
 
   useEffect(() => {
-    console.log('isSuccess', isSuccess);
     if (isSuccess) {
       navigate('/press-center', { replace: false });
     }

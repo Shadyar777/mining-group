@@ -70,7 +70,7 @@ const MapOfKazakhstan = () => {
     return;
   }
 
-  const parsedIconBase64 = data?.data
+  const parsedIconBase64 = data?.data?.file?.data
     ? parseImgBase64({
         data: data.data.file.data || '',
         type: data.data.file.type || '',
@@ -81,14 +81,18 @@ const MapOfKazakhstan = () => {
       <Container maxWidth='md'>
         <div className='map__content'>
           <Typography marginBottom='20px' className='text__title' variant='h3'>
-            {data.data.title}
+            {data.data?.title ?? ''}
           </Typography>
           <div className='map__image'>
-            <img alt={data.data.title} src={parsedIconBase64} />
+            <img alt={data.data?.title ?? '#'} src={parsedIconBase64} />
           </div>
           <div className='map__text'>
-            <Typography className='text__quote'>{data.data.quotes}</Typography>
-            <Typography className='text__author'>{data.data.author}</Typography>
+            <Typography className='text__quote'>
+              {data.data?.quotes ?? ''}
+            </Typography>
+            <Typography className='text__author'>
+              {data.data?.author ?? ''}
+            </Typography>
           </div>
         </div>
       </Container>

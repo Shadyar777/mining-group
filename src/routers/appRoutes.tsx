@@ -35,6 +35,8 @@ export const routers = createBrowserRouter([
   },
 ]);
 export const getLinksLanding = () =>
-  routersLanding.map(({ name, path }) => ({ name, path }));
+  routersLanding
+    .filter((item) => !item.skip)
+    .map(({ name, path }) => ({ name, path }));
 export const getLinksAdmin = () =>
   routersAdmin.map(({ name, path }) => ({ name, path }));

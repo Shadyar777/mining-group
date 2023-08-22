@@ -17,12 +17,16 @@ const StyledPressCenterTitle = styled('div')(({ theme: { breakpoints } }) => ({
     },
   },
 }));
-const PressCenterTitle = () => {
+
+type PressCenterTitleProps = {
+  title: string;
+};
+const PressCenterTitle = ({ title }: PressCenterTitleProps) => {
   return (
     <StyledPressCenterTitle>
       <Container maxWidth='md'>
         <Typography variant='h3' className='press-center__title'>
-          Разведка месторождения золота
+          {title}
         </Typography>
       </Container>
     </StyledPressCenterTitle>
