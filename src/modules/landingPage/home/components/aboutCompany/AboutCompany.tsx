@@ -102,9 +102,9 @@ const AboutCompany = () => {
       <Container maxWidth='md'>
         <div className='about-company__content'>
           <Typography variant='h3' className='content__title'>
-            {data?.data.title}
+            {data?.data?.title}
           </Typography>
-          <div className='content__text'>{data?.data.text}</div>
+          <div className='content__text'>{data?.data?.text}</div>
           <div className='content__img'>
             <img alt='' src={parsedBase64Img} />
           </div>

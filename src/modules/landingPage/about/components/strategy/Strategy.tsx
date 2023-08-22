@@ -73,12 +73,12 @@ const Strategy = () => {
       <Container maxWidth='md'>
         <div className='strategy__content'>
           <Typography variant='h3' className='content__title'>
-            {data.data.title}
+            {data.data?.title}
           </Typography>
 
-          <div className='content__text'>{data.data.text}</div>
+          <div className='content__text'>{data.data?.text}</div>
           <div className='content__img'>
-            <img src={parsedImagBase64} alt={data.data.title || ''} />
+            <img src={parsedImagBase64} alt={data.data?.title || ''} />
           </div>
         </div>
       </Container>

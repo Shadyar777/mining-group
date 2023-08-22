@@ -99,16 +99,20 @@ const Contacts = () => {
             Контакты
           </Typography>
           <div className='contacts__content'>
-            <GoogleMaps srcGoogle={data.data.location} />
+            <GoogleMaps srcGoogle={data.data?.location ?? ''} />
             <div className='content__text'>
-              <div className='text__location'>{data.data.address}</div>
+              <div className='text__location'>{data.data?.address ?? ''}</div>
               <div className='text__tel contact-link'>
                 <PhoneRoundedIcon />
-                <a href={`tel:{data.data.phone}`}> {data.data.phone}</a>
+                <a href={`tel:${data.data?.phone ?? '#'}`}>
+                  {data.data?.phone ?? ''}
+                </a>
               </div>
               <div className='text__mail contact-link'>
                 <EmailRoundedIcon />
-                <a href={`${data.data.mail}`}>{data.data.mail}</a>
+                <a href={`${data.data?.mail ?? '#'}`}>
+                  {data.data?.mail ?? ''}
+                </a>
               </div>
             </div>
           </div>
