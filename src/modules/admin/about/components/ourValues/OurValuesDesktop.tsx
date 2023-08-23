@@ -21,7 +21,6 @@ export const StyledActivityDesktop = styled('div')(() => ({
 const OurValuesDesktop = () => {
   const lng = useAppSelector(getAddGlobalLanguages);
   const { data } = useGetValuesQuery(lng);
-  console.log('data, data, data', data);
   return (
     <StyledActivityDesktop>
       {data?.data &&

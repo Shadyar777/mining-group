@@ -7,13 +7,14 @@ import {
   FieldsCommonResponse,
   QueryFieldsParams,
 } from './types/fields-types.ts';
-import { createFormData } from '../utils';
+// import { createFormData } from '../utils';
 
 export const fieldsApi = createApi({
   reducerPath: 'fieldsApi',
   tagTypes: ['Fields'],
   baseQuery: fetchBaseQuery({
     ...configFetchBaseQuery,
+    timeout: 10000,
   }),
   endpoints: (build) => ({
     getFields: build.query<
@@ -38,7 +39,8 @@ export const fieldsApi = createApi({
       query: (body) => ({
         url: 'fields/create',
         method: 'POST',
-        body: createFormData(body),
+        // body: createFormData(body),
+        body: body,
       }),
       invalidatesTags: [{ type: 'Fields', id: 'LIST' }],
     }),

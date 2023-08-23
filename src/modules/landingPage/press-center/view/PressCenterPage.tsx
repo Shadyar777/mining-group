@@ -40,10 +40,10 @@ const PressCenterPage = () => {
   const navigate = useNavigate();
   const goToHome = () => navigate('/', { replace: false });
   const lng = useAppSelector(getAddGlobalLanguages);
-  const privateId = useAppSelector((state) => state.admin.private.id);
+  const { id, password } = useAppSelector((state) => state.admin.private);
   const { data, isLoading, isError } = useGetFieldsPrivateByIdQuery({
-    id: privateId,
-    // id: 27,
+    id,
+    password,
     lng,
   });
 
@@ -54,7 +54,7 @@ const PressCenterPage = () => {
           type: data.data.mainFile.data || '',
         })
       : '';
-  }, [data?.data.mainFile.data]);
+  }, [data?.data?.mainFile?.data]);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -68,7 +68,6 @@ const PressCenterPage = () => {
     return;
   }
 
-  console.log('useGetFieldsPrivateByIdQuery', data);
   const images = data?.data.images.map(({ data, type }) => {
     return parseImgBase64({
       data: data || '',

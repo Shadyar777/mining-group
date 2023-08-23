@@ -4,11 +4,12 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Button, Typography } from '@mui/material';
 import PinCode from './PinCode.tsx';
-import { useAppDispatch } from '../../../../../store/hooks.ts';
+import { useAppDispatch, useAppSelector } from '../../../../../store/hooks.ts';
 import { addPassword } from '../../../../admin/signIn/slice.ts';
 import { useEffect, useState } from 'react';
 import { useLazyGetFieldsPrivateByIdQuery } from '../../../../../rtk-query';
 import { useNavigate } from 'react-router-dom';
+import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 
 type CustomModalProps = {
   open: boolean;
@@ -18,7 +19,7 @@ type CustomModalProps = {
 
 export default function CustomModal({ id, open, onClose }: CustomModalProps) {
   const navigate = useNavigate();
-
+  const lng = useAppSelector(getAddGlobalLanguages);
   const [pinCode, setPinCode] = useState<string>('');
   const dispatch = useAppDispatch();
   const [getFieldsById, { isSuccess, isError }] =
@@ -31,7 +32,7 @@ export default function CustomModal({ id, open, onClose }: CustomModalProps) {
           id: id,
         }),
       );
-      getFieldsById({ id });
+      getFieldsById({ id, password: pinCode, lng });
     }
   };
 

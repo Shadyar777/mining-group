@@ -40,13 +40,14 @@ export type QueryFieldsParams = {
   title?: string;
 };
 
-export type CreateBodyFields = {
-  resources: string;
-  backgroundImageFiles: any;
-  mainFile: any;
-  images: any;
-  location: string;
-};
+export type CreateBodyFields = FormData;
+// export type CreateBodyFields = {
+//   resources: string;
+//   backgroundImageFiles: any;
+//   mainFile: any;
+//   images: any;
+//   location: string;
+// };
 
 export interface DataById {
   id: number;

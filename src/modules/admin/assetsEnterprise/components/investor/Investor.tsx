@@ -1,3 +1,4 @@
+import { ChangeEvent, useState } from 'react';
 import {
   Container,
   styled,
@@ -10,7 +11,6 @@ import MenuFilters from './MenuFilters.tsx';
 import NewCard from './NewCard.tsx';
 import { useGetFieldsQuery } from '../../../../../rtk-query';
 import Pagination from './Pagination.tsx';
-import { ChangeEvent, useEffect, useState } from 'react';
 import { QueryFieldsParams } from '../../../../../rtk-query/types/fields-types.ts';
 import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
@@ -57,6 +57,7 @@ const Investor = () => {
     orderBy: 'new',
     limit: isMobile ? 4 : 10,
     page: 1,
+    language: lng,
   });
 
   const { data, isLoading } = useGetFieldsQuery(fieldsParams);
@@ -64,10 +65,6 @@ const Investor = () => {
   const onChangePagination = (_: ChangeEvent<unknown>, page: number) => {
     setFieldsParams((prevState) => ({ ...prevState, page }));
   };
-
-  useEffect(() => {
-    setFieldsParams((prevState) => ({ ...prevState, language: lng }));
-  }, [lng]);
 
   if (isLoading || !data) {
     return <LoadingSpinner />;

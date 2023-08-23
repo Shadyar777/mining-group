@@ -15,7 +15,8 @@ import { getListIconResources } from '../../../../common/utls/getListIconResourc
 import EditImage from '../../../common/EditImage.tsx';
 import EditPDF from './EditPDF.tsx';
 import { useAddFieldsMutation } from '../../../../../rtk-query';
-import { CreateBodyFields } from '../../../../../rtk-query/types/fields-types.ts';
+import { dataURLtoBlob } from '../../../../../utils/dataURLtoBlob.tsx';
+import { base64ToFile } from '../../../../../utils';
 
 const schema = yup.object().shape({
   title: yup.string().required('Заголовок обязателен'),
@@ -76,24 +77,38 @@ const CreateResourceCardForm = () => {
   const [resourceData, setResourceData] =
     useState<Resource[]>(initialResources);
 
-  const onSubmit = (data: FormData) => {
-    const body: CreateBodyFields = {
-      backgroundImageFiles: uploadedImage,
-      images: moreImages,
-      location: data.mapLink,
-      mainFile: urlPdf,
-      resources: resourceData.map((resource) => resource.name).join(),
-    };
-    addFields(body);
+  const onSubmit = async (data: FormData) => {
+    const formData = new FormData();
+    moreImages.forEach((item, index) => {
+      if (item.src) {
+        const imgBlob = dataURLtoBlob(item.src);
+        formData.append('images', imgBlob, `image${index}`);
+      }
+    });
+    typeof uploadedImage === 'string' &&
+      formData.append(
+        'backgroundImageFiles',
+        await base64ToFile(uploadedImage as string, 'backgroundImageFiles'),
+      );
+    formData.append('location', data.mapLink);
+    formData.append('mainFile', await base64ToFile(urlPdf as string, 'urlPdf'));
+    formData.append('password', data.projectPassword);
+    formData.append('price', String(data.price));
+    formData.append(
+      'resources',
+      resourceData.map((resource) => resource.name).join(),
+    );
+    formData.append('title', data.title);
 
-    // console.log('moreImages', moreImages);
-    // console.log(
-    //   'resourceData',
-    //   resourceData.map((resource) => resource.name),
-    // );
-    // console.log('uploadedImage', uploadedImage);
-    // console.log('urlPdf', urlPdf);
-    // console.log(data);
+    // formData.append('backgroundImageFiles', uploadedImage);
+    // const body: CreateBodyFields = {
+    //   backgroundImageFiles: uploadedImage,
+    //   images: moreImages.filter((obj) => Object.keys(obj).length > 0),
+    //   location: data.mapLink,
+    //   mainFile: urlPdf,
+    //   resources: resourceData.map((resource) => resource.name).join(),
+    // };
+    addFields(formData);
   };
 
   return (
