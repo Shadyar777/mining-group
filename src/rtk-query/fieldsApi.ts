@@ -28,7 +28,7 @@ export const fieldsApi = createApi({
       }),
       providesTags: [{ type: 'Fields', id: 'LIST' }],
     }),
-    getFieldsById: build.query<FieldsCommonResponse<DataById>, { id: number }>({
+    getFieldsById: build.query<FieldsCommonResponse<DataById>, { id: number, lng: string }>({
       query: ({ id }) => ({
         url: `fields/getByIdAdmin/${id}`,
         method: 'GET',

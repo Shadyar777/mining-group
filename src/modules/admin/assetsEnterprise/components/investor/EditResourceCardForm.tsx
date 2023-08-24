@@ -24,6 +24,8 @@ import { updateCheckboxes } from '../../../../../utils/updateCheckboxes.ts';
 import { dataURLtoBlob } from '../../../../../utils/dataURLtoBlob.tsx';
 import { getCheckedNames } from '../../../../../utils/getCheckedNames.ts';
 import { resourceSchema } from '../../utils/resourceSchema.ts';
+import { useAppSelector } from '../../../../../store/hooks.ts';
+import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 
 type FormData = {
   title: string;
@@ -63,7 +65,8 @@ const EditResourceCardForm = ({
   id,
   handleClose,
 }: EditResourceCardFormProps) => {
-  const { data, isLoading: isGetLoading } = useGetFieldsByIdQuery({ id });
+  const lng = useAppSelector(getAddGlobalLanguages);
+  const { data, isLoading: isGetLoading } = useGetFieldsByIdQuery({ id, lng });
   const [
     updateFieldsById,
     { isSuccess: isSuccessUpdateFieldsById, isLoading: isPostLoading },
@@ -135,7 +138,7 @@ const EditResourceCardForm = ({
         ? convertBase64ToPdfDataUrl(data.data?.mainFile?.data || '')
         : null;
       // fieldsId
-      const parsedBgImgFiles = data.data.backgroundImageFiles
+      const parsedBgImgFiles = data.data.backgroundImageFiles?.fieldsId
         ? parseImgBase64({
             data: data.data.backgroundImageFiles.data || '',
             type: data.data.backgroundImageFiles.type || '',
