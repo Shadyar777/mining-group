@@ -70,7 +70,11 @@ const TopBanner = () => {
   const onUploadImage = async () => {
     const data = {
       file: imgForReport
-        ? await base64ToFile(imgForReport as string, 'icon-value')
+        ? await base64ToFile({
+            dataURI: imgForReport as string,
+            fileName: 'bg-image',
+            optionsType: 'image/jpeg',
+          })
         : null,
     };
     const FormData = createFormData(data);

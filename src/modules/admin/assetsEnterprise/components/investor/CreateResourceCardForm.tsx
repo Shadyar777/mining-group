@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Box, styled } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import CustomInput from './EditCustomInput.tsx';
 import TitleEdit from '../../../common/TitleEdit.tsx';
@@ -17,23 +16,7 @@ import EditPDF from './EditPDF.tsx';
 import { useAddFieldsMutation } from '../../../../../rtk-query';
 import { dataURLtoBlob } from '../../../../../utils/dataURLtoBlob.tsx';
 import { base64ToFile } from '../../../../../utils';
-
-const schema = yup.object().shape({
-  title: yup.string().required('Заголовок обязателен'),
-  objectId: yup.string().required('ID объекта обязателен'),
-  projectPassword: yup
-    .string()
-    .length(6, 'Пароль должен содержать ровно 6 символов')
-    .required('Пароль обязателен'),
-  price: yup
-    .number()
-    .typeError('Цена должна быть числом')
-    .required('Цена обязательна'),
-  mapLink: yup
-    .string()
-    .url('Введите действующую URL ссылку')
-    .required('Ссылка обязательна'),
-});
+import { resourceSchema } from '../../utils/resourceSchema.ts';
 
 type FormData = {
   title: string;
@@ -68,7 +51,14 @@ const CreateResourceCardForm = () => {
   const [addFields] = useAddFieldsMutation();
   const [moreImages, setImages] = useState<TImageGallery[]>([]);
   const { control, handleSubmit } = useForm<FormData>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(resourceSchema),
+    defaultValues: {
+      title: '',
+      objectId: '',
+      price: 0,
+      projectPassword: '',
+      mapLink: '',
+    },
   });
   const [uploadedImage, setUploadedImage] = useState<
     string | ArrayBuffer | null
@@ -88,10 +78,21 @@ const CreateResourceCardForm = () => {
     typeof uploadedImage === 'string' &&
       formData.append(
         'backgroundImageFiles',
-        await base64ToFile(uploadedImage as string, 'backgroundImageFiles'),
+        await base64ToFile({
+          fileName: 'background-image',
+          optionsType: 'image/jpeg',
+          dataURI: uploadedImage as string,
+        }),
       );
     formData.append('location', data.mapLink);
-    formData.append('mainFile', await base64ToFile(urlPdf as string, 'urlPdf'));
+    formData.append(
+      'mainFile',
+      await base64ToFile({
+        fileName: 'pdf-file',
+        optionsType: 'application/pdf',
+        dataURI: urlPdf as string,
+      }),
+    );
     formData.append('password', data.projectPassword);
     formData.append('price', String(data.price));
     formData.append(

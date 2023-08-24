@@ -53,7 +53,11 @@ const AboutCompany = () => {
       title: contentTitle,
       text: contentText,
       file: uploadedImage
-        ? await base64ToFile(uploadedImage as string, 'about')
+        ? await base64ToFile({
+            fileName: 'about-page',
+            dataURI: uploadedImage as string,
+            optionsType: 'image/jpeg',
+          })
         : null,
     };
     const formData = createFormData(data);

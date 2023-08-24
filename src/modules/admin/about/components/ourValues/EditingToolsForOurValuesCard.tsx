@@ -77,7 +77,11 @@ const EditingToolsForOurValuesCard = ({
         title: contentHeadings,
         text: contentShortDescription,
         file: uploadedImage
-          ? await base64ToFile(uploadedImage as string, 'icon-value')
+          ? await base64ToFile({
+              dataURI: uploadedImage as string,
+              fileName: 'icon',
+              optionsType: 'image/jpeg',
+            })
           : null,
       };
       const formData = createFormData(data);
@@ -88,7 +92,11 @@ const EditingToolsForOurValuesCard = ({
       title: contentHeadings,
       text: contentShortDescription,
       file: uploadedImage
-        ? await base64ToFile(uploadedImage as string, 'icon-value')
+        ? await base64ToFile({
+            dataURI: uploadedImage as string,
+            fileName: 'icon',
+            optionsType: 'image/jpeg',
+          })
         : null,
     };
 

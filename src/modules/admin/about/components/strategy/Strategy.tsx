@@ -93,7 +93,11 @@ const Strategy = () => {
   const onUploadDate = async () => {
     const formData = new FormData();
     const file = uploadedImage
-      ? await base64ToFile(uploadedImage as string, 'filename.jpg')
+      ? await base64ToFile({
+          dataURI: uploadedImage as string,
+          fileName: 'images',
+          optionsType: 'image/jpeg',
+        })
       : null;
     formData.append('title', contentTitle);
     formData.append('text', contentText);

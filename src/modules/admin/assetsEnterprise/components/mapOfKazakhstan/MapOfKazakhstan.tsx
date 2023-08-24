@@ -119,7 +119,11 @@ const MapOfKazakhstan = () => {
       author: contentAuthor,
       quotes: contentText,
       file: uploadedImage
-        ? await base64ToFile(uploadedImage as string, 'file')
+        ? await base64ToFile({
+            dataURI: uploadedImage as string,
+            fileName: 'image',
+            optionsType: 'image/jpeg',
+          })
         : null,
     };
     console.log(data);

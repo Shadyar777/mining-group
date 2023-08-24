@@ -100,7 +100,11 @@ const EditingTools = ({
         title: contentHeadings,
         text: contentShortDescription,
         file: uploadedImage
-          ? await base64ToFile(uploadedImage as string, 'image/png')
+          ? await base64ToFile({
+              dataURI: uploadedImage as string,
+              fileName: 'image',
+              optionsType: 'image/jpeg',
+            })
           : null,
       };
       const formData = createFormData(data);
