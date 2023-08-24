@@ -7,11 +7,11 @@ type Base64ToFileParams = {
 async function base64ToFile({
   dataURI,
   fileName,
-  optionsType = 'image/jpeg',
+  optionsType,
 }: Base64ToFileParams): Promise<File> {
   if (!dataURI) {
     const endStr = optionsType.split('/')[1];
-    return new File([], `empty.pdf/${endStr}`);
+    return new File([], `empty/${endStr}`);
   }
 
   const byteString = atob(dataURI.split(',')[1]);
