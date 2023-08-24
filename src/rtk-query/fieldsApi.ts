@@ -7,7 +7,6 @@ import {
   FieldsCommonResponse,
   QueryFieldsParams,
 } from './types/fields-types.ts';
-// import { createFormData } from '../utils';
 
 export const fieldsApi = createApi({
   reducerPath: 'fieldsApi',
@@ -37,6 +36,7 @@ export const fieldsApi = createApi({
         method: 'GET',
       }),
       // providesTags: (_, __, { id }) => [{ type: 'Fields', id: id.toString() }],
+      keepUnusedDataFor: 0,
     }),
     updateFieldsById: build.mutation<
       FieldsCommonResponse<DataById>,
@@ -47,7 +47,7 @@ export const fieldsApi = createApi({
         method: 'PATCH',
         body,
       }),
-      // invalidatesTags: FIXME
+      invalidatesTags: [{ type: 'Fields', id: 'LIST' }],
     }),
     addFields: build.mutation<void, CreateBodyFields>({
       query: (body) => ({

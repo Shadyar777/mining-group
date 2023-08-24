@@ -104,12 +104,19 @@ const EditResourceCardForm = ({
         formData.append('images', imgBlob, `image${index}`);
       }
     });
-      formData.append(
-        'backgroundImageFiles',
-        await base64ToFile(uploadedImage as string, 'backgroundImageFiles'),
-      );
-
-    const pdfFile = await base64ToFile((urlPdf || '') as string, 'urlPdf');
+    formData.append(
+      'backgroundImageFiles',
+      await base64ToFile({
+        dataURI: uploadedImage as string,
+        fileName: 'backgroundImageFiles',
+        optionsType: 'image/jpeg',
+      }),
+    );
+    const pdfFile = await base64ToFile({
+      dataURI: urlPdf as string,
+      fileName: 'file-pdf',
+      optionsType: 'application/pdf',
+    });
     formData.append('mainFile', pdfFile);
     formData.append('location', data.mapLink);
     formData.append('password', data.projectPassword);
@@ -133,11 +140,10 @@ const EditResourceCardForm = ({
 
   useEffect(() => {
     if (data) {
-      const convertedDataUrl = data.data?.mainFile?.fieldsId
+      const convertedDataUrl = data.data?.mainFile?.data
         ? convertBase64ToPdfDataUrl(data.data?.mainFile?.data || '')
         : null;
-      // fieldsId
-      const parsedBgImgFiles = data.data.backgroundImageFiles
+      const parsedBgImgFiles = data.data.backgroundImageFiles?.data
         ? parseImgBase64({
             data: data.data.backgroundImageFiles.data || '',
             type: data.data.backgroundImageFiles.type || '',
@@ -152,7 +158,6 @@ const EditResourceCardForm = ({
         mapLink: data.data.location,
       });
       setTimeout(() => {
-        console.log('parsedBgImgFiles', parsedBgImgFiles)
         setUploadedImage(() => parsedBgImgFiles);
         if (data.data?.mainFile) {
           setUploadedPdf(() => convertedDataUrl);
@@ -171,7 +176,6 @@ const EditResourceCardForm = ({
     return <LoadingSpinner />;
   }
 
-  console.log('uploadedImage', uploadedImage)
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <TitleEdit>Заголовок:</TitleEdit>

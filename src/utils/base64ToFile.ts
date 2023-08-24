@@ -1,6 +1,17 @@
-async function base64ToFile(dataURI: string, fileName: string): Promise<File> {
+type Base64ToFileParams = {
+  dataURI: string;
+  fileName: string;
+  optionsType: 'application/pdf' | 'image/jpeg';
+};
+
+async function base64ToFile({
+  dataURI,
+  fileName,
+  optionsType = 'image/jpeg',
+}: Base64ToFileParams): Promise<File> {
   if (!dataURI) {
-    return new File([], 'empty.pdf');
+    const endStr = optionsType.split('/')[1];
+    return new File([], `empty.pdf/${endStr}`);
   }
 
   const byteString = atob(dataURI.split(',')[1]);
@@ -11,7 +22,7 @@ async function base64ToFile(dataURI: string, fileName: string): Promise<File> {
     intArray[i] = byteString.charCodeAt(i);
   }
 
-  const blob = new Blob([arrayBuffer], { type: 'image/jpeg' });
+  const blob = new Blob([arrayBuffer], { type: optionsType });
   return new File([blob], fileName);
 }
 

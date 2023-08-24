@@ -59,6 +59,7 @@ type EditPDFProps = {
 };
 
 const EditPDF = ({ urlPdf, setUploadedPdf }: EditPDFProps) => {
+  console.log('urlPdf', urlPdf);
   const [open, setOpen] = useState(false);
   const [numPages, setNumPages] = useState<number | null>(null);
 
