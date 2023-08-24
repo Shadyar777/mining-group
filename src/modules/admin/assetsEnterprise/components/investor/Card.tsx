@@ -153,7 +153,7 @@ const Card = memo(
           </div>
         </StyledCard>
         <CustomModal open={openCardModal} handleClose={handleClose}>
-          <EditResourceCardForm id={id} />
+          <EditResourceCardForm id={id} handleClose={handleClose} />
         </CustomModal>
       </>
     );

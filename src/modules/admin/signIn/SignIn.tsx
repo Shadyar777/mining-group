@@ -4,7 +4,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useForm } from 'react-hook-form';
 import { useAppSelector } from '../../../store/hooks.ts';
 import { getAdmin } from './slice.ts';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type Form = {
   login: string;
@@ -21,6 +21,7 @@ const SignIn = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<Form>();
 
   const onSubmit = (data: Form) => {
@@ -30,6 +31,10 @@ const SignIn = () => {
       setErrorMessage('Неверный логин или пароль!');
     }
   };
+
+  useEffect(() => {
+    setValue('login', 'hello worl');
+  }, [setValue]);
 
   return (
     <Grid

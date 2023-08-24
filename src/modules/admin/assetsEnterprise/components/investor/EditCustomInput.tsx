@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, forwardRef, useState } from 'react';
+import { ChangeEvent, FC, forwardRef } from 'react';
 import { styled, TextField } from '@mui/material';
 
 const StyledEditCustomInput = styled(TextField)({
@@ -20,42 +20,46 @@ const StyledEditCustomInput = styled(TextField)({
 });
 
 type CustomInputProps = {
+  name?: string;
   value?: string | number;
+  type?: string;
   placeholder?: string;
-  onChange?: (value: string) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   className?: string;
   error?: boolean;
   helperText?: string;
 };
-const EditCustomInput: FC<CustomInputProps> = forwardRef(
-  ({
-    value: propValue,
-    placeholder,
-    onChange,
-    className,
-    error,
-    helperText,
-  }) => {
-    const [value, setValue] = useState(propValue || '');
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-      setValue(event.target.value);
-      if (onChange) {
-        onChange(event.target.value);
-      }
-    };
-
+const EditCustomInput: FC<CustomInputProps> = forwardRef<
+  HTMLInputElement,
+  CustomInputProps
+>(
+  (
+    {
+      name,
+      value,
+      type = 'text',
+      placeholder,
+      onChange,
+      className,
+      error,
+      helperText,
+    },
+    ref,
+  ) => {
     return (
       <StyledEditCustomInput
         fullWidth
+        name={name}
+        type={type}
         className={className}
-        type='text'
         variant='standard'
         value={value}
         placeholder={placeholder}
-        onChange={handleChange}
+        onChange={onChange}
         error={error}
         helperText={helperText}
+        inputRef={ref} // передача ref
       />
     );
   },

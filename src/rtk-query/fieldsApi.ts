@@ -14,7 +14,7 @@ export const fieldsApi = createApi({
   tagTypes: ['Fields'],
   baseQuery: fetchBaseQuery({
     ...configFetchBaseQuery,
-    timeout: 10000,
+    // timeout: 10000,
   }),
   endpoints: (build) => ({
     getFields: build.query<
@@ -30,16 +30,26 @@ export const fieldsApi = createApi({
     }),
     getFieldsById: build.query<FieldsCommonResponse<DataById>, { id: number }>({
       query: ({ id }) => ({
-        url: `fields/getById/${id}`,
+        url: `fields/getByIdAdmin/${id}`,
         method: 'GET',
       }),
       providesTags: (_, __, { id }) => [{ type: 'Fields', id: id.toString() }],
+    }),
+    updateFieldsById: build.mutation<
+      FieldsCommonResponse<DataById>,
+      CreateBodyFields
+    >({
+      query: (body) => ({
+        url: `fields/update`,
+        method: 'PATCH',
+        body,
+      }),
+      // invalidatesTags: FIXME
     }),
     addFields: build.mutation<void, CreateBodyFields>({
       query: (body) => ({
         url: 'fields/create',
         method: 'POST',
-        // body: createFormData(body),
         body: body,
       }),
       invalidatesTags: [{ type: 'Fields', id: 'LIST' }],
@@ -56,6 +66,7 @@ export const fieldsApi = createApi({
 
 export const {
   useGetFieldsQuery,
+  useUpdateFieldsByIdMutation,
   useGetFieldsByIdQuery,
   useAddFieldsMutation,
   useDeleteFieldsMutation,

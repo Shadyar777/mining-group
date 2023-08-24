@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Box, styled } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import CustomInput from './EditCustomInput.tsx';
 import TitleEdit from '../../../common/TitleEdit.tsx';
@@ -14,27 +13,17 @@ import { Resource, ResourceList } from './resource/ResourceList.tsx';
 import { getListIconResources } from '../../../../common/utls/getListIconResources.tsx';
 import EditImage from '../../../common/EditImage.tsx';
 import EditPDF from './EditPDF.tsx';
-import { useGetFieldsByIdQuery } from '../../../../../rtk-query';
+import {
+  useGetFieldsByIdQuery,
+  useUpdateFieldsByIdMutation,
+} from '../../../../../rtk-query';
 import LoadingSpinner from '../../../../common/loadingSpinner';
-import { parseImgBase64 } from '../../../../../utils';
+import { base64ToFile, parseImgBase64 } from '../../../../../utils';
 import { convertBase64ToPdfDataUrl } from '../../../../../utils/convertBase64ToPdfDataUrl.ts';
-
-const schema = yup.object().shape({
-  title: yup.string().required('Заголовок обязателен'),
-  objectId: yup.string().required('ID объекта обязателен'),
-  projectPassword: yup
-    .string()
-    .length(6, 'Пароль должен содержать ровно 6 символов')
-    .required('Пароль обязателен'),
-  price: yup
-    .number()
-    .typeError('Цена должна быть числом')
-    .required('Цена обязательна'),
-  mapLink: yup
-    .string()
-    .url('Введите действующую URL ссылку')
-    .required('Ссылка обязательна'),
-});
+import { updateCheckboxes } from '../../../../../utils/updateCheckboxes.ts';
+import { dataURLtoBlob } from '../../../../../utils/dataURLtoBlob.tsx';
+import { getCheckedNames } from '../../../../../utils/getCheckedNames.ts';
+import { resourceSchema } from '../../utils/resourceSchema.ts';
 
 type FormData = {
   title: string;
@@ -43,8 +32,6 @@ type FormData = {
   price: number;
   mapLink: string;
 };
-
-// const imagesToPass = [{ src: imgSrcAboutCompany }, { src: imgSrcGold }]; // TODO: удалить когда будет бэк
 
 const initialResources = getListIconResources().map((resource) => ({
   ...resource,
@@ -69,14 +56,36 @@ const StyledForm = styled('form')(({ theme: { shape } }) => ({
 
 type EditResourceCardFormProps = {
   id: number;
+  handleClose: () => void;
 };
 
-const EditResourceCardForm = ({ id }: EditResourceCardFormProps) => {
-  const { data, isLoading } = useGetFieldsByIdQuery({ id });
+const EditResourceCardForm = ({
+  id,
+  handleClose,
+}: EditResourceCardFormProps) => {
+  const { data, isLoading: isGetLoading } = useGetFieldsByIdQuery({ id });
+  const [
+    updateFieldsById,
+    { isSuccess: isSuccessUpdateFieldsById, isLoading: isPostLoading },
+  ] = useUpdateFieldsByIdMutation();
   const [moreImages, setImages] = useState<TImageGallery[]>([]);
-  const { control, handleSubmit, setValue } = useForm<FormData>({
-    resolver: yupResolver(schema),
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    // setValue
+  } = useForm({
+    resolver: yupResolver(resourceSchema),
+    defaultValues: {
+      title: '',
+      objectId: '',
+      price: 0,
+      projectPassword: '',
+      mapLink: '',
+    },
   });
+
   const [uploadedImage, setUploadedImage] = useState<
     string | ArrayBuffer | null
   >(null);
@@ -84,55 +93,78 @@ const EditResourceCardForm = ({ id }: EditResourceCardFormProps) => {
   const [resourceData, setResourceData] =
     useState<Resource[]>(initialResources);
 
-  const onSubmit = (data: FormData) => {
-    // console.log('moreImages', moreImages);
-    // console.log('resourceData', resourceData);
-    // console.log('uploadedImage', uploadedImage);
-    // console.log('urlPdf', urlPdf);
-    console.log(data);
+  const onSubmit = async (data: FormData) => {
+    const formData = new FormData();
+    moreImages.forEach((item, index) => {
+      if (item.src) {
+        const imgBlob = dataURLtoBlob(item.src);
+        formData.append('images', imgBlob, `image${index}`);
+      }
+    });
+    typeof uploadedImage === 'string' &&
+      formData.append(
+        'backgroundImageFiles',
+        await base64ToFile(uploadedImage as string, 'backgroundImageFiles'),
+      );
+
+    const pdfFile = await base64ToFile((urlPdf || '') as string, 'urlPdf');
+    formData.append('mainFile', pdfFile);
+    formData.append('location', data.mapLink);
+    formData.append('password', data.projectPassword);
+    formData.append('price', String(data.price));
+    formData.append('resources', getCheckedNames(resourceData).join());
+    formData.append('title', data.title);
+    formData.append('id', String(id));
+    updateFieldsById(formData);
   };
 
-  console.log('useGetFieldsByIdQuery', data);
-
-  const srcImagesBase64 =
-    data?.data?.images.map((image) => ({
-      src: parseImgBase64({
-        data: image.data || '',
-        type: image.type || '',
-      }),
-    })) ?? [];
+  const srcImagesBase64 = useMemo(() => {
+    return (
+      data?.data?.images.map((image) => ({
+        src: parseImgBase64({
+          data: image.data || '',
+          type: image.type || '',
+        }),
+      })) ?? []
+    );
+  }, [data?.data?.images]);
 
   useEffect(() => {
     if (data) {
+      const convertedDataUrl = data.data?.mainFile?.fieldsId
+        ? convertBase64ToPdfDataUrl(data.data?.mainFile?.data || '')
+        : null;
+      // fieldsId
       const parsedBgImgFiles = data.data.backgroundImageFiles
         ? parseImgBase64({
             data: data.data.backgroundImageFiles.data || '',
             type: data.data.backgroundImageFiles.type || '',
           })
         : null;
-
-      setValue('title', 'data.data.title');
-      setValue('objectId', data.data.id as unknown as string);
-      setValue('projectPassword', data.data.password);
-      setValue('price', data.data.price);
-      setValue('mapLink', data.data.location);
-      // reset({
-      //   title: data.data.title,
-      //   objectId: data.data.id as unknown as string,
-      //   price: data.data.price,
-      //   projectPassword: data.data.password,
-      //   mapLink: data.data.location,
-      // });
-      setUploadedImage(() => parsedBgImgFiles);
-      if (data.data?.mainFile) {
-        setUploadedPdf(() =>
-          convertBase64ToPdfDataUrl(data.data.mainFile.data),
-        );
-      }
+      setResourceData(updateCheckboxes(resourceData, data.data.resources));
+      reset({
+        title: data.data.title,
+        objectId: data.data.id as unknown as string,
+        projectPassword: data.data.password,
+        price: data.data.price,
+        mapLink: data.data.location,
+      });
+      setTimeout(() => {
+        setUploadedImage(() => parsedBgImgFiles);
+        if (data.data?.mainFile) {
+          setUploadedPdf(() => convertedDataUrl);
+        }
+      }, 100);
     }
-  }, [data, data?.data, setValue]);
+  }, [data, data?.data, reset]);
 
-  if (isLoading) {
+  useEffect(() => {
+    if (isSuccessUpdateFieldsById) {
+      handleClose();
+    }
+  }, [handleClose, isSuccessUpdateFieldsById]);
+
+  if (isGetLoading || isPostLoading) {
     return <LoadingSpinner />;
   }
   return (
@@ -141,12 +173,11 @@ const EditResourceCardForm = ({ id }: EditResourceCardFormProps) => {
       <Controller
         name='title'
         control={control}
-        render={({ field, fieldState }) => (
+        render={({ field }) => (
           <CustomInput
             {...field}
-            placeholder=''
-            error={!!fieldState?.error}
-            helperText={fieldState?.error?.message}
+            error={!!errors.title}
+            helperText={errors.title?.message}
           />
         )}
       />
@@ -154,12 +185,11 @@ const EditResourceCardForm = ({ id }: EditResourceCardFormProps) => {
       <Controller
         name='objectId'
         control={control}
-        render={({ field, fieldState }) => (
+        render={({ field }) => (
           <CustomInput
             {...field}
-            placeholder=''
-            error={!!fieldState?.error}
-            helperText={fieldState?.error?.message}
+            error={!!errors.objectId}
+            helperText={errors.objectId?.message}
           />
         )}
       />
@@ -168,12 +198,11 @@ const EditResourceCardForm = ({ id }: EditResourceCardFormProps) => {
       <Controller
         name='projectPassword'
         control={control}
-        render={({ field, fieldState }) => (
+        render={({ field }) => (
           <CustomInput
             {...field}
-            placeholder=''
-            error={!!fieldState?.error}
-            helperText={fieldState?.error?.message}
+            error={!!errors.projectPassword}
+            helperText={errors.projectPassword?.message}
           />
         )}
       />
@@ -182,12 +211,11 @@ const EditResourceCardForm = ({ id }: EditResourceCardFormProps) => {
       <Controller
         name='price'
         control={control}
-        render={({ field, fieldState }) => (
+        render={({ field }) => (
           <CustomInput
             {...field}
-            placeholder=''
-            error={!!fieldState?.error}
-            helperText={fieldState?.error?.message}
+            error={!!errors.price}
+            helperText={errors.price?.message}
           />
         )}
       />
@@ -218,12 +246,11 @@ const EditResourceCardForm = ({ id }: EditResourceCardFormProps) => {
       <Controller
         name='mapLink'
         control={control}
-        render={({ field, fieldState }) => (
+        render={({ field }) => (
           <CustomInput
             {...field}
-            placeholder=''
-            error={!!fieldState?.error}
-            helperText={fieldState?.error?.message}
+            error={!!errors.mapLink}
+            helperText={errors.mapLink?.message}
           />
         )}
       />

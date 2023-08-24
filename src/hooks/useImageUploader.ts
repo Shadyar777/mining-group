@@ -1,4 +1,10 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 
 type ImageUploaderReturnType = {
   uploadedImage: string | ArrayBuffer | null;
@@ -48,6 +54,10 @@ const useImageUploader = ({
   const handleImageRemove = () => {
     setUploadedImage(null);
   };
+
+  useEffect(() => {
+    setUploadedImage(initialImage);
+  }, [initialImage]);
 
   return {
     uploadedImage,

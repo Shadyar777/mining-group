@@ -16,11 +16,8 @@ export const configFetchBaseQuery: configFetchBaseQuery = {
     const state = getState() as AppState;
     const { login, password } = getAdmin(state).admin;
     const globalLanguages = getAddGlobalLanguages(state);
-
-    // headers.set('Content-Type', 'application/json');
     headers.set('Authorization', getBasicAuthHeader(login, password));
     headers.set('Accept-Language', globalLanguages.toUpperCase());
-    headers.set('password', '123456'); // TODO - Удалить когда бек сделает ручку
     return headers;
   },
 };

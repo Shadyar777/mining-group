@@ -99,15 +99,6 @@ const CreateResourceCardForm = () => {
       resourceData.map((resource) => resource.name).join(),
     );
     formData.append('title', data.title);
-
-    // formData.append('backgroundImageFiles', uploadedImage);
-    // const body: CreateBodyFields = {
-    //   backgroundImageFiles: uploadedImage,
-    //   images: moreImages.filter((obj) => Object.keys(obj).length > 0),
-    //   location: data.mapLink,
-    //   mainFile: urlPdf,
-    //   resources: resourceData.map((resource) => resource.name).join(),
-    // };
     addFields(formData);
   };
 
