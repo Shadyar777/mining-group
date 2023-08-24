@@ -132,8 +132,8 @@ const MapOfKazakhstan = () => {
     if (data) {
       const parsedIconBase64 = data?.data
         ? parseImgBase64({
-            data: data?.data?.file.data || '',
-            type: data?.data?.file.type || '',
+            data: data?.data?.file?.data || '',
+            type: data?.data?.file?.type || '',
           })
         : null;
       setContentTitle(data?.data?.title);
