@@ -14,7 +14,7 @@ type Data = {
     data: string;
     fieldsId: string;
   };
-  type: string;
+  type: 'job' | 'about_company' | 'investors';
 };
 
 export type TitleResponse = {

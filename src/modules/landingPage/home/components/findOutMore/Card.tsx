@@ -1,11 +1,15 @@
 import { styled, Typography } from '@mui/material';
 import { TitleResponse } from '../../../../../rtk-query';
 import { parseImgBase64 } from '../../../../../utils';
+import { useNavigate } from 'react-router-dom';
+import { lendingRoutes } from '../../../routers';
 
 export const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   padding: '20px 0',
   display: 'flex',
   flexDirection: 'column',
+
+  cursor: 'pointer',
   '& .card__img': {
     width: 'clamp(150px, 100%, 300px)',
     height: '300px',
@@ -50,23 +54,39 @@ export const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
     },
   },
 }));
+type Type = 'job' | 'about_company' | 'investors';
 
 type CardProps = {
   id: string | number;
   title: string;
   text: string;
   file?: TitleResponse['data']['0']['file'] | null;
+  type: Type;
 };
 
-const Card = ({ title, text, file }: CardProps) => {
+const getPath = (to: Type) => {
+  const redirect = {
+    job: lendingRoutes.VACANCIES,
+    about_company: lendingRoutes.ABOUT,
+    investors: lendingRoutes.ASSETS_ENTERPRISE,
+  };
+  return redirect[to] ?? lendingRoutes.HOME;
+};
+
+const Card = ({ title, text, file, type }: CardProps) => {
+  const navigate = useNavigate();
   const parsedIconBase64 = file
     ? parseImgBase64({
         data: file.data || '',
         type: file.type || '',
       })
     : '';
+
+  const goTo = () => {
+    navigate(getPath(type));
+  };
   return (
-    <StyledCard>
+    <StyledCard onClick={goTo}>
       <div className='card__img'>
         <img alt='' src={parsedIconBase64} />
       </div>
