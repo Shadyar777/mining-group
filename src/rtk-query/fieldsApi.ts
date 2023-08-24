@@ -28,12 +28,15 @@ export const fieldsApi = createApi({
       }),
       providesTags: [{ type: 'Fields', id: 'LIST' }],
     }),
-    getFieldsById: build.query<FieldsCommonResponse<DataById>, { id: number, lng: string }>({
+    getFieldsById: build.query<
+      FieldsCommonResponse<DataById>,
+      { id: number; lng: string }
+    >({
       query: ({ id }) => ({
         url: `fields/getByIdAdmin/${id}`,
         method: 'GET',
       }),
-      providesTags: (_, __, { id }) => [{ type: 'Fields', id: id.toString() }],
+      // providesTags: (_, __, { id }) => [{ type: 'Fields', id: id.toString() }],
     }),
     updateFieldsById: build.mutation<
       FieldsCommonResponse<DataById>,

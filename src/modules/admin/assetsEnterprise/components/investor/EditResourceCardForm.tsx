@@ -104,7 +104,6 @@ const EditResourceCardForm = ({
         formData.append('images', imgBlob, `image${index}`);
       }
     });
-    typeof uploadedImage === 'string' &&
       formData.append(
         'backgroundImageFiles',
         await base64ToFile(uploadedImage as string, 'backgroundImageFiles'),
@@ -138,7 +137,7 @@ const EditResourceCardForm = ({
         ? convertBase64ToPdfDataUrl(data.data?.mainFile?.data || '')
         : null;
       // fieldsId
-      const parsedBgImgFiles = data.data.backgroundImageFiles?.fieldsId
+      const parsedBgImgFiles = data.data.backgroundImageFiles
         ? parseImgBase64({
             data: data.data.backgroundImageFiles.data || '',
             type: data.data.backgroundImageFiles.type || '',
@@ -153,6 +152,7 @@ const EditResourceCardForm = ({
         mapLink: data.data.location,
       });
       setTimeout(() => {
+        console.log('parsedBgImgFiles', parsedBgImgFiles)
         setUploadedImage(() => parsedBgImgFiles);
         if (data.data?.mainFile) {
           setUploadedPdf(() => convertedDataUrl);
@@ -170,6 +170,8 @@ const EditResourceCardForm = ({
   if (isGetLoading || isPostLoading) {
     return <LoadingSpinner />;
   }
+
+  console.log('uploadedImage', uploadedImage)
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <TitleEdit>Заголовок:</TitleEdit>

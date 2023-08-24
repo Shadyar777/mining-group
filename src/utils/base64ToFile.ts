@@ -1,6 +1,6 @@
 async function base64ToFile(dataURI: string, fileName: string): Promise<File> {
   if (!dataURI) {
-    return new File([new Blob()], 'empty.jpeg');
+    return new File([], 'empty.pdf');
   }
 
   const byteString = atob(dataURI.split(',')[1]);

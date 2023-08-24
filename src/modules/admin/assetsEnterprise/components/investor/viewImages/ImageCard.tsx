@@ -66,11 +66,11 @@ export const ImageCard: React.FC<ImageCardProps> = ({
   return (
     <StyledCard>
       {imageSrc ? (
-        <Box flex='auto'>
+        <Box flex='auto' overflow='hidden'>
           <img
             src={imageSrc}
             alt='Uploaded Preview'
-            style={{ width: '100%', height: '100%', borderRadius: '10px' }}
+            style={{ width: '100%', height: '100%', borderRadius: '10px', maxHeight: '100%' }}
             // style={{ maxWidth: '100%', borderRadius: '10px' }}
           />
         </Box>
