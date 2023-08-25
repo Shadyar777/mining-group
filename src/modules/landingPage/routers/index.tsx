@@ -16,44 +16,44 @@ export const lendingRoutes = {
 
 export const routersLanding = [
   {
-    name: 'Главная',
+    name: 'main',
     index: true,
     path: lendingRoutes.HOME,
     element: <HomePage />,
     skip: false,
   },
   {
-    name: 'О компании',
+    name: 'aboutCompany',
     path: lendingRoutes.ABOUT,
     element: <AboutPage />,
     skip: false,
   },
   {
-    name: 'Для инвесторов',
+    name: 'forInvestors',
     path: '/press-center',
     element: <PressCenterPage />,
     skip: true,
   },
   {
-    name: 'Услуги',
+    name: 'services',
     path: `${lendingRoutes.ABOUT}#services`,
     element: <PressCenterPage />,
     skip: false,
   },
   {
-    name: 'Активы предприятия',
+    name: 'assetsOfEnterprise',
     path: lendingRoutes.ASSETS_ENTERPRISE,
     element: <AssetsEnterprisePage />,
     skip: false,
   },
   {
-    name: 'Вакансии',
+    name: 'vacancies',
     path: lendingRoutes.VACANCIES,
     element: <VacanciesPage />,
     skip: false,
   },
   {
-    name: 'Контакты',
+    name: 'contacts',
     path: lendingRoutes.CONTACTS,
     element: <ContactsPage />,
     skip: false,

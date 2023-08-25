@@ -3,7 +3,13 @@
   "label": "Select another language!",
   "lng": "ru",
   "nav": {
-    "any": "any"
+    "main": "Главная",
+    "aboutCompany": "О компании",
+    "forInvestors": "Для инвесторов",
+    "services": "Услуги",
+    "assetsOfEnterprise": "Активы предприятия",
+    "vacancies": "Вакансии",
+    "contacts": "Контакты"
   },
   "home": {
     "toLearnMore": "Узнать больше"

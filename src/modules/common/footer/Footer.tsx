@@ -3,8 +3,10 @@ import { Container } from '@mui/material';
 import StyledFooter from './styled';
 import { getLinksAdmin, getLinksLanding } from '../../../routers/appRoutes.tsx';
 import Logo from '../header/Logo.tsx';
+import { useTranslation } from 'react-i18next';
 
 const Footer = ({ isAdmin }: { isAdmin?: boolean }) => {
+  const { t } = useTranslation('translation', { keyPrefix: 'nav' });
   const links = isAdmin ? getLinksAdmin() : getLinksLanding();
 
   return (
@@ -30,10 +32,10 @@ const Footer = ({ isAdmin }: { isAdmin?: boolean }) => {
                       }}
                       to={path}
                     >
-                      {name}
+                      {t(name)}
                     </NavLink>
                   ) : (
-                    <NavLink to={path}>{name}</NavLink>
+                    <NavLink to={path}> {t(name)}</NavLink>
                   )}
                 </li>
               );

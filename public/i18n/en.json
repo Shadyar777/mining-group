@@ -3,7 +3,13 @@
   "label": "Select another language!",
   "lng": "ru",
   "nav": {
-    "any": "any"
+    "main": "Min",
+    "aboutCompany": "About the company",
+    "forInvestors": "For investors",
+    "services": "Services",
+    "assetsOfEnterprise": "Assets of the enterprise",
+    "vacancies": "Job openings",
+    "contacts": "Contacts"
   },
   "home": {
     "toLearnMore": "To learn more"

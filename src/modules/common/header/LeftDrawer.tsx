@@ -3,6 +3,7 @@ import { getLinksAdmin, getLinksLanding } from '../../../routers/appRoutes.tsx';
 import { StyledLeftDrawer } from './styled';
 import Languages from './Languages.tsx';
 import { useMediaQuery, useTheme } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const LeftDrawer = ({
   isOpen,
@@ -13,14 +14,18 @@ const LeftDrawer = ({
   onClose: () => void;
   isAdmin?: boolean;
 }) => {
+  const { t } = useTranslation('translation', { keyPrefix: 'nav' });
   const links = isAdmin ? getLinksAdmin() : getLinksLanding();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('mobileSm'));
+
+  console.log(t('aboutCompany'));
 
   return (
     <StyledLeftDrawer anchor={'left'} open={isOpen} onClose={onClose}>
       <ul>
         {links.map(({ name, path }, idx) => {
+          console.log(t(name));
           return (
             <li key={`name-${idx}`}>
               {path.includes('#services') ? (
@@ -35,11 +40,11 @@ const LeftDrawer = ({
                   }}
                   to={path}
                 >
-                  {name}
+                  {t(name)}
                 </NavLink>
               ) : (
                 <NavLink onClick={onClose} to={path}>
-                  {name}
+                  {t(name)}
                 </NavLink>
               )}
             </li>

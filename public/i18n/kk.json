@@ -3,7 +3,13 @@
   "label": "Select another language!",
   "lng": "ru",
   "nav": {
-    "any": "any"
+    "main": "Басты бет",
+    "aboutCompany": "Компания туралы",
+    "forInvestors": "Инвесторлар үшін",
+    "services": "Қызметтер",
+    "assetsOfEnterprise": "Кәсіпорын активтері",
+    "vacancies": "Бос жұмыс орындары",
+    "contacts": "Байланыс"
   },
   "home": {
     "toLearnMore": "Көбірек біліңіз"
