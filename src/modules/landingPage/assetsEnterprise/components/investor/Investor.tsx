@@ -61,7 +61,7 @@ const Investor = () => {
     title: '',
     resources: [],
     orderBy: 'new',
-    limit: isMobile ? 4 : 1,
+    limit: isMobile ? 4 : 9,
     page: 1,
   });
 

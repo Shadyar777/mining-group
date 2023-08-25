@@ -56,7 +56,7 @@ const Investor = () => {
     title: '',
     resources: [],
     orderBy: 'new',
-    limit: isMobile ? 4 : 1,
+    limit: isMobile ? 4 : 8,
     page: 1,
     language: lng,
   });
