@@ -1,6 +1,5 @@
 import { Modal, styled } from '@mui/material';
 import { FC } from 'react';
-import LanguageSwitcher from './buttons/LanguageSwitcher.tsx';
 import srcCanselIcon from '@public/svgs/cancel.svg';
 
 type CustomModalProps = {
@@ -54,10 +53,6 @@ const CustomModal: FC<CustomModalProps> = ({
   children,
   maxwidth,
 }) => {
-  const onSwitchLanguage = (language: string) => {
-    console.log(language);
-  };
-
   return (
     <StyledModal
       maxwidth={maxwidth}
@@ -72,7 +67,7 @@ const CustomModal: FC<CustomModalProps> = ({
           className='modal__icon-cancel'
           src={srcCanselIcon}
         />
-        <LanguageSwitcher onClick={onSwitchLanguage} />
+        {/*<LanguageSwitcher onClick={onSwitchLanguage} />*/}
         <div className='modal__content'>{children}</div>
       </div>
     </StyledModal>

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Container, Typography } from '@mui/material';
-import LanguageSwitcher from '../../../../common/buttons/LanguageSwitcher.tsx';
 import UploadButton from '../../../../common/buttons/UploadButton.tsx';
 import PlusFile from '../../../../../svgs/PlusFile.tsx';
 import { StyledAboutCompany } from './styled.ts';
@@ -44,10 +43,6 @@ const AboutCompany = () => {
     setContent: setContentText,
   } = useEditableContent('');
 
-  const onSwitchLaunch = (language: string) => {
-    console.log(language);
-  };
-
   const onUploadDate = async () => {
     const data = {
       title: contentTitle,
@@ -82,7 +77,7 @@ const AboutCompany = () => {
     <StyledAboutCompany>
       <Container maxWidth='md'>
         <div className='about-company__content'>
-          <LanguageSwitcher onClick={onSwitchLaunch} />
+          {/*<LanguageSwitcher onClick={onSwitchLaunch} />*/}
           <TitleEdit>Заголовок:</TitleEdit>
           <Typography
             variant='h3'
