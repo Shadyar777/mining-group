@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
+import { SnackbarProvider } from 'notistack';
 
 import Wrapper from './Wrapper';
 
@@ -22,9 +23,11 @@ createRoot(document.getElementById('root')!).render(
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Wrapper>
-          <RouterProvider router={routers} />
-        </Wrapper>
+        <SnackbarProvider maxSnack={3}>
+          <Wrapper>
+            <RouterProvider router={routers} />
+          </Wrapper>
+        </SnackbarProvider>
       </ThemeProvider>
     </Provider>
   </StrictMode>,

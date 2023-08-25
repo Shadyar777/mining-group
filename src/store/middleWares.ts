@@ -1,3 +1,5 @@
+import { Middleware } from 'redux';
+import { enqueueSnackbar } from '../modules/common/sliceCommon/slice.ts';
 import { goodsApi } from './rtkQuery.ts';
 import {
   activitiesApi,
@@ -25,3 +27,22 @@ export const rtkMiddleWares = [
   fieldsApi.middleware,
   fieldsPrivateByIdApi.middleware,
 ];
+
+export const snackbarMiddleware: Middleware =
+  ({ dispatch }) =>
+  (next) =>
+  (action) => {
+    if (action.type.endsWith('/reject') || action.error) {
+      dispatch(
+        enqueueSnackbar({
+          // message: action.error.message || 'Что-то пошло не так',
+          message: 'Что-то пошло не так',
+          options: {
+            variant: 'error',
+          },
+        }),
+      );
+    }
+
+    return next(action);
+  };
