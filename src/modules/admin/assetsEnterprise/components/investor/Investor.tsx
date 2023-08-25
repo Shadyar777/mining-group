@@ -75,7 +75,7 @@ const Investor = () => {
   return (
     <StyledInvestor>
       <Container maxWidth='md'>
-        <div className='investor__titles'>
+        <div className='investor__titlaes'>
           <Typography className='title' variant='h3'>
             Инвесторам
           </Typography>

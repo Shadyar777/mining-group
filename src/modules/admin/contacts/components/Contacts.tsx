@@ -144,9 +144,9 @@ const Contacts = () => {
   };
   useEffect(() => {
     if (data) {
-      setContentLocation(data.data.address || '');
-      setContentTel(data.data.phone || '');
-      setContentMail(data.data.mail || '');
+      setContentLocation(data?.data?.address || '');
+      setContentTel(data?.data?.phone || '');
+      setContentMail(data?.data?.mail || '');
     }
   }, [data, setContentLocation, setContentMail, setContentTel]);
 
@@ -166,7 +166,9 @@ const Contacts = () => {
                 setInputValue={setInputValue}
                 setIsValid={setIsValid}
               />
-              <GoogleMaps srcGoogle={inputValue || data?.data.location || ''} />
+              <GoogleMaps
+                srcGoogle={inputValue || data?.data?.location || ''}
+              />
             </div>
             <div className='content__text'>
               <TitleEdit>Адрес:</TitleEdit>
