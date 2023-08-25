@@ -2,7 +2,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { Button, Typography } from '@mui/material';
+import { Button, CircularProgress, Typography } from '@mui/material';
 import PinCode from './PinCode.tsx';
 import { useAppDispatch, useAppSelector } from '../../../../../store/hooks.ts';
 import { addPassword } from '../../../../admin/signIn/slice.ts';
@@ -25,7 +25,7 @@ export default function CustomModal({ id, open, onClose }: CustomModalProps) {
   const lng = useAppSelector(getAddGlobalLanguages);
   const [pinCode, setPinCode] = useState<string>('');
   const dispatch = useAppDispatch();
-  const [getFieldsById, { isSuccess, isError }] =
+  const [getFieldsById, { isSuccess, isError, isLoading }] =
     useLazyGetFieldsPrivateByIdQuery();
   const sendPinCode = () => {
     if (Number(pinCode.length) === 6) {
@@ -97,7 +97,7 @@ export default function CustomModal({ id, open, onClose }: CustomModalProps) {
           disabled={Number(pinCode.length) !== 6}
           onClick={sendPinCode}
         >
-          {t('common.send')}
+          {isLoading ? <CircularProgress size={24} /> : t('common.send')}
         </Button>
 
         {isError && (
