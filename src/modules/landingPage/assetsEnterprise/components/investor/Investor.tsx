@@ -99,7 +99,10 @@ const Investor = () => {
           </Typography>
           <Typography className='sub-title'> {t('deposits')}</Typography>
         </div>
-        <MenuFilters setFieldsParams={setFieldsParams} />
+        <MenuFilters
+          setFieldsParams={setFieldsParams}
+          paramResources={fieldsParams.resources}
+        />
         <div className='investor__content'>
           {isFetching || isLoading ? (
             <Box
@@ -115,10 +118,6 @@ const Investor = () => {
               <Card {...item} key={key} handleOpenModal={handleOpenModal} />
             ))
           )}
-
-          {/*{listFields.map((item, key) => (*/}
-          {/*  <Card {...item} key={key} handleOpenModal={handleOpenModal} />*/}
-          {/*))}*/}
         </div>
         <CustomModal id={cardId} open={open} onClose={handleCloseModal} />
         <Pagination

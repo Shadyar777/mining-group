@@ -56,7 +56,7 @@ const Investor = () => {
     title: '',
     resources: [],
     orderBy: 'new',
-    limit: isMobile ? 4 : 8,
+    limit: isMobile ? 4 : 1,
     page: 1,
     language: lng,
   });
@@ -81,7 +81,10 @@ const Investor = () => {
           </Typography>
           <Typography className='sub-title'>Месторождения</Typography>
         </div>
-        <MenuFilters setFieldsParams={setFieldsParams} />
+        <MenuFilters
+          setFieldsParams={setFieldsParams}
+          paramResources={fieldsParams.resources}
+        />
         <div className='investor__content'>
           {isLoading || isFetching ? null : <NewCard />}
           {isLoading || isFetching ? (
