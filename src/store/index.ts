@@ -19,7 +19,7 @@ import {
   titleApi,
   valuesApi,
 } from '../rtk-query';
-import { rtkMiddleWares } from './middleWares.ts';
+import { rtkMiddleWares, snackbarMiddleware } from './middleWares.ts';
 
 export const store = configureStore({
   reducer: {
@@ -38,7 +38,7 @@ export const store = configureStore({
     [fieldsPrivateByIdApi.reducerPath]: fieldsPrivateByIdApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([...rtkMiddleWares]),
+    getDefaultMiddleware().concat([...rtkMiddleWares, snackbarMiddleware]),
 });
 
 export type AppDispatch = typeof store.dispatch;
