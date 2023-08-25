@@ -1,4 +1,5 @@
 import { Drawer, FormControl, styled } from '@mui/material';
+import bgLeftDrawerIconSrc from '@public/svgs/bg-left-drawer.svg';
 
 export const StyledHeader = styled('header')(({ theme: { breakpoints } }) => ({
   padding: '32px',
@@ -147,7 +148,7 @@ export const StyledLeftDrawer = styled(Drawer)(
 
       '&::after': {
         content: `""`,
-        background: `url('./../../../../public/svgs/bg-left-drawer.svg')`,
+        background: `url(${bgLeftDrawerIconSrc})`,
         position: 'absolute',
         bottom: 0,
         left: 0,

@@ -6,6 +6,7 @@ import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 import { useGetAllHomeQuery } from '../../../../../rtk-query';
 import { parseImgBase64 } from '../../../../../utils';
 import LoadingSpinner from '../../../../common/loadingSpinner';
+import companyBgSrc from '@public/images/home-page-about-company-bg.jpg';
 
 export const StyledAboutCompany = styled('div')(
   ({ theme: { breakpoints } }) => ({
@@ -17,7 +18,7 @@ export const StyledAboutCompany = styled('div')(
       flexDirection: 'column',
       gap: '1rem 0',
       padding: '32px 40px',
-      backgroundImage: `url('../../../../../../public/images/home-page-about-company-bg.jpg')`,
+      backgroundImage: `url(${companyBgSrc})`,
       // backgroundColor: 'white',
 
       borderRadius: '20px',
@@ -55,7 +56,7 @@ export const StyledAboutCompany = styled('div')(
       },
     },
     [breakpoints.down('mobileSm')]: {
-      backgroundImage: `url('../../../../../../public/images/home-page-about-company-bg.jpg')`,
+      backgroundImage: `url(${companyBgSrc})`,
       padding: '32px 0',
       '& .about-company__content': {
         background: 'unset',
