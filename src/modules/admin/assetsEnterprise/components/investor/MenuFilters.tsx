@@ -40,7 +40,10 @@ const StyledMenuFilter = styled('div')(({ theme: { breakpoints } }) => ({
     background: 'rgba(255, 255, 255, 0.90)',
   },
 
-  [breakpoints.down('sm')]: {},
+  [breakpoints.down('mobileSm')]: {
+    flexWrap: 'wrap',
+    gap: '20px 0',
+  },
 }));
 
 type MenuFiltersProps = {

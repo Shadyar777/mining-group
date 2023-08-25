@@ -42,7 +42,8 @@ const StyledMenuFilter = styled('div')(({ theme: { breakpoints } }) => ({
   },
 
   [breakpoints.down('sm')]: {
-    // gap: '60px',
+    flexWrap: 'wrap',
+    gap: '20px 0',
   },
 }));
 
