@@ -4,15 +4,20 @@ import { routersLanding } from '../modules/landingPage/routers';
 import SignIn from '../modules/admin/signIn/SignIn.tsx';
 import { routersAdmin } from '../modules/admin/routers';
 
-const landingMap = routersLanding.map(({ path, element, index }) => ({
-  path,
-  element,
-  index: index ? index : false,
-}));
-const adminMap = routersAdmin.map(({ path, element }) => ({
-  path,
-  element,
-}));
+const landingMap = routersLanding
+  .filter((router) => router.element)
+  .map(({ path, element, index }) => ({
+    path,
+    element,
+    index: index ? index : false,
+  }));
+const adminMap = routersAdmin
+  .filter((router) => router.element)
+  .map(({ path, element }) => ({
+    path,
+    element,
+  }));
+
 export const routers = createBrowserRouter([
   {
     path: '/',
@@ -29,8 +34,9 @@ export const routers = createBrowserRouter([
     children: adminMap,
   },
 ]);
-
 export const getLinksLanding = () =>
-  routersLanding.map(({ name, path }) => ({ name, path }));
+  routersLanding
+    .filter((item) => !item.skip)
+    .map(({ name, path }) => ({ name, path }));
 export const getLinksAdmin = () =>
   routersAdmin.map(({ name, path }) => ({ name, path }));

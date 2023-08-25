@@ -1,4 +1,7 @@
 import { styled } from '@mui/material';
+import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
+import PhoneRoundedIcon from '@mui/icons-material/PhoneRounded';
+import { useTranslation } from 'react-i18next';
 
 type StyledVacancyCardProps = {
   bgColor: string;
@@ -37,19 +40,19 @@ const StyledVacancyCard = styled('div')<StyledVacancyCardProps>(
       fontWeight: 300,
     },
 
-    '& .card__mail': {
+    '& .card__contacts': {
       display: 'flex',
-      alignItems: 'center',
-      '& .mail__icon': {
-        marginRight: '16px',
-        img: {
-          width: '100%',
-          height: '100%',
-        },
+      flexDirection: 'column',
+      alignItems: 'start',
+      justifyContent: 'center',
+      fontSize: '26px',
+      '& .contacts__mail, .contacts__tel': {
+        display: 'flex',
+        alignItems: 'center',
       },
       a: {
+        marginLeft: '16px',
         color: 'white',
-        fontSize: '26px',
         fontWeight: 400,
         textDecoration: 'none',
       },
@@ -71,7 +74,7 @@ const StyledVacancyCard = styled('div')<StyledVacancyCardProps>(
       '& .text': {
         fontSize: '12px',
       },
-      '& .card__mail': {
+      '& .card__contacts': {
         a: {
           color: '#FFF',
           fontSize: '14px',
@@ -82,49 +85,52 @@ const StyledVacancyCard = styled('div')<StyledVacancyCardProps>(
 );
 
 type VacancyCardProps = {
+  jobId: number;
   title: string;
-  termsText: string;
-  tasksText: string;
-  mailHref: string;
-  baColor: string;
+  conditions: string;
+  tasks: string;
+  mail: string;
+  backgroundColor: string;
+  phone: string;
 };
 const VacancyCard = ({
   title,
-  termsText,
-  tasksText,
-  mailHref,
-  baColor,
+  conditions,
+  tasks,
+  mail,
+  backgroundColor,
+  phone,
 }: VacancyCardProps) => {
+  const { t } = useTranslation('translation', {
+    keyPrefix: 'vacancies',
+  });
   return (
-    <StyledVacancyCard bgColor={baColor}>
+    <StyledVacancyCard bgColor={backgroundColor}>
       <div className='card__content'>
         <div className='card__title'>{title}</div>
         <div className='card__terms title'>
-          <div className='terms__title title'>Условия:</div>
-          <div className='terms__text text'>{termsText}</div>
+          <div className='terms__title title'>{t('conditions')}</div>
+          <div className='terms__text text'>{conditions}</div>
         </div>
         <div className='card__tasks'>
-          <div className='tasks__title title'>Задачи:</div>
-          <div className='tasks__text text'>{tasksText}</div>
+          <div className='tasks__title title'>{t('tasks')}</div>
+          <div className='tasks__text text'>{tasks}</div>
         </div>
-        <div className='card__mail'>
-          <div className='mail__icon icon'>
-            <img alt='' src='../../../../../public/images/mail.svg' />
-          </div>
-          <a href={mailHref}>{mailHref}</a>
+        <div className='card__contacts'>
+          {mail && (
+            <div className='contacts__mail'>
+              <EmailRoundedIcon /> <a href={mail}>{mail}</a>
+            </div>
+          )}
+          {phone && (
+            <div className='contacts__tel '>
+              <PhoneRoundedIcon /> <a href={`tel:${phone}`}>{phone}</a>
+            </div>
+          )}
         </div>
       </div>
     </StyledVacancyCard>
   );
-};
-
-VacancyCard.defaultProps = {
-  title: 'Главный экономист предприятия',
-  termsText: 'График 5/2 оффлайн, город Шымкент',
-  tasksText:
-    'Сознание экономического блока. Сознание системы бюджетирование и планирования 5/2 оффлайн, город Шымкент',
-  mailHref: 'info@imgkz.com',
-  baColor: '#004B8F',
 };
 
 export default VacancyCard;

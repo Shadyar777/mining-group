@@ -1,11 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container, styled, Typography } from '@mui/material';
-import LanguageSwitcher from '../../../../common/buttons/LanguageSwitcher.tsx';
 import PlusFile from '../../../../../svgs/PlusFile.tsx';
 import UploadButton from '../../../../common/buttons/UploadButton.tsx';
 import TitleEdit from '../../../common/TitleEdit.tsx';
 import { useEditableContent } from '../../../../../hooks/useEditableContent.ts';
 import EditImage from '../../../common/EditImage.tsx';
+import {
+  useAddStrategyMutation,
+  useGetStrategyQuery,
+} from '../../../../../rtk-query';
+import { useAppSelector } from '../../../../../store/hooks.ts';
+import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
+import { base64ToFile, parseImgBase64 } from '../../../../../utils';
+import LoadingSpinner from '../../../../common/loadingSpinner';
 
 export const StyledStrategy = styled('div')(({ theme: { breakpoints } }) => ({
   width: '100%',
@@ -57,41 +64,68 @@ export const StyledStrategy = styled('div')(({ theme: { breakpoints } }) => ({
   },
 }));
 
-const maskText =
-  'Основной стратегией развития компании является управление\n' +
-  '            горно-рудными проектами на всех стадиях развития: от начальной\n' +
-  '            стадии поиска и разведки, технико-экономического обоснования,\n' +
-  '            проектирования и строительства, до управления на этапе производства.\n' +
-  '            <br />\n' +
-  '            <br />\n' +
-  '            Дополнительной стратегией развития является сопровождение сделок по\n' +
-  '            продажам и слиянию активов.';
 const Strategy = () => {
   const [uploadedImage, setUploadedImage] = useState<
     string | ArrayBuffer | null
   >(null);
+  const [imageBase64, setImageBase64] = useState<string | null>('');
+
+  const lng = useAppSelector(getAddGlobalLanguages);
+  const { data, isLoading: isGetLoading } = useGetStrategyQuery(lng);
+  const [addStrategy, { isLoading: isAddLoading }] = useAddStrategyMutation();
+
   const {
     content: contentTitle,
     ref: contentRefTitle,
     handleBlur: handleContentTitle,
-  } = useEditableContent(`Стратегия`);
+    setContent: setContentTitle,
+  } = useEditableContent('');
 
   const {
     content: contentText,
     ref: contentRefText,
     handleBlur: handleContentText,
-  } = useEditableContent(maskText);
-  const onSwitchLaunch = (language: string) => {
-    console.log(language);
+    setContent: setContentText,
+  } = useEditableContent(data?.data?.text ?? '');
+
+  const onUploadDate = async () => {
+    const formData = new FormData();
+    const file = uploadedImage
+      ? await base64ToFile({
+          dataURI: uploadedImage as string,
+          fileName: 'images',
+          optionsType: 'image/jpeg',
+        })
+      : null;
+    formData.append('title', contentTitle);
+    formData.append('text', contentText);
+    formData.append('file', file || '');
+    addStrategy(formData);
   };
-  const onUploadDate = () => {
-    console.log(contentTitle, contentText, uploadedImage);
-  };
+
+  useEffect(() => {
+    if (data) {
+      const parsedImagBase64 = data?.data
+        ? parseImgBase64({
+            data: data?.data?.file.data || '',
+            type: data?.data?.file.type || '',
+          })
+        : null;
+      setContentTitle(data?.data?.title || '');
+      setContentText(data?.data?.text || '');
+      setImageBase64(parsedImagBase64);
+    }
+  }, [data, setContentText, setContentTitle]);
+
+  if (isGetLoading || isAddLoading) {
+    return <LoadingSpinner />;
+  }
+
   return (
     <StyledStrategy>
       <Container maxWidth='md'>
         <div className='strategy__content'>
-          <LanguageSwitcher onClick={onSwitchLaunch} />
+          {/*<LanguageSwitcher onClick={onSwitchLaunch} />*/}
           <TitleEdit>Заголовок:</TitleEdit>
           <Typography
             variant='h3'
@@ -112,7 +146,7 @@ const Strategy = () => {
           <div className='content__img'>
             <EditImage
               setUploadedImage={setUploadedImage}
-              urlImag='../../../../../../public/mock-images/about-company.png'
+              urlImag={imageBase64}
             />
           </div>
           <UploadButton

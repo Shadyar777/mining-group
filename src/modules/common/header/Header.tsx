@@ -7,6 +7,8 @@ import Menu from './Menu';
 import LeftDrawer from './LeftDrawer';
 import Logo from './Logo.tsx';
 
+import waveImgSrc from '@public/svgs/home-top-banner-wave.svg';
+
 const Header = ({ isAdmin }: { isAdmin?: boolean }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -41,10 +43,7 @@ const Header = ({ isAdmin }: { isAdmin?: boolean }) => {
         </Container>
         {!isMobile && (
           <div className='header-bg__wive'>
-            <img
-              alt=''
-              src='../../../../public/svgs/home-top-banner-wave.svg'
-            />
+            <img alt='' src={waveImgSrc} />
           </div>
         )}
       </StyledHeader>

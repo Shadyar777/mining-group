@@ -1,6 +1,4 @@
 import { styled } from '@mui/material';
-
-// import AboutCompany from '../components/aboutCompany/AboutCompany.tsx';
 import AboutCompany from '../../home/components/aboutCompany/AboutCompany.tsx';
 import Activity from '../components/activity/Activity.tsx';
 import Strategy from '../components/strategy/Strategy.tsx';

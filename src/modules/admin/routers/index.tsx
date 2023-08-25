@@ -1,6 +1,8 @@
 import HomePage from '../home/view/HomePage.tsx';
 import AboutPage from '../about/view/AboutPage.tsx';
 import AssetsEnterprisePage from '../assetsEnterprise/view/AssetsEnterprisePage.tsx';
+import VacanciesPage from '../vacancies/view/VacanciesPage.tsx';
+import ContactsPage from '../contacts/view/ContactsPage.tsx';
 
 export const adminRoutes = {
   HOME: '/admin/home',
@@ -28,24 +30,24 @@ export const routersAdmin = [
     path: adminRoutes.ASSETS_ENTERPRISE,
     element: <AssetsEnterprisePage />,
   },
+  {
+    name: 'Вакансии',
+    path: adminRoutes.VACANCIES,
+    element: <VacanciesPage />,
+  },
+  {
+    name: 'Услуги',
+    path: `${adminRoutes.ABOUT}#services`,
+    // element: <PressCenterPage />,
+  },
+  {
+    name: 'Контакты',
+    path: adminRoutes.CONTACTS,
+    element: <ContactsPage />,
+  },
   // {
   //   name: 'Для инвесторов',
   //   path: '/press-center',
   //   element: <PressCenterPage />,
-  // },
-  // {
-  //   name: 'Услуги',
-  //   path: `${adminRoutes.ABOUT}#services`,
-  //   element: <PressCenterPage />,
-  // },
-  // {
-  //   name: 'Вакансии',
-  //   path: adminRoutes.VACANCIES,
-  //   element: <VacanciesPage />,
-  // },
-  // {
-  //   name: 'Контакты',
-  //   path: adminRoutes.CONTACTS,
-  //   element: <ContactsPage />,
   // },
 ];

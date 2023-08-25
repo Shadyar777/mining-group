@@ -1,7 +1,21 @@
-import { Container, styled, Typography } from '@mui/material';
+import { ChangeEvent, useState } from 'react';
+import {
+  Box,
+  Container,
+  styled,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import Card from './Card.tsx';
-import { getArray } from '../../../../../utils/getArray.ts';
 import MenuFilters from './MenuFilters.tsx';
+import NewCard from './NewCard.tsx';
+import { useGetFieldsQuery } from '../../../../../rtk-query';
+import Pagination from './Pagination.tsx';
+import { QueryFieldsParams } from '../../../../../rtk-query/types/fields-types.ts';
+import { useAppSelector } from '../../../../../store/hooks.ts';
+import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
+import LoadingSpinner from '../../../../common/loadingSpinner';
 
 const StyledInvestor = styled('div')(({ theme: { breakpoints } }) => ({
   padding: '40px 0',
@@ -18,18 +32,6 @@ const StyledInvestor = styled('div')(({ theme: { breakpoints } }) => ({
       fontWeight: 400,
     },
   },
-  // '& .investor__filters': {
-  //   '& .filters__icon': {},
-  //   '& .filters__label': {
-  //     color: '#000',
-  //     fontSize: '16px',
-  //     fontWeight: 400,
-  //   },
-  //   '& .filters__search': {
-  //     borderRadius: '30px',
-  //     background: 'rgba(255, 255, 255, 0.90)',
-  //   },
-  // },
   '& .investor__content': {
     display: 'flex',
     flexWrap: 'wrap',
@@ -42,37 +44,64 @@ const StyledInvestor = styled('div')(({ theme: { breakpoints } }) => ({
   },
 
   [breakpoints.down('sm')]: {
-    // gap: '60px',
+    backgroundColor: '#FFF8EC',
   },
 }));
 
 const Investor = () => {
+  const lng = useAppSelector(getAddGlobalLanguages);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('mobileSm'));
+  const [fieldsParams, setFieldsParams] = useState<QueryFieldsParams>({
+    title: '',
+    resources: [],
+    orderBy: 'new',
+    limit: isMobile ? 4 : 1,
+    page: 1,
+    language: lng,
+  });
+
+  const { data, isLoading, isFetching } = useGetFieldsQuery(fieldsParams);
+
+  const onChangePagination = (_: ChangeEvent<unknown>, page: number) => {
+    setFieldsParams((prevState) => ({ ...prevState, page }));
+  };
+
+  if (!data) {
+    return;
+  }
+
+  const { listFields } = data.data.listFields;
   return (
     <StyledInvestor>
       <Container maxWidth='md'>
-        <div className='investor__titles'>
+        <div className='investor__titlaes'>
           <Typography className='title' variant='h3'>
             Инвесторам
           </Typography>
           <Typography className='sub-title'>Месторождения</Typography>
         </div>
-        <MenuFilters />
-        {/*<div className='investor__filters'>*/}
-        {/*  <div>*/}
-        {/*    <div className='filters__icon'>*/}
-        {/*      <img alt='' src='../../../../../../public/svgs/icon-filter.svg' />*/}
-        {/*    </div>*/}
-        {/*    <div className='filters__label'>Фильтры</div>*/}
-        {/*  </div>*/}
-        {/*  <div className='filters__search'>*/}
-        {/*    <input type='text' />*/}
-        {/*  </div>*/}
-        {/*</div>*/}
+        <MenuFilters setFieldsParams={setFieldsParams} />
         <div className='investor__content'>
-          {getArray(6).map((_, key) => (
-            <Card key={key} />
-          ))}
+          {isLoading || isFetching ? null : <NewCard />}
+          {isLoading || isFetching ? (
+            <Box
+              display='flex'
+              justifyContent='center'
+              alignItems='center'
+              width='100%'
+            >
+              <LoadingSpinner customHeight='100%' />
+            </Box>
+          ) : (
+            listFields.map((item, key) => <Card {...item} key={key} />)
+          )}
         </div>
+
+        <Pagination
+          count={data.data.listFields.allPageCount}
+          onChange={onChangePagination}
+        />
       </Container>
     </StyledInvestor>
   );

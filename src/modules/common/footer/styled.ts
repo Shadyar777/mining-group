@@ -1,8 +1,9 @@
 import { styled } from '@mui/material';
+import bgFooterSrc from '@public/images/bg-footer.png';
 
 const StyledFooter = styled('footer')(({ theme: { breakpoints } }) => ({
   flex: '0 0 auto',
-  background: `url('./../../../../public/images/bg-footer.png')`,
+  background: `url(${bgFooterSrc})`,
   backgroundColor: '#FFF8EC',
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'cover',
@@ -50,6 +51,10 @@ const StyledFooter = styled('footer')(({ theme: { breakpoints } }) => ({
       a: {
         color: 'white',
         textDecoration: 'none',
+      },
+
+      '& .link-react-scroll': {
+        cursor: 'pointer',
       },
     },
   },

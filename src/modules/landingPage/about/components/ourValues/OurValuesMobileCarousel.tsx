@@ -1,7 +1,8 @@
 import Carousel from 'react-multi-carousel';
 import Card from './Card.tsx';
 import { styled } from '@mui/material';
-import { getArray } from '../../../../../utils/getArray.ts';
+import { ValuesResponse } from '../../../../../rtk-query';
+import { parseImgBase64 } from '../../../../../utils';
 
 export const StyledActivityMobileCarousel = styled(Carousel)(() => ({
   '& .card': {
@@ -31,7 +32,11 @@ const responsive = {
   },
 };
 
-const OurValuesMobileCarousel = () => {
+const OurValuesMobileCarousel = ({
+  data,
+}: {
+  data: ValuesResponse['data'];
+}) => {
   return (
     <StyledActivityMobileCarousel
       additionalTransfrom={0}
@@ -62,9 +67,24 @@ const OurValuesMobileCarousel = () => {
       slidesToSlide={1}
       swipeable
     >
-      {getArray(5).map((_, idx) => (
-        <Card key={idx} />
-      ))}
+      {data.map(({ text, id, title, file }) => {
+        const parsedIconBase64 = data
+          ? parseImgBase64({
+              data: file.data || '',
+              type: file.type || '',
+            })
+          : null;
+
+        return (
+          <Card
+            title={title}
+            text={text}
+            icon={parsedIconBase64}
+            id={id}
+            key={id}
+          />
+        );
+      })}
     </StyledActivityMobileCarousel>
   );
 };

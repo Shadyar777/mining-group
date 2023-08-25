@@ -1,4 +1,9 @@
 import { Container, styled, Typography } from '@mui/material';
+import { useAppSelector } from '../../../../../store/hooks.ts';
+import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
+import { useGetStrategyQuery } from '../../../../../rtk-query';
+import { parseImgBase64 } from '../../../../../utils';
+import LoadingSpinner from '../../../../common/loadingSpinner';
 
 export const StyledStrategy = styled('div')(({ theme: { breakpoints } }) => ({
   width: '100%',
@@ -51,29 +56,34 @@ export const StyledStrategy = styled('div')(({ theme: { breakpoints } }) => ({
 }));
 
 const Strategy = () => {
+  const lng = useAppSelector(getAddGlobalLanguages);
+  const { data, isLoading } = useGetStrategyQuery(lng);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (!data) {
+    return;
+  }
+
+  const parsedImagBase64 = data?.data
+    ? parseImgBase64({
+        data: data?.data?.file.data || '',
+        type: data?.data?.file.type || '',
+      })
+    : '';
   return (
     <StyledStrategy>
       <Container maxWidth='md'>
         <div className='strategy__content'>
           <Typography variant='h3' className='content__title'>
-            Стратегия
+            {data.data?.title}
           </Typography>
 
-          <div className='content__text'>
-            Основной стратегией развития компании является управление
-            горно-рудными проектами на всех стадиях развития: от начальной
-            стадии поиска и разведки, технико-экономического обоснования,
-            проектирования и строительства, до управления на этапе производства.
-            <br />
-            <br />
-            Дополнительной стратегией развития является сопровождение сделок по
-            продажам и слиянию активов.
-          </div>
+          <div className='content__text'>{data.data?.text}</div>
           <div className='content__img'>
-            <img
-              src='../../../../../../public/mock-images/about-company.png'
-              alt=''
-            />
+            <img src={parsedImagBase64} alt={data.data?.title || ''} />
           </div>
         </div>
       </Container>

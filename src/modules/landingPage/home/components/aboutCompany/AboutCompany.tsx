@@ -1,6 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { Button, Container, styled, Typography } from '@mui/material';
 import { lendingRoutes } from '../../../routers';
+import { useAppSelector } from '../../../../../store/hooks.ts';
+import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
+import { useGetAllHomeQuery } from '../../../../../rtk-query';
+import { parseImgBase64 } from '../../../../../utils';
+import LoadingSpinner from '../../../../common/loadingSpinner';
+import companyBgSrc from '@public/images/home-page-about-company-bg.jpg';
 
 export const StyledAboutCompany = styled('div')(
   ({ theme: { breakpoints } }) => ({
@@ -12,7 +18,7 @@ export const StyledAboutCompany = styled('div')(
       flexDirection: 'column',
       gap: '1rem 0',
       padding: '32px 40px',
-      backgroundImage: `url('../../../../../../public/images/home-page-about-company-bg.jpg')`,
+      backgroundImage: `url(${companyBgSrc})`,
       // backgroundColor: 'white',
 
       borderRadius: '20px',
@@ -50,7 +56,7 @@ export const StyledAboutCompany = styled('div')(
       },
     },
     [breakpoints.down('mobileSm')]: {
-      backgroundImage: `url('../../../../../../public/images/home-page-about-company-bg.jpg')`,
+      backgroundImage: `url(${companyBgSrc})`,
       padding: '32px 0',
       '& .about-company__content': {
         background: 'unset',
@@ -81,28 +87,32 @@ export const StyledAboutCompany = styled('div')(
 
 const AboutCompany = () => {
   const navigate = useNavigate();
+  const lng = useAppSelector(getAddGlobalLanguages);
+  const { data, isLoading } = useGetAllHomeQuery(lng);
+  const parsedBase64Img = data?.data
+    ? parseImgBase64({
+        data: data.data.file.data || '',
+        type: data.data.file.type || '',
+      })
+    : '';
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (!data) {
+    return;
+  }
   return (
     <StyledAboutCompany>
       <Container maxWidth='md'>
         <div className='about-company__content'>
           <Typography variant='h3' className='content__title'>
-            ТОО «INVEST MINING GROUP» 22
+            {data?.data?.title}
           </Typography>
-          <div className='content__text'>
-            Казахстанская компания, основанная в 2020 году. На данный момент
-            компания уже имеет несколько действующих рудников, а также ряд
-            месторождений на стадии геологоразведки.
-            <br />
-            <br />
-            Мы продолжаем вкладывать в каждый из наших проектов на территории
-            Республики Казахстан. К 2024 году все рудники INVEST MINING GROUPE
-            будут работать на полную мощность
-          </div>
+          <div className='content__text'>{data?.data?.text}</div>
           <div className='content__img'>
-            <img
-              alt=''
-              src='../../../../../../public/mock-images/about-company.png'
-            />
+            <img alt='' src={parsedBase64Img} />
           </div>
           <Button onClick={() => console.log(navigate(lendingRoutes.ABOUT))}>
             Подробнее

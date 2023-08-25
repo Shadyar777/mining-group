@@ -3,12 +3,14 @@ import { Button } from '@mui/material';
 
 type UpdateButtonProps = {
   text: string;
-  onClick: (event: MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   icon: ReactNode;
+  type?: 'button' | 'submit' | 'reset';
 };
-const UploadButton = ({ text, onClick, icon }: UpdateButtonProps) => {
+const UploadButton = ({ text, onClick, icon, type }: UpdateButtonProps) => {
   return (
     <Button
+      type={type}
       variant='contained'
       onClick={onClick}
       className='upload-button'

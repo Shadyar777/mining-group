@@ -1,5 +1,14 @@
+import { memo, useState } from 'react';
 import { Divider, styled } from '@mui/material';
-import { getArray } from '../../../../../utils/getArray.ts';
+import CardActionsMenu from './CardActionsMenu.tsx';
+import CustomModal from '../../../../common/CustomModal.tsx';
+import EditResourceCardForm from './EditResourceCardForm.tsx';
+import { getIconForResource } from '../../../../common/utls/getIconForResource.ts';
+import { formatDate } from '../../../../common/utls/formatDate.ts';
+import { currencyFormat } from '../../../../common/utls/currencyFormat.ts';
+import { useDeleteFieldsMutation } from '../../../../../rtk-query';
+import { parseImgBase64 } from '../../../../../utils';
+import { BackgroundImageFiles } from '../../../../../rtk-query/types/fields-types.ts';
 
 const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   borderRadius: '32px',
@@ -11,7 +20,6 @@ const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
     padding: '16px 20px',
   },
   '& .card__img': {
-    // maxWidth: '307px',
     width: '100%',
     height: '107px',
     position: 'relative',
@@ -21,19 +29,20 @@ const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
       objectFit: 'cover',
     },
 
-    '& .img__arrow-icon': {
+    '& .img__more-vert': {
       position: 'absolute',
       top: '16px',
       right: '16px',
-      width: '32px',
-      height: '32px',
       cursor: 'pointer',
       zIndex: '1',
+      borderRadius: '50px',
+      background: 'rgba(255, 255, 255, 0.90)',
+      display: 'flex',
+      padding: '3px',
     },
   },
   '& .card__id': {
     textAlign: 'center',
-    fontFamily: 'Baloo Da 2', // FIXME - Нужно будет добавить шрифт
     fontSize: '12px',
     fontWeight: 400,
   },
@@ -75,50 +84,94 @@ const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   [breakpoints.down('sm')]: {},
 }));
 
-const onClick = () => {
-  console.log('click on card');
+type CardProps = {
+  id: number;
+  title: string;
+  resources: string[];
+  price: number;
+  createdDate: string;
+  backgroundImageFiles?: BackgroundImageFiles;
 };
 
-const Card = () => {
-  return (
-    <StyledCard className='card'>
-      <div className='card__img'>
-        <img src='../../../../../../public/mock-images/gold.png' alt='' />
-        <img
-          className='img__arrow-icon'
-          src='../../../../../../public/svgs/arrow-forward-sharp.svg'
-          alt=''
-          onClick={onClick}
-        />
-      </div>
-      <div className='card__content'>
-        <div className='card__id'>ID объекта: 36557</div>
-        <div className='card__geolocation'>Месторождение рассыпного золота</div>
-        <div className='card__resource'>
-          {getArray(3).map((_, key) => (
-            <ResourceName
-              key={key}
-              name='Золото рассыпное'
-              iconSrc='../../../../../../public/svgs/icon-filters/cube.svg'
-            />
-          ))}
-        </div>
+const Card = memo(
+  ({
+    id,
+    title,
+    backgroundImageFiles,
+    resources,
+    createdDate,
+    price,
+  }: CardProps) => {
+    const [openCardModal, onCloseCardModal] = useState<boolean>(false);
 
-        <Divider className='card__divider' />
-        {/*<Divider variant='middle' />*/}
-        <div className='card__price'>Цена: по запросу</div>
-        <div className='card__date'>Опубликовано 19.06.2023</div>
-      </div>
-    </StyledCard>
-  );
-};
+    const [deleteFields] = useDeleteFieldsMutation();
+
+    const parsedImgBase64 = backgroundImageFiles
+      ? parseImgBase64({
+          data: backgroundImageFiles.data || '',
+          type: backgroundImageFiles.type || '',
+        })
+      : '';
+
+    const handleEdit = () => {
+      onCloseCardModal(true);
+    };
+
+    const handleDelete = () => {
+      deleteFields({ id });
+    };
+    const handleClose = () => {
+      onCloseCardModal(false);
+    };
+    return (
+      <>
+        <StyledCard className='card'>
+          <div className='card__img'>
+            <CardActionsMenu onEdit={handleEdit} onDelete={handleDelete} />
+            <img src={parsedImgBase64} alt={title} />
+          </div>
+          <div className='card__content'>
+            <div className='card__id'>ID объекта: {id}</div>
+            <div className='card__geolocation'>{title}</div>
+            <div className='card__resource'>
+              {resources?.map((resource, key) => (
+                <ResourceName
+                  name={resource}
+                  iconSrc={getIconForResource(resource)}
+                  key={`${resource}-${key}`}
+                />
+              ))}
+            </div>
+
+            <Divider className='card__divider' />
+            <div className='card__price'>
+              Цена: {currencyFormat(Number(price))}
+            </div>
+            <div className='card__date'>
+              Опубликовано {formatDate(createdDate)}
+            </div>
+          </div>
+        </StyledCard>
+        <CustomModal open={openCardModal} handleClose={handleClose}>
+          <EditResourceCardForm id={id} handleClose={handleClose} />
+        </CustomModal>
+      </>
+    );
+  },
+);
 
 export default Card;
 
-function ResourceName({ name, iconSrc }: { name: string; iconSrc: string }) {
+function ResourceName({
+  name,
+  iconSrc,
+}: {
+  name: string;
+  iconSrc: JSX.Element | null;
+}) {
   return (
     <div className='card__resource-name'>
-      <img src={iconSrc} alt='' />
+      {iconSrc ?? 'icon ('}
       <div>{name}</div>
     </div>
   );

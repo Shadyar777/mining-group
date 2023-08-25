@@ -1,14 +1,15 @@
 import { styled, Typography } from '@mui/material';
+import { TitleResponse } from '../../../../../rtk-query';
+import { parseImgBase64 } from '../../../../../utils';
+import { useNavigate } from 'react-router-dom';
+import { lendingRoutes } from '../../../routers';
 
 export const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
-  // width: '100%',
   padding: '20px 0',
-  // width: 'clamp(150px, 50%, 300px)',
-
   display: 'flex',
   flexDirection: 'column',
-  // gap: '20px 0',
 
+  cursor: 'pointer',
   '& .card__img': {
     width: 'clamp(150px, 100%, 300px)',
     height: '300px',
@@ -53,21 +54,47 @@ export const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
     },
   },
 }));
+type Type = 'job' | 'about_company' | 'investors';
 
-const Card = () => {
+type CardProps = {
+  id: string | number;
+  title: string;
+  text: string;
+  file?: TitleResponse['data']['0']['file'] | null;
+  type: Type;
+};
+
+const getPath = (to: Type) => {
+  const redirect = {
+    job: lendingRoutes.VACANCIES,
+    about_company: lendingRoutes.ABOUT,
+    investors: lendingRoutes.ASSETS_ENTERPRISE,
+  };
+  return redirect[to] ?? lendingRoutes.HOME;
+};
+
+const Card = ({ title, text, file, type }: CardProps) => {
+  const navigate = useNavigate();
+  const parsedIconBase64 = file
+    ? parseImgBase64({
+        data: file.data || '',
+        type: file.type || '',
+      })
+    : '';
+
+  const goTo = () => {
+    navigate(getPath(type));
+  };
   return (
-    <StyledCard>
+    <StyledCard onClick={goTo}>
       <div className='card__img'>
-        <img
-          alt=''
-          src='../../../../../../public/mock-images/about-company.png'
-        />
+        <img alt='' src={parsedIconBase64} />
       </div>
       <Typography variant='h4' className='card__title'>
-        О компании
+        {title}
       </Typography>
       <Typography variant='body1' className='card__text'>
-        Виды деятельности. Стратегия
+        {text}
       </Typography>
     </StyledCard>
   );

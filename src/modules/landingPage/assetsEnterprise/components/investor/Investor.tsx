@@ -1,7 +1,22 @@
-import { Container, styled, Typography } from '@mui/material';
+import {
+  Box,
+  Container,
+  styled,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import Card from './Card.tsx';
-import { getArray } from '../../../../../utils/getArray.ts';
 import MenuFilters from './MenuFilters.tsx';
+import { useAppSelector } from '../../../../../store/hooks.ts';
+import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { QueryFieldsParams } from '../../../../../rtk-query/types/fields-types.ts';
+import { useGetFieldsQuery } from '../../../../../rtk-query';
+import LoadingSpinner from '../../../../common/loadingSpinner';
+import Pagination from '../../../../admin/assetsEnterprise/components/investor/Pagination.tsx';
+import CustomModal from './CustomModal.tsx';
+import { useTranslation } from 'react-i18next';
 
 const StyledInvestor = styled('div')(({ theme: { breakpoints } }) => ({
   padding: '40px 0',
@@ -18,18 +33,6 @@ const StyledInvestor = styled('div')(({ theme: { breakpoints } }) => ({
       fontWeight: 400,
     },
   },
-  // '& .investor__filters': {
-  //   '& .filters__icon': {},
-  //   '& .filters__label': {
-  //     color: '#000',
-  //     fontSize: '16px',
-  //     fontWeight: 400,
-  //   },
-  //   '& .filters__search': {
-  //     borderRadius: '30px',
-  //     background: 'rgba(255, 255, 255, 0.90)',
-  //   },
-  // },
   '& .investor__content': {
     display: 'flex',
     flexWrap: 'wrap',
@@ -42,37 +45,86 @@ const StyledInvestor = styled('div')(({ theme: { breakpoints } }) => ({
   },
 
   [breakpoints.down('sm')]: {
-    // gap: '60px',
+    backgroundColor: '#FFF8EC',
   },
 }));
 
 const Investor = () => {
+  const { t } = useTranslation('translation', {
+    keyPrefix: 'assetsEnterprise',
+  });
+  const lng = useAppSelector(getAddGlobalLanguages);
+  const theme = useTheme();
+  const [cardId, setCardId] = useState<number>(0);
+  const isMobile = useMediaQuery(theme.breakpoints.down('mobileSm'));
+  const [fieldsParams, setFieldsParams] = useState<QueryFieldsParams>({
+    title: '',
+    resources: [],
+    orderBy: 'new',
+    limit: isMobile ? 4 : 1,
+    page: 1,
+  });
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpenModal = (value: number) => {
+    setCardId(value);
+    setOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpen(false);
+  };
+
+  const { data, isLoading, isFetching } = useGetFieldsQuery(fieldsParams);
+
+  const onChangePagination = (_: ChangeEvent<unknown>, page: number) => {
+    setFieldsParams((prevState) => ({ ...prevState, page }));
+  };
+
+  useEffect(() => {
+    setFieldsParams((prevState) => ({ ...prevState, language: lng }));
+  }, [lng]);
+
+  if (!data) {
+    return;
+  }
+  const { listFields } = data.data.listFields;
   return (
     <StyledInvestor>
       <Container maxWidth='md'>
         <div className='investor__titles'>
           <Typography className='title' variant='h3'>
-            Инвесторам
+            {t('investor')}
           </Typography>
-          <Typography className='sub-title'>Месторождения</Typography>
+          <Typography className='sub-title'> {t('deposits')}</Typography>
         </div>
-        <MenuFilters />
-        {/*<div className='investor__filters'>*/}
-        {/*  <div>*/}
-        {/*    <div className='filters__icon'>*/}
-        {/*      <img alt='' src='../../../../../../public/svgs/icon-filter.svg' />*/}
-        {/*    </div>*/}
-        {/*    <div className='filters__label'>Фильтры</div>*/}
-        {/*  </div>*/}
-        {/*  <div className='filters__search'>*/}
-        {/*    <input type='text' />*/}
-        {/*  </div>*/}
-        {/*</div>*/}
+        <MenuFilters setFieldsParams={setFieldsParams} />
         <div className='investor__content'>
-          {getArray(6).map((_, key) => (
-            <Card key={key} />
-          ))}
+          {isFetching || isLoading ? (
+            <Box
+              display='flex'
+              justifyContent='center'
+              alignItems='center'
+              width='100%'
+            >
+              <LoadingSpinner customHeight='100%' />
+            </Box>
+          ) : (
+            listFields.map((item, key) => (
+              <Card {...item} key={key} handleOpenModal={handleOpenModal} />
+            ))
+          )}
+
+          {/*{listFields.map((item, key) => (*/}
+          {/*  <Card {...item} key={key} handleOpenModal={handleOpenModal} />*/}
+          {/*))}*/}
         </div>
+        <CustomModal id={cardId} open={open} onClose={handleCloseModal} />
+        <Pagination
+          count={data.data.listFields.allPageCount}
+          onChange={onChangePagination}
+        />
       </Container>
     </StyledInvestor>
   );

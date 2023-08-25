@@ -1,5 +1,13 @@
 import { Container, styled, Typography } from '@mui/material';
-import GoogleMaps from './GoogleMaps/GoogleMaps.tsx';
+import GoogleMaps from './GoogleMaps.tsx';
+
+import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
+import PhoneRoundedIcon from '@mui/icons-material/PhoneRounded';
+import { useAppSelector } from '../../../../store/hooks.ts';
+import { getAddGlobalLanguages } from '../../../common/sliceCommon/slice.ts';
+import { useGetContactsQuery } from '../../../../rtk-query';
+import LoadingSpinner from '../../../common/loadingSpinner';
+import { useTranslation } from 'react-i18next';
 
 const StyledContacts = styled('div')(({ theme: { breakpoints } }) => ({
   padding: '40px 0 0 0',
@@ -29,6 +37,7 @@ const StyledContacts = styled('div')(({ theme: { breakpoints } }) => ({
         display: 'flex',
         alignItems: 'center',
         gap: '0 16px',
+        fontSize: '26px',
 
         a: {
           color: '#392C0B',
@@ -78,27 +87,41 @@ const StyledContacts = styled('div')(({ theme: { breakpoints } }) => ({
   },
 }));
 const Contacts = () => {
+  const { t } = useTranslation('translation', {
+    keyPrefix: 'contacts',
+  });
+  const lng = useAppSelector(getAddGlobalLanguages);
+  const { data, isLoading } = useGetContactsQuery(lng);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (!data) {
+    return;
+  }
   return (
     <StyledContacts>
       <Container maxWidth='md'>
         <div className='contacts__container'>
           <Typography variant='h2' className='contacts__title'>
-            Контакты
+            {t('contact')}
           </Typography>
           <div className='contacts__content'>
-            <GoogleMaps />
+            <GoogleMaps srcGoogle={data.data?.location ?? ''} />
             <div className='content__text'>
-              <div className='text__location'>
-                Республика Казахстан, г. Шымкент, микрорайон Нурсат 2, 19/1
-                160023
-              </div>
+              <div className='text__location'>{data.data?.address ?? ''}</div>
               <div className='text__tel contact-link'>
-                <img alt='' src='../../../../../public/images/call.svg' />
-                <a href='tel:+77470439940'> +7 (747) 034-99-40</a>
+                <PhoneRoundedIcon />
+                <a href={`tel:${data.data?.phone ?? '#'}`}>
+                  {data.data?.phone ?? ''}
+                </a>
               </div>
               <div className='text__mail contact-link'>
-                <img alt='' src='../../../../../public/images/mail.svg' />
-                <a href='mailto: info@imgkz.com'>info@imgkz.com</a>
+                <EmailRoundedIcon />
+                <a href={`${data.data?.mail ?? '#'}`}>
+                  {data.data?.mail ?? ''}
+                </a>
               </div>
             </div>
           </div>

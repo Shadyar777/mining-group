@@ -1,8 +1,8 @@
 import TopBanner from '../components/topBanner/TopBanner.tsx';
-import Resources from '../components/resources/Resources.tsx';
 import AboutCompany from '../components/aboutCompany/AboutCompany.tsx';
 import FindOutMore from '../components/findOutMore/FindOutMore.tsx';
 import { styled } from '@mui/material';
+import TradingViewWidget from '../../../landingPage/home/components/resources/Resources.tsx';
 
 export const StyledHomePage = styled('div')(({ theme: { breakpoints } }) => ({
   display: 'flex',
@@ -25,7 +25,7 @@ const HomePage = () => {
   return (
     <StyledHomePage>
       <TopBanner />
-      <Resources />
+      <TradingViewWidget />
       <AboutCompany />
       <FindOutMore />
     </StyledHomePage>

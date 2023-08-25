@@ -53,19 +53,24 @@ const StyledEditImage = styled('div')({
 });
 
 type EditImageProps = {
-  urlImag: string | null;
+  urlImag: string | ArrayBuffer | null;
   setUploadedImage: Dispatch<SetStateAction<string | ArrayBuffer | null>>;
 };
 
 const EditImage = ({ urlImag, setUploadedImage }: EditImageProps) => {
-  const { uploadedImage, handleImageUpload, handleImageRemove } =
-    useImageUploader({
-      initialImage: urlImag,
-      textMessage: 'Неправильный формат изображения!',
-    });
+  const {
+    uploadedImage,
+    handleImageUpload,
+    handleImageRemove,
+    setUploadedImage: setImageWithBase64,
+  } = useImageUploader({
+    initialImage: urlImag as string,
+    textMessage: 'Неправильный формат изображения!',
+  });
 
   useEffect(() => {
     if (urlImag) {
+      setUploadedImage(null);
       setUploadedImage(urlImag);
     }
   }, [urlImag, setUploadedImage]);
@@ -73,6 +78,10 @@ const EditImage = ({ urlImag, setUploadedImage }: EditImageProps) => {
   useEffect(() => {
     setUploadedImage(uploadedImage);
   }, [uploadedImage, setUploadedImage]);
+
+  useEffect(() => {
+    setImageWithBase64(urlImag);
+  }, [setImageWithBase64, urlImag]);
 
   return (
     <StyledEditImage className='edit__img'>

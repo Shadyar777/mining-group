@@ -50,20 +50,23 @@ export const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   },
 }));
 
-const Card = () => {
+export type CardProps = {
+  id: string;
+  title: string;
+  text: string;
+  icon: string | null;
+};
+
+const Card = ({ title, icon, text }: CardProps) => {
   return (
     <>
       <StyledCard className='card'>
         <Typography variant='h5' className='card__title'>
-          Экология
+          {title}
         </Typography>
-        <p className='card__text'>
-          Приоритет компании — защита и сохранение экологии. Мы делаем
-          конкретные шаги для минимизация влияния золотодобывающего производства
-          на окружающую среду.
-        </p>
+        <p className='card__text'>{text}</p>
         <div className='card__img'>
-          <img alt='' src='../../../../../../public/mock-images/eco.svg' />
+          <img alt='' src={icon || ''} />
         </div>
       </StyledCard>
     </>

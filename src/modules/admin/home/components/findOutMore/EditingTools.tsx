@@ -1,10 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { styled, Typography } from '@mui/material';
 import TitleEdit from '../../../common/TitleEdit.tsx';
 import UploadButton from '../../../../common/buttons/UploadButton.tsx';
 import PlusFile from '../../../../../svgs/PlusFile.tsx';
 import EditImage from './EditImage.tsx';
 import { useEditableContent } from '../../../../../hooks/useEditableContent.ts';
+import {
+  TitleResponse,
+  useUpdateTitleMutation,
+} from '../../../../../rtk-query';
+import {
+  base64ToFile,
+  createFormData,
+  parseImgBase64,
+} from '../../../../../utils';
 
 const StyledEditingTools = styled('div')(({ theme: { shape } }) => ({
   color: '#6A6A6A',
@@ -47,23 +56,68 @@ const StyledEditingTools = styled('div')(({ theme: { shape } }) => ({
     alignSelf: 'center',
   },
 }));
-const EditingTools = () => {
+
+type EditingToolsProps = {
+  id: string | number;
+  title: string;
+  text: string;
+  file?: TitleResponse['data']['0']['file'] | null;
+  onCloseEditModal: () => void;
+};
+const EditingTools = ({
+  id,
+  title,
+  text,
+  file,
+  onCloseEditModal,
+}: EditingToolsProps) => {
+  const [updateTitle, { isSuccess: isSuccessUpdateTitle }] =
+    useUpdateTitleMutation();
+  const parsedIconBase64 = file
+    ? parseImgBase64({
+        data: file.data || '',
+        type: file.type || '',
+      })
+    : null;
+
   const {
     content: contentHeadings,
     ref: contentHeadingsRef,
     handleBlur: handleContentHeadings,
-  } = useEditableContent(`Вакансии`);
+  } = useEditableContent(title);
   const {
     content: contentShortDescription,
     ref: contentShortDescriptionRef,
     handleBlur: handleContentShortDescription,
-  } = useEditableContent(`Виды деятельности. Стратегия`);
+  } = useEditableContent(text);
   const [uploadedImage, setUploadedImage] = useState<
     string | ArrayBuffer | null
   >(null);
-  const onUploadDate = () => {
-    console.log(contentHeadings, contentShortDescription, uploadedImage);
+  const onUploadDate = async () => {
+    if (id) {
+      const data = {
+        id: id,
+        title: contentHeadings,
+        text: contentShortDescription,
+        file: uploadedImage
+          ? await base64ToFile({
+              dataURI: uploadedImage as string,
+              fileName: 'image',
+              optionsType: 'image/jpeg',
+            })
+          : null,
+      };
+      const formData = createFormData(data);
+      updateTitle(formData);
+    }
   };
+
+  useEffect(() => {
+    if (isSuccessUpdateTitle) {
+      onCloseEditModal();
+    }
+  }, [isSuccessUpdateTitle, onCloseEditModal]);
+
   return (
     <StyledEditingTools>
       <TitleEdit>Заголовок:</TitleEdit>
@@ -87,7 +141,7 @@ const EditingTools = () => {
       <TitleEdit>Фоновое изображение:</TitleEdit>
       <EditImage
         setUploadedImage={setUploadedImage}
-        urlImag='../../../../../../public/images/home-top-banner.jpg'
+        urlImag={parsedIconBase64}
       />
       <UploadButton
         text='Сохранить'

@@ -1,6 +1,43 @@
 {
-  "title": "Салем!",
+  "title": "Привет",
   "label": "Select another language!",
-  "about": "Биз туралы",
-  "home": "Казашка"
+  "lng": "ru",
+  "nav": {
+    "any": "any"
+  },
+  "home": {
+    "toLearnMore": "Көбірек біліңіз"
+  },
+  "about": {
+    "activity": "Қызмет түрлері және қызмет көрсету спектрі",
+    "ourValues": "Біздің құндылықтарымыз"
+  },
+  "assetsEnterprise": {
+    "investor": "Инвесторларға",
+    "deposits": "Кен орындары",
+    "filters": "Сүзгілер",
+    "sort": "Сұрыптау",
+    "byPublicationDate": "Жарияланған күні бойынша:",
+    "mineralResource": "Пайдалы қазбалар",
+    "new": "Жаңа",
+    "old": "Ескі",
+    "openFilePINCode": "Файлды ашу үшін PIN кодын енгізіңіз",
+    "closeInformation": "Жабық ақпарат. Қол жетімділікті қамтамасыз ету үшін менеджерге хабарласыңыз",
+    "invalidPINCode": "Қате PIN коды. Қайта жіберу",
+    "price": "Бағасы",
+    "Published": "Жарияланды",
+    "objectID": "Нысан идентификаторы:"
+  },
+  "contacts": {
+    "contact": "Байланыс"
+  },
+  "vacancies": {
+    "conditions": "Шарттар:",
+    "tasks": "Тапсырмалар:"
+  },
+  "common": {
+    "moreDetailed": "Толығырақ",
+    "send": "Жіберу",
+    "downloadFile": "Файлды жүктеу"
+  }
 }

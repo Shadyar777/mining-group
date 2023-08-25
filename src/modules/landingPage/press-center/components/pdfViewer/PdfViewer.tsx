@@ -1,53 +1,39 @@
-import { useState } from 'react';
-import { Document, Page } from 'react-pdf';
+import { Document, Page, pdfjs } from 'react-pdf';
+import { FC, useState } from 'react';
 
-import { Container, styled } from '@mui/material';
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-const StyledPdfViewer = styled('div')(({ theme: { breakpoints } }) => ({
-  [breakpoints.down('sm')]: {},
-  [breakpoints.down('mobileSm')]: {},
-}));
+type PDFViewerProps = {
+  pdfURL: string;
+};
 
-function PdfViewer() {
-  const [numPages, setNumPages] = useState(null);
-  // const [pdfUrl, setPdfUrl] = useState<string | null>(null);
-  //
-  // useEffect(() => {
-  //   // Запрос к вашему серверу для получения PDF
-  //   fetch(
-  //     'https://cors-anywhere.herokuapp.com/http://localhost:4000/pdf/sample.pdf',
-  //   )
-  //     .then((response) => {
-  //       console.log(response);
-  //       return response.blob();
-  //     })
-  //     .then((blob) => {
-  //       const url = URL.createObjectURL(blob);
-  //       setPdfUrl(url);
-  //     })
-  //     .catch((error) => {
-  //       console.error('There was an error fetching the PDF', error);
-  //     });
-  // }, []);
-  //
-  function onDocumentLoadSuccess({ numPages }) {
-    setNumPages(numPages);
-  }
-
-  // if (!pdfUrl) return 'Загрузка...';
+const PDFViewer: FC<PDFViewerProps> = ({ pdfURL }) => {
+  const [numPages, setNumPages] = useState<number | null>(null);
 
   return (
-    <StyledPdfViewer>
-      <Container maxWidth='md'>
-        {/*<Document file={samplePdf} onLoadSuccess={onDocumentLoadSuccess}>*/}
-        {/*  {Array.from(new Array(numPages), (_, index) => (*/}
-        {/*    <Page key={`page_${index + 1}`} pageNumber={index + 1} />*/}
-        {/*  ))}*/}
-        {/*</Document>*/}
-        pdf
-      </Container>
-    </StyledPdfViewer>
+    <div
+      style={{
+        width: '100%',
+        height: '600px',
+        overflow: 'hidden',
+        position: 'relative',
+      }}
+    >
+      <Document
+        file={pdfURL}
+        onLoadSuccess={({ numPages }) => setNumPages(numPages)}
+      >
+        {Array.from(new Array(numPages || 0), (_, index) => (
+          <Page key={`page_${index + 1}`} pageNumber={index + 1} scale={1.0} />
+        ))}
+      </Document>
+      <div style={{ position: 'absolute', bottom: '10px', right: '10px' }}>
+        {/*<Button variant='contained' color='primary' href={pdfURL} download>*/}
+        {/*  Скачать PDF*/}
+        {/*</Button>*/}
+      </div>
+    </div>
   );
-}
+};
 
-export default PdfViewer;
+export default PDFViewer;

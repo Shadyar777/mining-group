@@ -1,8 +1,8 @@
+import { styled } from '@mui/material';
 import TopBanner from '../components/topBanner/TopBanner.tsx';
 import Resources from '../components/resources/Resources.tsx';
 import AboutCompany from '../components/aboutCompany/AboutCompany.tsx';
 import FindOutMore from '../components/findOutMore/FindOutMore.tsx';
-import { styled } from '@mui/material';
 
 export const StyledHomePage = styled('div')(({ theme: { breakpoints } }) => ({
   display: 'flex',
@@ -12,7 +12,6 @@ export const StyledHomePage = styled('div')(({ theme: { breakpoints } }) => ({
     gap: '60px',
   },
   [breakpoints.down('mobileSm')]: {
-    // marginTop: '60px',
     flexDirection: 'unset',
     gap: 'unset',
     display: 'grid',

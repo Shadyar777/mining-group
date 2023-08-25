@@ -1,7 +1,11 @@
 import { Container, styled, Typography } from '@mui/material';
 import Card from './Card.tsx';
 import Carousel from 'react-multi-carousel';
-import { getArray } from '../../../../../utils/getArray.ts';
+import { useAppSelector } from '../../../../../store/hooks.ts';
+import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
+import { useGetTitleQuery } from '../../../../../rtk-query';
+import LoadingSpinner from '../../../../common/loadingSpinner';
+import { useTranslation } from 'react-i18next';
 
 const responsive = {
   desktop: {
@@ -53,12 +57,25 @@ export const StyledFindOutMore = styled('div')(
 );
 
 const FindOutMore = () => {
+  const lng = useAppSelector(getAddGlobalLanguages);
+  const { data, isLoading } = useGetTitleQuery(lng);
+
+  const { t } = useTranslation('translation', { keyPrefix: 'home' });
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (!data) {
+    return;
+  }
+  // console.log(t('home.toLearnMore'))
   return (
     <StyledFindOutMore>
       <Container maxWidth='md'>
         <div className='find-out-more__content'>
           <Typography variant='h3' className='content__title'>
-            Узнать больше
+            {t('toLearnMore')}
           </Typography>
           <Carousel
             additionalTransfrom={0}
@@ -70,7 +87,6 @@ const FindOutMore = () => {
             dotListClass=''
             draggable
             focusOnSelect={false}
-            // infinite
             itemClass=''
             keyBoardControl
             minimumTouchDrag={80}
@@ -89,8 +105,8 @@ const FindOutMore = () => {
             slidesToSlide={1}
             swipeable
           >
-            {getArray(3).map((_, idx) => (
-              <Card key={idx} />
+            {data.data.map((title) => (
+              <Card {...title} key={title.id} />
             ))}
           </Carousel>
         </div>

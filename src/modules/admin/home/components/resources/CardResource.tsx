@@ -1,4 +1,5 @@
 import { styled } from '@mui/material';
+import currencyYenRsc from '@public/svgs/currency_yen.svg';
 
 export const StyledCardResource = styled('div')(
   ({ theme: { breakpoints } }) => ({
@@ -61,7 +62,7 @@ type CardResourceProps = {
 };
 
 const CardResource = ({
-  icon = '../../../../../../public/svgs/currency_yen.svg',
+  icon = currencyYenRsc,
   nameResource = 'СNY/KZT',
   rate = '63.34',
   percent = '+0.52 (+0.11%)',

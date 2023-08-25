@@ -20,35 +20,42 @@ export const routersLanding = [
     index: true,
     path: lendingRoutes.HOME,
     element: <HomePage />,
+    skip: false,
   },
   {
     name: 'О компании',
     path: lendingRoutes.ABOUT,
     element: <AboutPage />,
+    skip: false,
   },
   {
     name: 'Для инвесторов',
     path: '/press-center',
     element: <PressCenterPage />,
+    skip: true,
   },
   {
     name: 'Услуги',
     path: `${lendingRoutes.ABOUT}#services`,
     element: <PressCenterPage />,
+    skip: false,
   },
   {
     name: 'Активы предприятия',
     path: lendingRoutes.ASSETS_ENTERPRISE,
     element: <AssetsEnterprisePage />,
+    skip: false,
   },
   {
     name: 'Вакансии',
     path: lendingRoutes.VACANCIES,
     element: <VacanciesPage />,
+    skip: false,
   },
   {
     name: 'Контакты',
     path: lendingRoutes.CONTACTS,
     element: <ContactsPage />,
+    skip: false,
   },
 ];

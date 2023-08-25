@@ -1,6 +1,43 @@
 {
   "title": "Привет",
   "label": "Select another language!",
-  "about": "О нас",
-  "home": "Главная"
+  "lng": "ru",
+  "nav": {
+    "any": "any"
+  },
+  "home": {
+    "toLearnMore": "Узнать больше"
+  },
+  "about": {
+    "activity": "Виды деятельности и спектр услуг",
+    "ourValues": "Наши ценности"
+  },
+  "assetsEnterprise": {
+    "investor": "Инвесторам",
+    "deposits": "Месторождения",
+    "filters": "Фильтры",
+    "sort": "Сортировка",
+    "byPublicationDate": "По дате публикации:",
+    "mineralResource": "Полезные ископаемые",
+    "new": "Новые",
+    "old": "Старые",
+    "openFilePINCode": "Для открытия файла введите пин-код",
+    "closeInformation": "Закрытая информация. Для предоставление доступа обратитесь к менеджеру",
+    "invalidPINCode": "Неверный пин-код. Отправить повторно",
+    "price": "Цена",
+    "Published": "Опубликовано",
+    "objectID": "ID объекта:"
+  },
+  "contacts": {
+    "contact": "Контакты"
+  },
+  "vacancies": {
+    "conditions": "Условия:",
+    "tasks": "Задачи:"
+  },
+  "common": {
+    "moreDetailed": "Подробнее",
+    "send": "Отправить",
+    "downloadFile": "Загрузить файл"
+  }
 }

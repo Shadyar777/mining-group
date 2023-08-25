@@ -1,8 +1,14 @@
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { styled, Typography } from '@mui/material';
 import TitleEdit from '../../../common/TitleEdit.tsx';
 import { useEditableContent } from '../../../../../hooks/useEditableContent.ts';
 import PlusFile from '../../../../../svgs/PlusFile.tsx';
 import UploadButton from '../../../../common/buttons/UploadButton.tsx';
+import {
+  useAddActivitiesMutation,
+  useUpdateActivitiesMutation,
+} from '../../../../../rtk-query';
+import LoadingSpinner from '../../../../common/loadingSpinner';
 
 const StyledEditingToolsForActivityCard = styled('div')(() => ({
   display: 'flex',
@@ -33,28 +39,63 @@ const StyledEditingToolsForActivityCard = styled('div')(() => ({
 
 type EditingToolsForActivityCardProps = {
   content: {
+    id?: string;
     title: string;
     text: string;
   };
+  setOpenEditModal: Dispatch<SetStateAction<boolean>>;
 };
 
 const EditingToolsForActivityCard = ({
   content,
+  setOpenEditModal,
 }: EditingToolsForActivityCardProps) => {
+  const [
+    addActivities,
+    { isSuccess: isSuccessAddActivities, isLoading: isAddLoading },
+  ] = useAddActivitiesMutation();
+  const [
+    updateActivities,
+    { isSuccess: isSuccessUpdateActivities, isLoading: isUpdateLoading },
+  ] = useUpdateActivitiesMutation();
   const {
     content: contentHeadings,
     ref: contentHeadingsRef,
     handleBlur: handleContentHeadings,
+    handlePaste: handlePasteContentHeadings,
   } = useEditableContent(content.title);
+
   const {
     content: contentShortDescription,
     ref: contentShortDescriptionRef,
     handleBlur: handleContentShortDescription,
+    handlePaste: handlePasteShortDescription,
   } = useEditableContent(content.text);
 
   const onUploadDate = () => {
-    console.log(contentHeadings, contentShortDescription);
+    if (content.id) {
+      updateActivities({
+        id: content.id,
+        title: contentHeadings,
+        text: contentShortDescription,
+      });
+    } else {
+      addActivities({
+        title: contentHeadings,
+        text: contentShortDescription,
+      });
+    }
   };
+
+  useEffect(() => {
+    if (isSuccessAddActivities || isSuccessUpdateActivities) {
+      setOpenEditModal(false);
+    }
+  }, [isSuccessAddActivities, isSuccessUpdateActivities, setOpenEditModal]);
+
+  if (isAddLoading || isUpdateLoading) {
+    return <LoadingSpinner />;
+  }
   return (
     <StyledEditingToolsForActivityCard>
       <TitleEdit>Заголовок:</TitleEdit>
@@ -63,6 +104,7 @@ const EditingToolsForActivityCard = ({
         className='edit__title'
         contentEditable={true}
         onBlur={handleContentHeadings}
+        onPaste={handlePasteContentHeadings}
         ref={contentHeadingsRef}
         dangerouslySetInnerHTML={{ __html: contentHeadings }}
       />
@@ -71,6 +113,7 @@ const EditingToolsForActivityCard = ({
         className='edit__text'
         contentEditable={true}
         onBlur={handleContentShortDescription}
+        onPaste={handlePasteShortDescription}
         ref={contentShortDescriptionRef}
         dangerouslySetInnerHTML={{ __html: contentShortDescription }}
       />

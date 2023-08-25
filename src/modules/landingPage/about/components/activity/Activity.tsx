@@ -1,13 +1,16 @@
-import { Container, styled, Typography } from '@mui/material';
-import Card from './Card.tsx';
-import { getArray } from '../../../../../utils/getArray.ts';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Container, styled, Typography } from '@mui/material';
+import Card from './Card.tsx';
+import { useAppSelector } from '../../../../../store/hooks.ts';
+import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
+import { useGetAllActivitiesQuery } from '../../../../../rtk-query';
+import LoadingSpinner from '../../../../common/loadingSpinner';
+import { useTranslation } from 'react-i18next';
 
 export const StyledActivity = styled('div')(({ theme: { breakpoints } }) => ({
   '& .activity__title': {
     marginBottom: '40px',
-
     color: '#392C0B',
     textAlign: 'center',
   },
@@ -37,6 +40,10 @@ export const StyledActivity = styled('div')(({ theme: { breakpoints } }) => ({
 
 const Activity = () => {
   const location = useLocation();
+  const { t } = useTranslation('translation', { keyPrefix: 'about' });
+
+  const lng = useAppSelector(getAddGlobalLanguages);
+  const { data, isLoading } = useGetAllActivitiesQuery(lng);
 
   useEffect(() => {
     if (location.hash === '#services') {
@@ -46,17 +53,25 @@ const Activity = () => {
       }
     }
   }, [location]);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (!data) {
+    return;
+  }
   return (
     <StyledActivity>
       <Container maxWidth='md'>
         <Container maxWidth='md'>
           <div className='activity__container'>
             <Typography id='services' variant='h3' className='activity__title'>
-              Виды деятельности и спектр услуг
+              {t('activity')}
             </Typography>
             <div className='activity__content'>
-              {getArray(3).map((_, idx) => (
-                <Card key={idx} />
+              {data.data.map(({ title, text, id }, idx) => (
+                <Card title={title} text={text} id={id} key={`${idx}-${id}`} />
               ))}
             </div>
           </div>

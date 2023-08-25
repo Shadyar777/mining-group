@@ -1,12 +1,19 @@
-import { ChangeEvent, useState } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 
 type ImageUploaderReturnType = {
   uploadedImage: string | ArrayBuffer | null;
   handleImageUpload: (e: ChangeEvent<EventTarget & HTMLInputElement>) => void;
   handleImageRemove: () => void;
+  setUploadedImage: Dispatch<SetStateAction<string | ArrayBuffer | null>>;
 };
 
-type AllowedFormat = 'png' | 'jpeg' | 'svg+xml';
+type AllowedFormat = 'png' | 'jpeg' | 'svg+xml' | 'svg';
 
 type UseImageUploaderProps = {
   initialImage: string | null;
@@ -48,10 +55,15 @@ const useImageUploader = ({
     setUploadedImage(null);
   };
 
+  useEffect(() => {
+    setUploadedImage(initialImage);
+  }, [initialImage]);
+
   return {
     uploadedImage,
     handleImageUpload,
     handleImageRemove,
+    setUploadedImage,
   };
 };
 

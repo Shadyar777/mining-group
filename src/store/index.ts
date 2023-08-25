@@ -1,14 +1,44 @@
 import {
-  createAsyncThunk,
   Action,
-  ThunkAction,
   configureStore,
+  createAsyncThunk,
+  ThunkAction,
 } from '@reduxjs/toolkit';
-import userSlice from './userSlice';
+import adminSlice from '../modules/admin/signIn/slice.ts';
+import commonSlice from '../modules/common/sliceCommon/slice.ts';
+import { goodsApi } from './rtkQuery.ts';
+import {
+  activitiesApi,
+  contactsApi,
+  fieldsApi,
+  fieldsPrivateByIdApi,
+  geoProdApi,
+  homeApi,
+  jobsApi,
+  strategyApi,
+  titleApi,
+  valuesApi,
+} from '../rtk-query';
+import { rtkMiddleWares, snackbarMiddleware } from './middleWares.ts';
+
 export const store = configureStore({
   reducer: {
-    userSlice,
+    admin: adminSlice,
+    common: commonSlice,
+    [goodsApi.reducerPath]: goodsApi.reducer,
+    [jobsApi.reducerPath]: jobsApi.reducer,
+    [activitiesApi.reducerPath]: activitiesApi.reducer,
+    [strategyApi.reducerPath]: strategyApi.reducer,
+    [valuesApi.reducerPath]: valuesApi.reducer,
+    [homeApi.reducerPath]: homeApi.reducer,
+    [titleApi.reducerPath]: titleApi.reducer,
+    [geoProdApi.reducerPath]: geoProdApi.reducer,
+    [contactsApi.reducerPath]: contactsApi.reducer,
+    [fieldsApi.reducerPath]: fieldsApi.reducer,
+    [fieldsPrivateByIdApi.reducerPath]: fieldsPrivateByIdApi.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat([...rtkMiddleWares, snackbarMiddleware]),
 });
 
 export type AppDispatch = typeof store.dispatch;

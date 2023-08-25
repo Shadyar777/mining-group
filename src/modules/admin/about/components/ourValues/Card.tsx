@@ -3,12 +3,15 @@ import CustomModal from '../../../../common/CustomModal.tsx';
 import { useState } from 'react';
 import EditingToolsForOurValuesCard from './EditingToolsForOurValuesCard.tsx';
 
+import editSrcIcon from '@public/svgs/contract_edit.svg';
+
 export const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   width: 'clamp(150px, 100%, 250px)',
   height: 'auto',
   backgroundColor: 'white',
   position: 'relative',
   borderRadius: '20px',
+  overflow: 'hidden',
 
   '& .card__title': {
     color: '#2A2A2A',
@@ -60,13 +63,20 @@ export const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   },
 }));
 
-const emptyContent = {
-  title: 'Экология',
-  text: 'Приоритет компании — защита и сохранение экологии. Мы делаем конкретные шаги для минимизация влияния золотодобывающего производства на окружающую среду.',
-  icon: '../../../../../../public/mock-images/eco.svg',
+// const emptyContent = {
+//   title: 'Экология',
+//   text: 'Приоритет компании — защита и сохранение экологии. Мы делаем конкретные шаги для минимизация влияния золотодобывающего производства на окружающую среду.',
+//   icon: '../../../../../../public/mock-images/eco.svg',
+// };
+
+export type CardProps = {
+  id: string;
+  title: string;
+  text: string;
+  icon: string | null;
 };
 
-const Card = () => {
+const Card = ({ id, title, icon, text }: CardProps) => {
   const [openEditModal, setOpenEditModal] = useState(false);
 
   const onClickEdit = () => {
@@ -79,22 +89,27 @@ const Card = () => {
     <>
       <StyledCard className='card'>
         <div className='card__edit' onClick={onClickEdit}>
-          <img alt='' src='../../../../../../public/svgs/contract_edit.svg' />
+          <img alt='' src={editSrcIcon} />
         </div>
         <Typography variant='h5' className='card__title'>
-          Экология
+          {title}
         </Typography>
-        <p className='card__text'>
-          Приоритет компании — защита и сохранение экологии. Мы делаем
-          конкретные шаги для минимизация влияния золотодобывающего производства
-          на окружающую среду.
-        </p>
+        <p className='card__text'>{text}</p>
         <div className='card__img'>
-          <img alt='' src='../../../../../../public/mock-images/eco.svg' />
+          <img alt='' src={icon || ''} />
+          {/*<img alt='' src='../../../../../../public/mock-images/eco.svg' />*/}
         </div>
       </StyledCard>
       <CustomModal open={openEditModal} handleClose={onCloseEditModal}>
-        <EditingToolsForOurValuesCard content={{ ...emptyContent }} />
+        <EditingToolsForOurValuesCard
+          content={{
+            id: id,
+            icon: icon,
+            text: text,
+            title: title,
+          }}
+          onCloseEditModal={onCloseEditModal}
+        />
       </CustomModal>
     </>
   );

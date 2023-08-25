@@ -1,6 +1,5 @@
-import { Container, styled, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Container, styled, useMediaQuery, useTheme } from '@mui/material';
 import Carousel from 'react-multi-carousel';
-import { getArray } from '../../../../../utils/getArray.ts';
 
 const responsive = {
   desktop: {
@@ -38,22 +37,10 @@ const StyledSlider = styled('div')(({ theme: { breakpoints, shape } }) => ({
   },
 }));
 
-const arrImg = getArray(6).map((_, idx) => {
-  return (
-    <img
-      key={idx}
-      alt=''
-      src='https://images.unsplash.com/photo-1549396535-c11d5c55b9df?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60'
-      style={{
-        display: 'block',
-        height: '100%',
-        margin: 'auto',
-        width: '100%',
-      }}
-    />
-  );
-});
-const Slider = () => {
+type SliderProps = {
+  images: string[];
+};
+const Slider = ({ images }: SliderProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('mobileSm'));
   return (
@@ -87,7 +74,19 @@ const Slider = () => {
           slidesToSlide={1}
           swipeable
         >
-          {arrImg.map((item) => item)}
+          {images.map((image, idx) => (
+            <Box width='100%' height='600px'>
+              <img
+                key={idx}
+                alt=''
+                src={image}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                }}
+              />
+            </Box>
+          ))}
         </Carousel>
       </Container>
     </StyledSlider>

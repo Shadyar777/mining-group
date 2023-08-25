@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { StyledLogo } from './styled';
 
-import logoSrc from './../../../../public/images/logo.png';
+import logoSrc from '@public/images/logo.png';
 
 const Logo = () => {
   return (
