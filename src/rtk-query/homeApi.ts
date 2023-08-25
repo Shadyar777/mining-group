@@ -42,7 +42,7 @@ export const homeApi = createApi({
   }),
   endpoints: (build) => ({
     getAllHome: build.query<HomeResponse, TLanguage>({
-      query: () => `main/getAl`,
+      query: () => `main/getAll`,
       providesTags: () => [{ type: 'Home', id: 'OBJECT' }],
     }),
     updateHome: build.mutation<void, BodyHeme>({
