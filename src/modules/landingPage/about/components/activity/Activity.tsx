@@ -5,6 +5,7 @@ import Card from './Card.tsx';
 import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 import { useGetAllActivitiesQuery } from '../../../../../rtk-query';
+import LoadingSpinner from '../../../../common/loadingSpinner';
 
 export const StyledActivity = styled('div')(({ theme: { breakpoints } }) => ({
   '& .activity__title': {
@@ -40,7 +41,7 @@ const Activity = () => {
   const location = useLocation();
 
   const lng = useAppSelector(getAddGlobalLanguages);
-  const { data } = useGetAllActivitiesQuery(lng);
+  const { data, isLoading } = useGetAllActivitiesQuery(lng);
 
   useEffect(() => {
     if (location.hash === '#services') {
@@ -50,6 +51,10 @@ const Activity = () => {
       }
     }
   }, [location]);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   if (!data) {
     return;

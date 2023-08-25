@@ -1,14 +1,21 @@
 import { CircularProgress, styled } from '@mui/material';
 
-const LoadingContainer = styled('div')({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  height: '100vh',
-});
+type LoadingContainerProps = {
+  customHeight?: string;
+};
 
-const LoadingSpinner = () => (
-  <LoadingContainer>
+const LoadingContainer = styled('div')<LoadingContainerProps>(
+  ({ customHeight }) => ({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: customHeight ? customHeight : '100vh',
+  }),
+);
+
+type LoadingSpinner = LoadingContainerProps;
+const LoadingSpinner = ({ customHeight }: LoadingSpinner) => (
+  <LoadingContainer customHeight={customHeight}>
     <CircularProgress />
   </LoadingContainer>
 );

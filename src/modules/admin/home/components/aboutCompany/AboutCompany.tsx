@@ -17,6 +17,7 @@ import {
   createFormData,
   parseImgBase64,
 } from '../../../../../utils';
+import LoadingSpinner from '../../../../common/loadingSpinner';
 
 const AboutCompany = () => {
   const [uploadedImage, setUploadedImage] = useState<
@@ -25,8 +26,9 @@ const AboutCompany = () => {
   const [imageBase64, setImageBase64] = useState<string | null>('');
 
   const lng = useAppSelector(getAddGlobalLanguages);
-  const { data } = useGetAllHomeQuery(lng);
-  const [updateAboutHome] = useUpdateHomeMutation();
+  const { data, isLoading: isGetLoading } = useGetAllHomeQuery(lng);
+  const [updateAboutHome, { isLoading: isUpdateLoading }] =
+    useUpdateHomeMutation();
 
   const {
     content: contentTitle,
@@ -72,6 +74,10 @@ const AboutCompany = () => {
       setImageBase64(parsedIconBase64 || null);
     }
   }, [data, setContentText, setContentTitle]);
+
+  if (isGetLoading || isUpdateLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <StyledAboutCompany>

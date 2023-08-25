@@ -68,7 +68,7 @@ const PressCenterPage = () => {
     return;
   }
 
-  const images = data?.data.images.map(({ data, type }) => {
+  const images = data?.data?.images?.map(({ data, type }) => {
     return parseImgBase64({
       data: data || '',
       type: type || '',

@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import {
+  Box,
   Container,
   styled,
   Typography,
@@ -60,14 +61,14 @@ const Investor = () => {
     language: lng,
   });
 
-  const { data, isLoading } = useGetFieldsQuery(fieldsParams);
+  const { data, isLoading, isFetching } = useGetFieldsQuery(fieldsParams);
 
   const onChangePagination = (_: ChangeEvent<unknown>, page: number) => {
     setFieldsParams((prevState) => ({ ...prevState, page }));
   };
 
-  if (isLoading || !data) {
-    return <LoadingSpinner />;
+  if (!data) {
+    return;
   }
 
   const { listFields } = data.data.listFields;
@@ -82,10 +83,19 @@ const Investor = () => {
         </div>
         <MenuFilters setFieldsParams={setFieldsParams} />
         <div className='investor__content'>
-          <NewCard />
-          {listFields.map((item, key) => (
-            <Card {...item} key={key} />
-          ))}
+          {isLoading || isFetching ? null : <NewCard />}
+          {isLoading || isFetching ? (
+            <Box
+              display='flex'
+              justifyContent='center'
+              alignItems='center'
+              width='100%'
+            >
+              <LoadingSpinner customHeight='100%' />
+            </Box>
+          ) : (
+            listFields.map((item, key) => <Card {...item} key={key} />)
+          )}
         </div>
 
         <Pagination

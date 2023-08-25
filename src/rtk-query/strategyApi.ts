@@ -30,7 +30,7 @@ export const strategyApi = createApi({
     getStrategy: build.query<StrategyResponse, TLanguage>({
       query: () => `strategy/getAll`,
       providesTags: (result) =>
-        result?.data ? [{ type: 'Strategy', id: result.data.id }] : [],
+        result?.data ? [{ type: 'Strategy', id: 'LIST' }] : [],
     }),
     addStrategy: build.mutation<void, BodyStrategy>({
       query: (body) => {

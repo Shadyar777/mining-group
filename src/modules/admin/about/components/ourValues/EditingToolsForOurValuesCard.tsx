@@ -11,6 +11,7 @@ import {
 } from '../../../../../rtk-query';
 import { base64ToFile } from '../../../../../utils';
 import { createFormData } from '../../../../../utils';
+import LoadingSpinner from '../../../../common/loadingSpinner';
 
 const StyledEditingToolsForOurValuesCard = styled('div')(() => ({
   display: 'flex',
@@ -66,7 +67,7 @@ const EditingToolsForOurValuesCard = ({
     string | ArrayBuffer | null
   >(null);
 
-  const [updateValues, { isSuccess: isSuccessUpdateValues }] =
+  const [updateValues, { isSuccess: isSuccessUpdateValues, isLoading }] =
     useUpdateValuesMutation();
   const [addValues, { isSuccess: isSuccessAddValues }] = useAddValuesMutation();
 
@@ -110,6 +111,10 @@ const EditingToolsForOurValuesCard = ({
       onCloseEditModal();
     }
   }, [isSuccessAddValues, isSuccessUpdateValues, onCloseEditModal]);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <StyledEditingToolsForOurValuesCard>

@@ -12,6 +12,7 @@ import {
 import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 import { base64ToFile, parseImgBase64 } from '../../../../../utils';
+import LoadingSpinner from '../../../../common/loadingSpinner';
 
 export const StyledStrategy = styled('div')(({ theme: { breakpoints } }) => ({
   width: '100%',
@@ -70,8 +71,8 @@ const Strategy = () => {
   const [imageBase64, setImageBase64] = useState<string | null>('');
 
   const lng = useAppSelector(getAddGlobalLanguages);
-  const { data } = useGetStrategyQuery(lng);
-  const [addStrategy] = useAddStrategyMutation();
+  const { data, isLoading: isGetLoading } = useGetStrategyQuery(lng);
+  const [addStrategy, { isLoading: isAddLoading }] = useAddStrategyMutation();
 
   const {
     content: contentTitle,
@@ -115,6 +116,10 @@ const Strategy = () => {
       setImageBase64(parsedImagBase64);
     }
   }, [data, setContentText, setContentTitle]);
+
+  if (isGetLoading || isAddLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <StyledStrategy>

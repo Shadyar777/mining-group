@@ -5,6 +5,7 @@ import { useGetValuesQuery } from '../../../../../rtk-query';
 import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 import { parseImgBase64 } from '../../../../../utils';
+import LoadingSpinner from '../../../../common/loadingSpinner';
 
 export const StyledActivityDesktop = styled('div')(() => ({
   display: 'flex',
@@ -20,15 +21,19 @@ export const StyledActivityDesktop = styled('div')(() => ({
 
 const OurValuesDesktop = () => {
   const lng = useAppSelector(getAddGlobalLanguages);
-  const { data } = useGetValuesQuery(lng);
+  const { data, isLoading } = useGetValuesQuery(lng);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
   return (
     <StyledActivityDesktop>
       {data?.data &&
         data.data.map(({ text, id, title, file }) => {
           const parsedIconBase64 = data?.data
             ? parseImgBase64({
-                data: file.data || '',
-                type: file.type || '',
+                data: file?.data || '',
+                type: file?.type || '',
               })
             : null;
 

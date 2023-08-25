@@ -17,6 +17,8 @@ import {
 
 import UploadImage from '../../../../common/buttons/UploadImage.tsx';
 import UploadButton from '../../../../common/buttons/UploadButton.tsx';
+import { useAppSelector } from '../../../../../store/hooks.ts';
+import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 
 type StyledTopBannerProps = {
   bgImg?: string | null;
@@ -66,7 +68,8 @@ const TopBanner = () => {
 
   const [updateBgImage] = useUpdateHomeBackgroundMutation();
 
-  const { data } = useGetBackgroundQuery('ru');
+  const lng = useAppSelector(getAddGlobalLanguages);
+  const { data } = useGetBackgroundQuery(lng);
   const onUploadImage = async () => {
     const data = {
       file: imgForReport

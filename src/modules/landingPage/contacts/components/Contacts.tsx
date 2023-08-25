@@ -6,6 +6,7 @@ import PhoneRoundedIcon from '@mui/icons-material/PhoneRounded';
 import { useAppSelector } from '../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../common/sliceCommon/slice.ts';
 import { useGetContactsQuery } from '../../../../rtk-query';
+import LoadingSpinner from '../../../common/loadingSpinner';
 
 const StyledContacts = styled('div')(({ theme: { breakpoints } }) => ({
   padding: '40px 0 0 0',
@@ -86,7 +87,11 @@ const StyledContacts = styled('div')(({ theme: { breakpoints } }) => ({
 }));
 const Contacts = () => {
   const lng = useAppSelector(getAddGlobalLanguages);
-  const { data } = useGetContactsQuery(lng);
+  const { data, isLoading } = useGetContactsQuery(lng);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   if (!data) {
     return;

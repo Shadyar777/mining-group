@@ -3,6 +3,7 @@ import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 import { useGetStrategyQuery } from '../../../../../rtk-query';
 import { parseImgBase64 } from '../../../../../utils';
+import LoadingSpinner from '../../../../common/loadingSpinner';
 
 export const StyledStrategy = styled('div')(({ theme: { breakpoints } }) => ({
   width: '100%',
@@ -56,7 +57,11 @@ export const StyledStrategy = styled('div')(({ theme: { breakpoints } }) => ({
 
 const Strategy = () => {
   const lng = useAppSelector(getAddGlobalLanguages);
-  const { data } = useGetStrategyQuery(lng);
+  const { data, isLoading } = useGetStrategyQuery(lng);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   if (!data) {
     return;

@@ -26,13 +26,7 @@ export const activitiesApi = createApi({
   endpoints: (build) => ({
     getAllActivities: build.query<ActivitiesResponse, TLanguage>({
       query: () => `activities/getAll`,
-      providesTags: (result) =>
-        result
-          ? result.data.map((activity) => ({
-              type: 'Activities',
-              id: activity.id,
-            }))
-          : [],
+      providesTags: [{ type: 'Activities', id: 'LIST' }],
     }),
     addActivities: build.mutation<void, BodyActivities>({
       query: (body) => ({

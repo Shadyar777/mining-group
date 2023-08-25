@@ -43,8 +43,7 @@ export const homeApi = createApi({
   endpoints: (build) => ({
     getAllHome: build.query<HomeResponse, TLanguage>({
       query: () => `main/getAll`,
-      providesTags: (result) =>
-        result?.data ? [{ type: 'Home', id: result.data.id }] : [],
+      providesTags: () => [{ type: 'Home', id: 'OBJECT' }],
     }),
     updateHome: build.mutation<void, BodyHeme>({
       query: (body) => ({
@@ -52,12 +51,11 @@ export const homeApi = createApi({
         method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: 'Home', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Home', id: 'OBJECT' }],
     }),
     getBackground: build.query<BackgroundResponse, TLanguage>({
       query: () => `main/getBackground`,
-      providesTags: (result) =>
-        result?.data ? [{ type: 'Home', id: result.data.id }] : [],
+      providesTags: () => [{ type: 'Home', id: 'BG' }],
     }),
     updateHomeBackground: build.mutation<void, BodyHeme>({
       query: (body) => ({
@@ -65,7 +63,7 @@ export const homeApi = createApi({
         method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: 'Home', id: 'IMAGE' }],
+      invalidatesTags: [{ type: 'Home', id: 'BG' }],
     }),
   }),
 });

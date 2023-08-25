@@ -5,6 +5,7 @@ import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 import { useGetAllHomeQuery } from '../../../../../rtk-query';
 import { parseImgBase64 } from '../../../../../utils';
+import LoadingSpinner from '../../../../common/loadingSpinner';
 
 export const StyledAboutCompany = styled('div')(
   ({ theme: { breakpoints } }) => ({
@@ -86,13 +87,17 @@ export const StyledAboutCompany = styled('div')(
 const AboutCompany = () => {
   const navigate = useNavigate();
   const lng = useAppSelector(getAddGlobalLanguages);
-  const { data } = useGetAllHomeQuery(lng);
+  const { data, isLoading } = useGetAllHomeQuery(lng);
   const parsedBase64Img = data?.data
     ? parseImgBase64({
         data: data.data.file.data || '',
         type: data.data.file.type || '',
       })
     : '';
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   if (!data) {
     return;

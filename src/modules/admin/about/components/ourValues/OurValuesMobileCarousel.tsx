@@ -6,6 +6,7 @@ import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 import { useGetValuesQuery } from '../../../../../rtk-query';
 import { parseImgBase64 } from '../../../../../utils';
+import LoadingSpinner from '../../../../common/loadingSpinner';
 
 export const StyledActivityMobileCarousel = styled(Carousel)(() => ({
   '& .card': {
@@ -37,7 +38,11 @@ const responsive = {
 
 const OurValuesMobileCarousel = () => {
   const lng = useAppSelector(getAddGlobalLanguages);
-  const { data } = useGetValuesQuery(lng);
+  const { data, isLoading } = useGetValuesQuery(lng);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
   return (
     <StyledActivityMobileCarousel
       additionalTransfrom={0}
@@ -72,8 +77,8 @@ const OurValuesMobileCarousel = () => {
         data.data.map(({ text, id, title, file }) => {
           const parsedIconBase64 = data?.data
             ? parseImgBase64({
-                data: file.data || '',
-                type: file.type || '',
+                data: file?.data || '',
+                type: file?.type || '',
               })
             : null;
 

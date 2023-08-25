@@ -10,6 +10,7 @@ import OurValuesDesktop from './OurValuesDesktop.tsx';
 import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 import { useGetValuesQuery } from '../../../../../rtk-query';
+import LoadingSpinner from '../../../../common/loadingSpinner';
 // import {lazy} from "react";
 // const LazyActivityMobileCarousel = lazy(() => import('./OurValuesMobileCarousel.tsx'));
 
@@ -37,7 +38,11 @@ const OurValues = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const lng = useAppSelector(getAddGlobalLanguages);
-  const { data } = useGetValuesQuery(lng);
+  const { data, isLoading } = useGetValuesQuery(lng);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   if (!data) {
     return;

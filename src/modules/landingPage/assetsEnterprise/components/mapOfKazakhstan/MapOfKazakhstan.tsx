@@ -3,6 +3,7 @@ import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 import { useGetGeoProdQuery } from '../../../../../rtk-query';
 import { parseImgBase64 } from '../../../../../utils';
+import LoadingSpinner from '../../../../common/loadingSpinner';
 
 const StyledMapOfKazakhstan = styled('div')(({ theme: { breakpoints } }) => ({
   display: 'flex',
@@ -64,7 +65,11 @@ const StyledMapOfKazakhstan = styled('div')(({ theme: { breakpoints } }) => ({
 
 const MapOfKazakhstan = () => {
   const lng = useAppSelector(getAddGlobalLanguages);
-  const { data } = useGetGeoProdQuery(lng);
+  const { data, isLoading } = useGetGeoProdQuery(lng);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   if (!data) {
     return;

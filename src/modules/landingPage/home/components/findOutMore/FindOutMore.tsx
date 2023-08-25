@@ -4,6 +4,7 @@ import Carousel from 'react-multi-carousel';
 import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 import { useGetTitleQuery } from '../../../../../rtk-query';
+import LoadingSpinner from '../../../../common/loadingSpinner';
 
 const responsive = {
   desktop: {
@@ -56,7 +57,11 @@ export const StyledFindOutMore = styled('div')(
 
 const FindOutMore = () => {
   const lng = useAppSelector(getAddGlobalLanguages);
-  const { data } = useGetTitleQuery(lng);
+  const { data, isLoading } = useGetTitleQuery(lng);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   if (!data) {
     return;

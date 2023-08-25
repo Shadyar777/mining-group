@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, styled } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -17,6 +17,8 @@ import { useAddFieldsMutation } from '../../../../../rtk-query';
 import { dataURLtoBlob } from '../../../../../utils/dataURLtoBlob.tsx';
 import { base64ToFile } from '../../../../../utils';
 import { resourceSchema } from '../../utils/resourceSchema.ts';
+import { getCheckedNames } from '../../../../../utils/getCheckedNames.ts';
+import LoadingSpinner from '../../../../common/loadingSpinner';
 
 type FormData = {
   title: string;
@@ -47,8 +49,12 @@ const StyledForm = styled('form')(({ theme: { shape } }) => ({
   },
 }));
 
-const CreateResourceCardForm = () => {
-  const [addFields] = useAddFieldsMutation();
+type CreateResourceCardForm = {
+  handleClose: () => void;
+};
+
+const CreateResourceCardForm = ({ handleClose }: CreateResourceCardForm) => {
+  const [addFields, { isSuccess, isLoading }] = useAddFieldsMutation();
   const [moreImages, setImages] = useState<TImageGallery[]>([]);
   const { control, handleSubmit } = useForm<FormData>({
     resolver: yupResolver(resourceSchema),
@@ -95,13 +101,20 @@ const CreateResourceCardForm = () => {
     );
     formData.append('password', data.projectPassword);
     formData.append('price', String(data.price));
-    formData.append(
-      'resources',
-      resourceData.map((resource) => resource.name).join(),
-    );
+    formData.append('resources', getCheckedNames(resourceData).join());
     formData.append('title', data.title);
     addFields(formData);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      handleClose();
+    }
+  }, [handleClose, isSuccess]);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>

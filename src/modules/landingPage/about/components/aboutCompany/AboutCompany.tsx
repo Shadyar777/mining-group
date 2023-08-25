@@ -3,6 +3,7 @@ import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 import { useGetAllHomeQuery } from '../../../../../rtk-query';
 import { parseImgBase64 } from '../../../../../utils';
+import LoadingSpinner from '../../../../common/loadingSpinner';
 
 export const StyledAboutCompany = styled('div')(
   ({ theme: { breakpoints } }) => ({
@@ -69,7 +70,11 @@ export const StyledAboutCompany = styled('div')(
 
 const AboutCompany = () => {
   const lng = useAppSelector(getAddGlobalLanguages);
-  const { data } = useGetAllHomeQuery(lng);
+  const { data, isLoading } = useGetAllHomeQuery(lng);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   if (!data) {
     return;

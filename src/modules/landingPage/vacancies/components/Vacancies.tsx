@@ -3,6 +3,7 @@ import VacancyCard from './VacancyCard.tsx';
 import { useAppSelector } from '../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../common/sliceCommon/slice.ts';
 import { useGetAllJobsQuery } from '../../../../rtk-query';
+import LoadingSpinner from '../../../common/loadingSpinner';
 
 const StyledVacancies = styled('div')(({ theme: { breakpoints } }) => ({
   padding: '40px 0',
@@ -26,7 +27,11 @@ const Vacancies = () => {
   const isMobile = useMediaQuery(breakpoints.down('mobileSm'));
 
   const lng = useAppSelector(getAddGlobalLanguages);
-  const { data } = useGetAllJobsQuery(lng);
+  const { data, isLoading } = useGetAllJobsQuery(lng);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   if (!data) {
     return;

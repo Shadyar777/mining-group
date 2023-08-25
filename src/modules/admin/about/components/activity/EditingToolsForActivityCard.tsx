@@ -8,6 +8,7 @@ import {
   useAddActivitiesMutation,
   useUpdateActivitiesMutation,
 } from '../../../../../rtk-query';
+import LoadingSpinner from '../../../../common/loadingSpinner';
 
 const StyledEditingToolsForActivityCard = styled('div')(() => ({
   display: 'flex',
@@ -49,10 +50,14 @@ const EditingToolsForActivityCard = ({
   content,
   setOpenEditModal,
 }: EditingToolsForActivityCardProps) => {
-  const [addActivities, { isSuccess: isSuccessAddActivities }] =
-    useAddActivitiesMutation();
-  const [updateActivities, { isSuccess: isSuccessUpdateActivities }] =
-    useUpdateActivitiesMutation();
+  const [
+    addActivities,
+    { isSuccess: isSuccessAddActivities, isLoading: isAddLoading },
+  ] = useAddActivitiesMutation();
+  const [
+    updateActivities,
+    { isSuccess: isSuccessUpdateActivities, isLoading: isUpdateLoading },
+  ] = useUpdateActivitiesMutation();
   const {
     content: contentHeadings,
     ref: contentHeadingsRef,
@@ -88,6 +93,9 @@ const EditingToolsForActivityCard = ({
     }
   }, [isSuccessAddActivities, isSuccessUpdateActivities, setOpenEditModal]);
 
+  if (isAddLoading || isUpdateLoading) {
+    return <LoadingSpinner />;
+  }
   return (
     <StyledEditingToolsForActivityCard>
       <TitleEdit>Заголовок:</TitleEdit>

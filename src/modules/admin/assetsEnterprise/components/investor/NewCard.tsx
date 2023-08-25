@@ -47,7 +47,7 @@ const NewCard = memo(() => {
         </div>
       </StyledNewCard>
       <CustomModal open={openNewCardModal} handleClose={onCloseNewCard}>
-        <CreateResourceCardForm />
+        <CreateResourceCardForm handleClose={onCloseNewCard} />
       </CustomModal>
     </>
   );
