@@ -21,6 +21,8 @@ export const StyledHeader = styled('header')(({ theme: { breakpoints } }) => ({
     },
   },
   '& .header-bg__wive': {
+    pointerEvents: ' none',
+    userSelect: 'none',
     width: '100%',
     position: 'absolute',
     top: 0,

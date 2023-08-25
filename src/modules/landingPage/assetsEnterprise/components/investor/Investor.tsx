@@ -1,4 +1,5 @@
 import {
+  Box,
   Container,
   styled,
   Typography,
@@ -75,7 +76,7 @@ const Investor = () => {
     setOpen(false);
   };
 
-  const { data, isLoading } = useGetFieldsQuery(fieldsParams);
+  const { data, isLoading, isFetching } = useGetFieldsQuery(fieldsParams);
 
   const onChangePagination = (_: ChangeEvent<unknown>, page: number) => {
     setFieldsParams((prevState) => ({ ...prevState, page }));
@@ -85,8 +86,8 @@ const Investor = () => {
     setFieldsParams((prevState) => ({ ...prevState, language: lng }));
   }, [lng]);
 
-  if (isLoading || !data) {
-    return <LoadingSpinner />;
+  if (!data) {
+    return;
   }
   const { listFields } = data.data.listFields;
   return (
@@ -100,9 +101,24 @@ const Investor = () => {
         </div>
         <MenuFilters setFieldsParams={setFieldsParams} />
         <div className='investor__content'>
-          {listFields.map((item, key) => (
-            <Card {...item} key={key} handleOpenModal={handleOpenModal} />
-          ))}
+          {isFetching || isLoading ? (
+            <Box
+              display='flex'
+              justifyContent='center'
+              alignItems='center'
+              width='100%'
+            >
+              <LoadingSpinner customHeight='100%' />
+            </Box>
+          ) : (
+            listFields.map((item, key) => (
+              <Card {...item} key={key} handleOpenModal={handleOpenModal} />
+            ))
+          )}
+
+          {/*{listFields.map((item, key) => (*/}
+          {/*  <Card {...item} key={key} handleOpenModal={handleOpenModal} />*/}
+          {/*))}*/}
         </div>
         <CustomModal id={cardId} open={open} onClose={handleCloseModal} />
         <Pagination
