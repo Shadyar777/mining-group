@@ -48,54 +48,58 @@ const StyledMenuFilter = styled('div')(({ theme: { breakpoints } }) => ({
 
 type MenuFiltersProps = {
   setFieldsParams: Dispatch<SetStateAction<QueryFieldsParams>>;
+  paramResources: QueryFieldsParams['resources'];
 };
 
-const MenuFilters = memo(({ setFieldsParams }: MenuFiltersProps) => {
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const [searchValue, setSearchValue] = useState('');
-  const debouncedSearchValue = useDebounce(searchValue, 1000);
-  const onOpenPopoverFilters = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+const MenuFilters = memo(
+  ({ setFieldsParams, paramResources }: MenuFiltersProps) => {
+    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+    const [searchValue, setSearchValue] = useState('');
+    const debouncedSearchValue = useDebounce(searchValue, 1000);
+    const onOpenPopoverFilters = (event: React.MouseEvent<HTMLElement>) => {
+      setAnchorEl(event.currentTarget);
+    };
 
-  const onClosePopoverFilter = () => {
-    // setAnchorEl(() => null)
-    // FIXME: Тут не понятный баг. Если использовать setState, почему-то значение не обнуляется
-    //  Пришлось обойти баг при помощью макрозадачей. Может быть из за batching-га react-та
-    setTimeout(() => {
-      setAnchorEl(() => null);
-    }, 20);
-  };
+    const onClosePopoverFilter = () => {
+      // setAnchorEl(() => null)
+      // FIXME: Тут не понятный баг. Если использовать setState, почему-то значение не обнуляется
+      //  Пришлось обойти баг при помощью макрозадачей. Может быть из за batching-га react-та
+      setTimeout(() => {
+        setAnchorEl(() => null);
+      }, 20);
+    };
 
-  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
-  };
+    const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+      setSearchValue(event.target.value);
+    };
 
-  useEffect(() => {
-    setFieldsParams((prevState) => ({
-      ...prevState,
-      title: debouncedSearchValue,
-    }));
-  }, [debouncedSearchValue, setFieldsParams]);
+    useEffect(() => {
+      setFieldsParams((prevState) => ({
+        ...prevState,
+        title: debouncedSearchValue,
+      }));
+    }, [debouncedSearchValue, setFieldsParams]);
 
-  return (
-    <StyledMenuFilter className='investor__menu-filters'>
-      <div className='menu-filters' onClick={onOpenPopoverFilters}>
-        <div className='menu-filters__icon'>
-          <img alt='' src={iconFilter} />
+    return (
+      <StyledMenuFilter className='investor__menu-filters'>
+        <div className='menu-filters' onClick={onOpenPopoverFilters}>
+          <div className='menu-filters__icon'>
+            <img alt='' src={iconFilter} />
+          </div>
+          <div className='menu-filters__label'>Фильтры</div>
+          <TFilterPopoverProps
+            setFieldsParams={setFieldsParams}
+            anchorEl={anchorEl}
+            handlePopoverClose={onClosePopoverFilter}
+            paramResources={paramResources}
+          />
         </div>
-        <div className='menu-filters__label'>Фильтры</div>
-        <TFilterPopoverProps
-          setFieldsParams={setFieldsParams}
-          anchorEl={anchorEl}
-          handlePopoverClose={onClosePopoverFilter}
-        />
-      </div>
-      <div className='menu-filters__search'>
-        <SearchInput value={searchValue} onChange={handleSearchChange} />
-      </div>
-    </StyledMenuFilter>
-  );
-});
+        <div className='menu-filters__search'>
+          <SearchInput value={searchValue} onChange={handleSearchChange} />
+        </div>
+      </StyledMenuFilter>
+    );
+  },
+);
 
 export default MenuFilters;

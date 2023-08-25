@@ -8,18 +8,21 @@ import {
   Typography,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useForm } from 'react-hook-form';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { QueryFieldsParams } from '../../../../../rtk-query/types/fields-types.ts';
 import { getListIconResources } from '../../../../common/utls/getListIconResources.tsx';
-import { getSelectedResources } from '../../../../common/utls/getSelectedResources.ts';
 import { useTranslation } from 'react-i18next';
 
 type TFilterPopoverProps = {
   anchorEl: HTMLElement | null;
   handlePopoverClose: () => void;
   setFieldsParams: Dispatch<SetStateAction<QueryFieldsParams>>;
+  paramResources: QueryFieldsParams['resources'];
 };
+
+interface IFormInput {
+  [resourceName: string]: boolean;
+}
 
 const StyledPopover = styled(Popover)(({ theme: { breakpoints } }) => ({
   '& .filter__common': {
@@ -64,10 +67,17 @@ const StyledPopover = styled(Popover)(({ theme: { breakpoints } }) => ({
 
 const resourcesList = getListIconResources();
 
+const getSelectedResources = (
+  resourceObj: Record<string, boolean>,
+): string[] => {
+  return Object.keys(resourceObj).filter((key) => resourceObj[key]);
+};
+
 const FilterPopover = ({
   anchorEl,
   handlePopoverClose,
   setFieldsParams,
+  paramResources,
 }: TFilterPopoverProps) => {
   const { t } = useTranslation('translation', {
     keyPrefix: 'assetsEnterprise',
@@ -76,18 +86,29 @@ const FilterPopover = ({
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
-  const { register, watch } = useForm();
-
-  const watchAllFields = watch();
-
+  const [checkboxState, setCheckboxState] = useState<IFormInput>(
+    resourcesList.reduce(
+      (acc, resource) => ({
+        ...acc,
+        [resource.name]: paramResources?.includes(resource.name),
+      }),
+      {},
+    ),
+  );
   const onClickNewOrOld = (value: 'new' | 'old') => {
     setFieldsParams((prevState) => ({ ...prevState, orderBy: value }));
   };
 
+  const handleCheckboxChange = (name: string, checked: boolean) => {
+    setCheckboxState((prevState) => ({ ...prevState, [name]: checked }));
+  };
+
   useEffect(() => {
-    const resources = getSelectedResources(watchAllFields);
-    setFieldsParams((prevState) => ({ ...prevState, resources }));
-  }, [setFieldsParams, watchAllFields]);
+    setFieldsParams((prevState) => ({
+      ...prevState,
+      resources: getSelectedResources(checkboxState),
+    }));
+  }, [checkboxState, setFieldsParams]);
 
   return (
     <div>
@@ -143,7 +164,12 @@ const FilterPopover = ({
                   cursor: 'pointer',
                 }}
               >
-                <Checkbox {...register(resource.name)} />
+                <Checkbox
+                  checked={checkboxState[resource.name] || false}
+                  onChange={(e) =>
+                    handleCheckboxChange(resource.name, e.target.checked)
+                  }
+                />
                 {resource.icon}
                 <Typography style={{ marginLeft: '10px' }}>
                   {resource.name}
