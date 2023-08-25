@@ -15,6 +15,7 @@ import { useGetFieldsQuery } from '../../../../../rtk-query';
 import LoadingSpinner from '../../../../common/loadingSpinner';
 import Pagination from '../../../../admin/assetsEnterprise/components/investor/Pagination.tsx';
 import CustomModal from './CustomModal.tsx';
+import { useTranslation } from 'react-i18next';
 
 const StyledInvestor = styled('div')(({ theme: { breakpoints } }) => ({
   padding: '40px 0',
@@ -48,6 +49,9 @@ const StyledInvestor = styled('div')(({ theme: { breakpoints } }) => ({
 }));
 
 const Investor = () => {
+  const { t } = useTranslation('translation', {
+    keyPrefix: 'assetsEnterprise',
+  });
   const lng = useAppSelector(getAddGlobalLanguages);
   const theme = useTheme();
   const [cardId, setCardId] = useState<number>(0);
@@ -56,7 +60,7 @@ const Investor = () => {
     title: '',
     resources: [],
     orderBy: 'new',
-    limit: isMobile ? 4 : 9,
+    limit: isMobile ? 4 : 1,
     page: 1,
   });
 
@@ -90,9 +94,9 @@ const Investor = () => {
       <Container maxWidth='md'>
         <div className='investor__titles'>
           <Typography className='title' variant='h3'>
-            Инвесторам
+            {t('investor')}
           </Typography>
-          <Typography className='sub-title'>Месторождения</Typography>
+          <Typography className='sub-title'> {t('deposits')}</Typography>
         </div>
         <MenuFilters setFieldsParams={setFieldsParams} />
         <div className='investor__content'>

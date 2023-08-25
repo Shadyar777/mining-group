@@ -96,7 +96,7 @@ import { styled } from '@mui/material';
 
 export const StyledResources = styled('div')(() => ({
   width: '100%',
-  height: '150px',
+  // height: '150px',
   padding: '20px 0',
 
   gridArea: 'Resources',
@@ -186,15 +186,7 @@ const TradingViewWidget = () => {
     <StyledResources>
       <div className='tradingview-widget-container'>
         <div className='tradingview-widget-container__widget'></div>
-        <div className='tradingview-widget-copyright'>
-          <a
-            href='https://ru.tradingview.com/'
-            rel='noopener nofollow'
-            target='_blank'
-          >
-            <span className='blue-text'>Следите за рынками на TradingView</span>
-          </a>
-        </div>
+        <div className='tradingview-widget-copyright'></div>
       </div>
     </StyledResources>
   );

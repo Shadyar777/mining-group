@@ -13,6 +13,7 @@ import { Dispatch, SetStateAction, useEffect } from 'react';
 import { QueryFieldsParams } from '../../../../../rtk-query/types/fields-types.ts';
 import { getListIconResources } from '../../../../common/utls/getListIconResources.tsx';
 import { getSelectedResources } from '../../../../common/utls/getSelectedResources.ts';
+import { useTranslation } from 'react-i18next';
 
 type TFilterPopoverProps = {
   anchorEl: HTMLElement | null;
@@ -68,6 +69,10 @@ const FilterPopover = ({
   handlePopoverClose,
   setFieldsParams,
 }: TFilterPopoverProps) => {
+  const { t } = useTranslation('translation', {
+    keyPrefix: 'assetsEnterprise',
+  });
+
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
@@ -102,22 +107,22 @@ const FilterPopover = ({
       >
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className='filter__common'>Сортировка</Typography>
+            <Typography className='filter__common'>{t('sort')}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography component={'span'} className='filter__publication-date'>
-              По дате публикации:
+              {t('byPublicationDate')}
             </Typography>
             <div className='filter__new-old'>
-              <div onClick={() => onClickNewOrOld('new')}>Новые</div>
-              <div onClick={() => onClickNewOrOld('old')}>Старые</div>
+              <div onClick={() => onClickNewOrOld('new')}>{t('new')}</div>
+              <div onClick={() => onClickNewOrOld('old')}>{t('old')}</div>
             </div>
           </AccordionDetails>
         </Accordion>
         <Accordion>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography className='filter__common'>
-              Полезные ископаемые
+              {t('mineralResource')}
             </Typography>
           </AccordionSummary>
           <AccordionDetails

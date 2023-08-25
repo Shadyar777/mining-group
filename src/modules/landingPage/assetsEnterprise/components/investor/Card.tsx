@@ -7,6 +7,7 @@ import { currencyFormat } from '../../../../common/utls/currencyFormat.ts';
 import { formatDate } from '../../../../common/utls/formatDate.ts';
 
 import arrowIcon from '@public/svgs/arrow-forward-sharp.svg';
+import { useTranslation } from 'react-i18next';
 
 const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   borderRadius: '32px',
@@ -102,6 +103,10 @@ const Card = memo(
     price,
     handleOpenModal,
   }: CardProps) => {
+    const { t } = useTranslation('translation', {
+      keyPrefix: 'assetsEnterprise',
+    });
+
     const parsedImgBase64 = backgroundImageFiles
       ? parseImgBase64({
           data: backgroundImageFiles.data || '',
@@ -121,7 +126,9 @@ const Card = memo(
           />
         </div>
         <div className='card__content'>
-          <div className='card__id'>ID объекта: {id}</div>
+          <div className='card__id'>
+            {t('objectID')} {id}
+          </div>
           <div className='card__geolocation'>{title}</div>
           <div className='card__resource'>
             {resources.map((resource, key) => (
@@ -136,10 +143,10 @@ const Card = memo(
           <Divider className='card__divider' />
           {/*<Divider variant='middle' />*/}
           <div className='card__price'>
-            Цена: {currencyFormat(Number(price))}
+            {t('price')} {currencyFormat(Number(price))}
           </div>
           <div className='card__date'>
-            Опубликовано {formatDate(createdDate)}
+            {t('Published')} {formatDate(createdDate)}
           </div>
         </div>
       </StyledCard>

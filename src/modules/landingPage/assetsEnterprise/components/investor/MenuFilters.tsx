@@ -1,18 +1,19 @@
-import { MouseEvent } from 'react';
-import { styled } from '@mui/material';
 import {
   ChangeEvent,
   Dispatch,
   memo,
+  MouseEvent,
   SetStateAction,
   useEffect,
   useState,
 } from 'react';
+import { styled } from '@mui/material';
 import TFilterPopoverProps from './FilterPopover.tsx';
 import SearchInput from './SearchInput.tsx';
 import iconFilter from '@public/svgs/icon-filter.svg';
 import { QueryFieldsParams } from '../../../../../rtk-query/types/fields-types.ts';
 import { useDebounce } from '../../../../../hooks/useDebounce.ts';
+import { useTranslation } from 'react-i18next';
 
 const StyledMenuFilter = styled('div')(({ theme: { breakpoints } }) => ({
   display: 'flex',
@@ -51,6 +52,10 @@ type MenuFiltersProps = {
   setFieldsParams: Dispatch<SetStateAction<QueryFieldsParams>>;
 };
 const MenuFilters = memo(({ setFieldsParams }: MenuFiltersProps) => {
+  const { t } = useTranslation('translation', {
+    keyPrefix: 'assetsEnterprise',
+  });
+
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [searchValue, setSearchValue] = useState('');
   const debouncedSearchValue = useDebounce(searchValue, 1000);
@@ -85,7 +90,7 @@ const MenuFilters = memo(({ setFieldsParams }: MenuFiltersProps) => {
         <div className='menu-filters__icon'>
           <img alt='' src={iconFilter} />
         </div>
-        <div className='menu-filters__label'>Фильтры</div>
+        <div className='menu-filters__label'>{t('filters')}</div>
         <TFilterPopoverProps
           setFieldsParams={setFieldsParams}
           anchorEl={anchorEl}

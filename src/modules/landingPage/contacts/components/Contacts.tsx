@@ -7,6 +7,7 @@ import { useAppSelector } from '../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../common/sliceCommon/slice.ts';
 import { useGetContactsQuery } from '../../../../rtk-query';
 import LoadingSpinner from '../../../common/loadingSpinner';
+import { useTranslation } from 'react-i18next';
 
 const StyledContacts = styled('div')(({ theme: { breakpoints } }) => ({
   padding: '40px 0 0 0',
@@ -86,6 +87,9 @@ const StyledContacts = styled('div')(({ theme: { breakpoints } }) => ({
   },
 }));
 const Contacts = () => {
+  const { t } = useTranslation('translation', {
+    keyPrefix: 'contacts',
+  });
   const lng = useAppSelector(getAddGlobalLanguages);
   const { data, isLoading } = useGetContactsQuery(lng);
 
@@ -101,7 +105,7 @@ const Contacts = () => {
       <Container maxWidth='md'>
         <div className='contacts__container'>
           <Typography variant='h2' className='contacts__title'>
-            Контакты
+            {t('contact')}
           </Typography>
           <div className='contacts__content'>
             <GoogleMaps srcGoogle={data.data?.location ?? ''} />

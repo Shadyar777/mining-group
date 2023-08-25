@@ -5,6 +5,7 @@ import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 import { useGetTitleQuery } from '../../../../../rtk-query';
 import LoadingSpinner from '../../../../common/loadingSpinner';
+import { useTranslation } from 'react-i18next';
 
 const responsive = {
   desktop: {
@@ -59,6 +60,8 @@ const FindOutMore = () => {
   const lng = useAppSelector(getAddGlobalLanguages);
   const { data, isLoading } = useGetTitleQuery(lng);
 
+  const { t } = useTranslation('translation', { keyPrefix: 'home' });
+
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -66,13 +69,13 @@ const FindOutMore = () => {
   if (!data) {
     return;
   }
-
+  // console.log(t('home.toLearnMore'))
   return (
     <StyledFindOutMore>
       <Container maxWidth='md'>
         <div className='find-out-more__content'>
           <Typography variant='h3' className='content__title'>
-            Узнать больше
+            {t('toLearnMore')}
           </Typography>
           <Carousel
             additionalTransfrom={0}

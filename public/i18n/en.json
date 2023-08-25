@@ -1,7 +1,43 @@
 {
-  "title": "Multi-language app",
+  "title:": "Привет",
   "label": "Select another language!",
-  "about": "About",
-  "home": "Home 1",
-  "lng": "en"
+  "lng": "ru",
+  "nav": {
+    "any": "any"
+  },
+  "home": {
+    "toLearnMore": "To learn more"
+  },
+  "about": {
+    "activity": "Types of activities and range of services",
+    "ourValues": "Our values"
+  },
+  "assetsEnterprise": {
+    "investor": "Investors",
+    "deposits": "Deposits",
+    "filters": "Filters",
+    "sort": "Sorting",
+    "byPublicationDate": "By publication date:",
+    "mineralResource": "Minerals",
+    "new": "New",
+    "old": "Old",
+    "openFilePINCode": "To open the file, enter the PIN code",
+    "closeInformation": "Classified information. To grant access, contact the manager",
+    "invalidPINCode": "Invalid PIN code. Resend",
+    "price": "Price",
+    "Published": "Published",
+    "objectID": "Object ID:"
+  },
+  "contacts": {
+    "contact": "Contacts"
+  },
+  "vacancies": {
+    "conditions": "Conditions:",
+    "tasks": "Tasks:"
+  },
+  "common": {
+    "moreDetailed": "More detailed",
+    "send": "Send",
+    "downloadFile": "Upload a file"
+  }
 }

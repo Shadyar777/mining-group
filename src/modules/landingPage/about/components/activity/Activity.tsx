@@ -6,6 +6,7 @@ import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 import { useGetAllActivitiesQuery } from '../../../../../rtk-query';
 import LoadingSpinner from '../../../../common/loadingSpinner';
+import { useTranslation } from 'react-i18next';
 
 export const StyledActivity = styled('div')(({ theme: { breakpoints } }) => ({
   '& .activity__title': {
@@ -39,6 +40,7 @@ export const StyledActivity = styled('div')(({ theme: { breakpoints } }) => ({
 
 const Activity = () => {
   const location = useLocation();
+  const { t } = useTranslation('translation', { keyPrefix: 'about' });
 
   const lng = useAppSelector(getAddGlobalLanguages);
   const { data, isLoading } = useGetAllActivitiesQuery(lng);
@@ -65,7 +67,7 @@ const Activity = () => {
         <Container maxWidth='md'>
           <div className='activity__container'>
             <Typography id='services' variant='h3' className='activity__title'>
-              Виды деятельности и спектр услуг
+              {t('activity')}
             </Typography>
             <div className='activity__content'>
               {data.data.map(({ title, text, id }, idx) => (

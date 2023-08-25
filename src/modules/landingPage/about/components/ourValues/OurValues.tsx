@@ -11,6 +11,7 @@ import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 import { useGetValuesQuery } from '../../../../../rtk-query';
 import LoadingSpinner from '../../../../common/loadingSpinner';
+import { useTranslation } from 'react-i18next';
 // import {lazy} from "react";
 // const LazyActivityMobileCarousel = lazy(() => import('./OurValuesMobileCarousel.tsx'));
 
@@ -34,6 +35,7 @@ export const StyledOurValues = styled('div')(({ theme: { breakpoints } }) => ({
 }));
 
 const OurValues = () => {
+  const { t } = useTranslation('translation', { keyPrefix: 'about' });
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -52,7 +54,7 @@ const OurValues = () => {
       <Container maxWidth='md'>
         <div className='ourValues__container'>
           <Typography variant='h3' className='ourValues__title'>
-            Наши ценности
+            {t('ourValues')}
           </Typography>
           {isMobile ? (
             <OurValuesMobileCarousel data={data.data} />

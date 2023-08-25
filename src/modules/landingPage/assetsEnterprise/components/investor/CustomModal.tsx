@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { useLazyGetFieldsPrivateByIdQuery } from '../../../../../rtk-query';
 import { useNavigate } from 'react-router-dom';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
+import { useTranslation } from 'react-i18next';
 
 type CustomModalProps = {
   open: boolean;
@@ -18,6 +19,8 @@ type CustomModalProps = {
 };
 
 export default function CustomModal({ id, open, onClose }: CustomModalProps) {
+  const { t } = useTranslation('translation');
+
   const navigate = useNavigate();
   const lng = useAppSelector(getAddGlobalLanguages);
   const [pinCode, setPinCode] = useState<string>('');
@@ -80,9 +83,11 @@ export default function CustomModal({ id, open, onClose }: CustomModalProps) {
       </IconButton>
 
       <DialogContent>
-        <Typography variant='h4'>Для открытия файла введите пин-код</Typography>
+        <Typography variant='h4'>
+          {t('assetsEnterprise.openFilePINCode')}
+        </Typography>
         <Typography variant='body1'>
-          Закрытая информация. Для предоставление доступа обратитесь к менеджеру
+          {t('assetsEnterprise.closeInformation')}
         </Typography>
         <div>
           <PinCode setPinCode={setPinCode} />
@@ -92,12 +97,12 @@ export default function CustomModal({ id, open, onClose }: CustomModalProps) {
           disabled={Number(pinCode.length) !== 6}
           onClick={sendPinCode}
         >
-          Отправить
+          {t('common.send')}
         </Button>
 
         {isError && (
           <Typography variant='body1'>
-            Неверный пин-код. Отправить повторно
+            {t('assetsEnterprise.invalidPINCode')}
           </Typography>
         )}
       </DialogContent>
