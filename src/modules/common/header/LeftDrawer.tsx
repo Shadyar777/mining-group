@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { getLinksAdmin, getLinksLanding } from '../../../routers/appRoutes.tsx';
 import { StyledLeftDrawer } from './styled';
 import Languages from './Languages.tsx';
-import { useMediaQuery, useTheme } from '@mui/material';
+import { Box, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 const LeftDrawer = ({
@@ -56,6 +56,9 @@ const LeftDrawer = ({
           <Languages />
         </div>
       )}
+      <Box>
+        <NavLink to='/auth'>Auth</NavLink>
+      </Box>
     </StyledLeftDrawer>
   );
 };
