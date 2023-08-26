@@ -14,7 +14,7 @@ const LeftDrawer = ({
 }) => {
   const location = useLocation();
   const isAdmin = location.pathname.includes('/admin');
-  const { t } = useTranslation();
+  const { t } = useTranslation('translation', { keyPrefix: 'nav' });
   const links = isAdmin ? getLinksAdmin() : getLinksLanding();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('mobileSm'));
@@ -37,11 +37,11 @@ const LeftDrawer = ({
                   }}
                   to={path}
                 >
-                  {t(`nav.${name}`)}
+                  {t(name)}
                 </NavLink>
               ) : (
                 <NavLink onClick={onClose} to={path}>
-                  {t(`nav.${name}`)}
+                  {t(name)}
                 </NavLink>
               )}
             </li>

@@ -15,33 +15,33 @@ export const adminRoutes = {
 
 export const routersAdmin = [
   {
-    name: 'Главная',
+    name: 'main',
     // index: true,
     path: adminRoutes.HOME,
     element: <HomePage />,
   },
   {
-    name: 'О компании',
+    name: 'aboutCompany',
     path: adminRoutes.ABOUT,
     element: <AboutPage />,
   },
   {
-    name: 'Активы предприятия',
+    name: 'assetsOfEnterprise',
     path: adminRoutes.ASSETS_ENTERPRISE,
     element: <AssetsEnterprisePage />,
   },
   {
-    name: 'Вакансии',
+    name: 'vacancies',
     path: adminRoutes.VACANCIES,
     element: <VacanciesPage />,
   },
   {
-    name: 'Услуги',
+    name: 'services',
     path: `${adminRoutes.ABOUT}#services`,
     // element: <PressCenterPage />,
   },
   {
-    name: 'Контакты',
+    name: 'contacts',
     path: adminRoutes.CONTACTS,
     element: <ContactsPage />,
   },
