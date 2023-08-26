@@ -1,11 +1,13 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { Container } from '@mui/material';
 import StyledFooter from './styled';
 import { getLinksAdmin, getLinksLanding } from '../../../routers/appRoutes.tsx';
 import Logo from '../header/Logo.tsx';
 import { useTranslation } from 'react-i18next';
 
-const Footer = ({ isAdmin }: { isAdmin?: boolean }) => {
+const Footer = () => {
+  const location = useLocation();
+  const isAdmin = location.pathname.includes('/admin');
   const { t } = useTranslation('translation', { keyPrefix: 'nav' });
   const links = isAdmin ? getLinksAdmin() : getLinksLanding();
 

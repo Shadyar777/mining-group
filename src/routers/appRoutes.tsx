@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { LayoutAdmin, LayoutLanding } from '../modules/common/layout';
+import { LayoutLanding } from '../modules/common/layout';
 import { routersLanding } from '../modules/landingPage/routers';
 import SignIn from '../modules/admin/signIn/SignIn.tsx';
 import { routersAdmin } from '../modules/admin/routers';
@@ -18,20 +18,22 @@ const adminMap = routersAdmin
     element,
   }));
 
-export const routers = createBrowserRouter([
-  {
-    path: '/',
-    element: <LayoutLanding />,
-    children: landingMap,
-  },
+const admin = [
   {
     path: '/auth',
     element: <SignIn />,
   },
   {
     path: '/admin',
-    element: <LayoutAdmin />,
     children: adminMap,
+  },
+];
+
+export const routers = createBrowserRouter([
+  {
+    path: '/',
+    element: <LayoutLanding />,
+    children: [...landingMap, ...admin],
   },
 ]);
 export const getLinksLanding = () =>

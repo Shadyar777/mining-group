@@ -69,7 +69,6 @@ const FindOutMore = () => {
   if (!data) {
     return;
   }
-  // console.log(t('home.toLearnMore'))
   return (
     <StyledFindOutMore>
       <Container maxWidth='md'>

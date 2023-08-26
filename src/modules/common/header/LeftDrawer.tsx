@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { getLinksAdmin, getLinksLanding } from '../../../routers/appRoutes.tsx';
 import { StyledLeftDrawer } from './styled';
 import Languages from './Languages.tsx';
@@ -8,24 +8,21 @@ import { useTranslation } from 'react-i18next';
 const LeftDrawer = ({
   isOpen,
   onClose,
-  isAdmin,
 }: {
   isOpen: boolean;
   onClose: () => void;
-  isAdmin?: boolean;
 }) => {
-  const { t } = useTranslation('translation', { keyPrefix: 'nav' });
+  const location = useLocation();
+  const isAdmin = location.pathname.includes('/admin');
+  const { t } = useTranslation();
   const links = isAdmin ? getLinksAdmin() : getLinksLanding();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('mobileSm'));
-
-  console.log(t('aboutCompany'));
 
   return (
     <StyledLeftDrawer anchor={'left'} open={isOpen} onClose={onClose}>
       <ul>
         {links.map(({ name, path }, idx) => {
-          console.log(t(name));
           return (
             <li key={`name-${idx}`}>
               {path.includes('#services') ? (
@@ -40,25 +37,25 @@ const LeftDrawer = ({
                   }}
                   to={path}
                 >
-                  {t(name)}
+                  {t(`nav.${name}`)}
                 </NavLink>
               ) : (
                 <NavLink onClick={onClose} to={path}>
-                  {t(name)}
+                  {t(`nav.${name}`)}
                 </NavLink>
               )}
             </li>
           );
         })}
+        <Box>
+          <NavLink to='/auth'>Auth</NavLink>
+        </Box>
       </ul>
       {isMobile && (
         <div>
           <Languages />
         </div>
       )}
-      <Box>
-        <NavLink to='/auth'>Auth</NavLink>
-      </Box>
     </StyledLeftDrawer>
   );
 };

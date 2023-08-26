@@ -9,7 +9,7 @@ import Logo from './Logo.tsx';
 
 import waveImgSrc from '@public/svgs/home-top-banner-wave.svg';
 
-const Header = ({ isAdmin }: { isAdmin?: boolean }) => {
+const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const theme = useTheme();
@@ -47,7 +47,7 @@ const Header = ({ isAdmin }: { isAdmin?: boolean }) => {
           </div>
         )}
       </StyledHeader>
-      <LeftDrawer isOpen={isOpen} onClose={onCloseDrawer} isAdmin={isAdmin} />
+      <LeftDrawer isOpen={isOpen} onClose={onCloseDrawer} />
     </>
   );
 };

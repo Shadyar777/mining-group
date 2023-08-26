@@ -6,11 +6,11 @@ import { Outlet } from 'react-router-dom';
 const LayoutAdmin = () => {
   return (
     <Box display='flex' flexDirection='column' minHeight='100vh'>
-      <Header isAdmin={true} />
+      <Header />
       <Box flex='1 0 auto'>
         <Outlet />
       </Box>
-      <Footer isAdmin={true} />
+      <Footer />
     </Box>
   );
 };

@@ -68,7 +68,6 @@ const EditingToolsForVacancyCard = ({
   jobContent,
   setOpenEdit,
 }: EditingToolsForVacancyCardProps) => {
-  console.log('setOpenEdit', setOpenEdit);
   const { control, handleSubmit, setValue } = useForm<FormData>({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore FIXME

@@ -114,7 +114,7 @@ const AboutCompany = () => {
           <div className='content__img'>
             <img alt='' src={parsedBase64Img} />
           </div>
-          <Button onClick={() => console.log(navigate(lendingRoutes.ABOUT))}>
+          <Button onClick={() => navigate(lendingRoutes.ABOUT)}>
             Подробнее
           </Button>
         </div>

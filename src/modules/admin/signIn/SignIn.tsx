@@ -33,7 +33,7 @@ const SignIn = () => {
   };
 
   useEffect(() => {
-    setValue('login', 'hello worl');
+    setValue('login', '');
   }, [setValue]);
 
   return (
@@ -41,7 +41,7 @@ const SignIn = () => {
       container
       justifyContent='center'
       alignItems='center'
-      style={{ height: '100vh', backgroundColor: '#f4f4f4' }}
+      style={{ height: '100%' }}
     >
       <Box component={Paper} elevation={3} p={4} minWidth={320}>
         <Grid container direction='column' spacing={3} alignItems='center'>
