@@ -13,6 +13,7 @@ const stylesInput: CSSProperties = {
   textAlign: 'center',
   fontSize: '36px',
   fontWeight: '400',
+  minWidth: '30px',
   borderBottom: '1px solid white',
 };
 
@@ -31,7 +32,9 @@ const PinCode = ({ length = 6, setPinCode }: PinCodeProps) => {
       type='numeric'
       style={{
         padding: '10px',
-        display: 'inline-block',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         border: 'unset',
         borderRadius: '20px',
       }}

@@ -65,7 +65,7 @@ export default function CustomModal({ id, open, onClose }: CustomModalProps) {
           fontStyle: 'normal',
           fontWeight: 400,
           lineHeight: 'normal',
-          width: 660,
+          width: 460,
           height: 350,
         },
       }}
