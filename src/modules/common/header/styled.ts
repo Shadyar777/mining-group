@@ -41,6 +41,11 @@ export const StyledHeader = styled('header')(({ theme: { breakpoints } }) => ({
     background: 'white',
     padding: '32px 0',
   },
+  [breakpoints.down('mobileSm')]: {
+    '& .header-bg__wive': {
+      height: '200px',
+    },
+  },
 }));
 
 export const StyledLanguages = styled(FormControl)(

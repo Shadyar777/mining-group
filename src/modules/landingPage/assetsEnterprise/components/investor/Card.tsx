@@ -1,5 +1,5 @@
 import { Divider, styled } from '@mui/material';
-import { memo } from 'react';
+import { memo, ReactElement } from 'react';
 import { BackgroundImageFiles } from '../../../../../rtk-query/types/fields-types.ts';
 import { parseImgBase64 } from '../../../../../utils';
 import { getIconForResource } from '../../../../common/utls/getIconForResource.ts';
@@ -14,9 +14,14 @@ const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   overflow: 'hidden',
   background: 'rgba(255, 255, 255, 0.90)',
   color: '#6A6A6A',
+  display: 'flex',
+  flexDirection: 'column',
 
   '.card__content': {
     padding: '16px 20px',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
   },
   '& .card__img': {
     // maxWidth: '307px',
@@ -56,6 +61,7 @@ const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
     display: 'flex',
     flexDirection: 'column',
     gap: '17px',
+    flex: '1 0 auto',
     '& .card__resource-name': {
       display: 'flex',
       gap: '0 8px',
@@ -161,7 +167,7 @@ function ResourceName({
   iconSrc,
 }: {
   name: string;
-  iconSrc: JSX.Element | null;
+  iconSrc: ReactElement | null;
 }) {
   return (
     <div className='card__resource-name'>
