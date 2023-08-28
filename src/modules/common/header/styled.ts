@@ -162,6 +162,11 @@ export const StyledLeftDrawer = styled(Drawer)(
         height: '80%',
       },
     },
+    '& .exit': {
+      a: {
+        color: 'white',
+      },
+    },
     [breakpoints.down('sm')]: {
       '& .MuiDrawer-paper': {
         width: '250px !important',

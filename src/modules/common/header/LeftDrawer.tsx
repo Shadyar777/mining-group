@@ -2,7 +2,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { getLinksAdmin, getLinksLanding } from '../../../routers/appRoutes.tsx';
 import { StyledLeftDrawer } from './styled';
 import Languages from './Languages.tsx';
-import { Box, useMediaQuery, useTheme } from '@mui/material';
+import { useMediaQuery, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 const LeftDrawer = ({
@@ -47,9 +47,13 @@ const LeftDrawer = ({
             </li>
           );
         })}
-        <Box>
-          <NavLink to='/auth'>Auth</NavLink>
-        </Box>
+        <div className='exit' onClick={onClose}>
+          {isAdmin ? (
+            <NavLink to='/'>Выйти</NavLink>
+          ) : (
+            <NavLink to='/auth'>Auth</NavLink>
+          )}
+        </div>
       </ul>
       {isMobile && (
         <div>
