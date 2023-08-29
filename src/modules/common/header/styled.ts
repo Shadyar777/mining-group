@@ -115,7 +115,7 @@ export const StyledMenu = styled('div')(() => ({
   overflow: 'hidden',
   color: 'white',
 
-  '.css-ancrnh-MuiButtonBase-root-MuiIconButton-root': {
+  '.MuiIconButton-root': {
     margin: '0',
     padding: '8px',
   },

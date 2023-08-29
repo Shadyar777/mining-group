@@ -26,9 +26,7 @@ const Header = () => {
       <StyledHeader>
         <Container maxWidth='lg'>
           <div className='header__conteiner'>
-            <div>
-              <Menu onClick={onClickMenu} />
-            </div>
+            <Menu onClick={onClickMenu} />
             <div className='header__language-and-logo'>
               {!isMobile && (
                 <div>

@@ -4,8 +4,9 @@ import { StyledMenu } from './styled';
 
 const Menu = ({ onClick }: { onClick: () => void }) => {
   return (
-    <StyledMenu onClick={onClick}>
+    <StyledMenu>
       <IconButton
+        onClick={onClick}
         size='large'
         edge='start'
         color='inherit'
