@@ -46,7 +46,7 @@ const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   },
   '& .card__id': {
     textAlign: 'center',
-    fontFamily: 'Baloo Da 2', // FIXME - Нужно будет добавить шрифт
+    fontFamily: 'inherit',
     fontSize: '12px',
     fontWeight: 400,
   },

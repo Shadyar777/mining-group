@@ -18,6 +18,7 @@ const StyledFooter = styled('footer')(({ theme: { breakpoints } }) => ({
     gridTemplateAreas: `"logo list-links list-links" "rights-reserved rights-reserved rights-reserved"`,
     placeItems: 'center',
     flexWrap: 'wrap',
+    gap: '0 30px',
 
     '& .footer__logo': {
       gridArea: 'logo',
@@ -74,6 +75,10 @@ const StyledFooter = styled('footer')(({ theme: { breakpoints } }) => ({
       fontSize: '8px',
       justifySelf: 'center',
     },
+  },
+
+  ['@media (min-width: 1860px)']: {
+    height: '500px',
   },
 }));
 

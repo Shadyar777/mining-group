@@ -30,7 +30,7 @@ const Footer = () => {
                           const element = document.getElementById('services');
                           if (element)
                             element.scrollIntoView({ behavior: 'smooth' });
-                        }, 200);
+                        }, 1000);
                       }}
                       to={path}
                     >
