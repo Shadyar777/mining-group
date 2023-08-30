@@ -6,13 +6,21 @@ type UpdateButtonProps = {
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   icon: ReactNode;
   type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
 };
-const UploadButton = ({ text, onClick, icon, type }: UpdateButtonProps) => {
+const UploadButton = ({
+  text,
+  onClick,
+  icon,
+  type,
+  disabled = false,
+}: UpdateButtonProps) => {
   return (
     <Button
       type={type}
       variant='contained'
       onClick={onClick}
+      disabled={disabled}
       className='upload-button'
       style={{
         backgroundColor: 'transparent',

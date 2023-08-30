@@ -87,8 +87,12 @@ const EditingToolsForVacancyCard = ({
     },
   });
 
-  const [addJob, { isSuccess: isSuccessAddJob }] = useAddJobMutation();
-  const [updateJob, { isSuccess: isSuccessUpdate }] = useUpdateJobMutation();
+  const [addJob, { isSuccess: isSuccessAddJob, isLoading: isLoadingAddJob }] =
+    useAddJobMutation();
+  const [
+    updateJob,
+    { isSuccess: isSuccessUpdate, isLoading: isLoadingUpdateJob },
+  ] = useUpdateJobMutation();
 
   const onSubmit = (data: FormData) => {
     const { backgroundColor, mail, tasks, phone, title, isVisible } = data;
@@ -217,7 +221,12 @@ const EditingToolsForVacancyCard = ({
         )}
       />
 
-      <UploadButton text='Сохранить' icon={<PlusFile />} type='submit' />
+      <UploadButton
+        text='Сохранить'
+        disabled={isLoadingAddJob || isLoadingUpdateJob}
+        icon={<PlusFile />}
+        type='submit'
+      />
     </StyledForm>
   );
 };

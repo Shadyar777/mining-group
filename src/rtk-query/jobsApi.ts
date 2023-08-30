@@ -95,5 +95,9 @@ export const jobsApi = createApi({
   }),
 });
 
-export const { useGetAllJobsQuery, useAddJobMutation, useUpdateJobMutation } =
-  jobsApi;
+export const {
+  useGetAllJobsQuery,
+  useAddJobMutation,
+  useUpdateJobMutation,
+  useDeleteJobMutation,
+} = jobsApi;

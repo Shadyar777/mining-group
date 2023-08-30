@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { styled } from '@mui/material';
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import PhoneRoundedIcon from '@mui/icons-material/PhoneRounded';
-import EditFileIcon from '../../../../svgs/EditFileIcon.tsx';
-import UploadButton from '../../../common/buttons/UploadButton.tsx';
 import CustomModal from '../../../common/CustomModal.tsx';
 import EditingToolsForVacancyCard from './EditingToolsForVacancyCard.tsx';
+import CardMenu from '../../common/CardMenu.tsx';
+import { useDeleteJobMutation } from '../../../../rtk-query';
 
 type StyledVacancyCardProps = {
   bgColor: string;
@@ -22,6 +22,22 @@ const StyledVacancyCard = styled('div')<StyledVacancyCardProps>(
       display: 'flex',
       flexDirection: 'column',
       gap: '30px 0',
+
+      '& .card__tooltip': {
+        position: 'relative',
+
+        '& .img__more-vert': {
+          position: 'absolute',
+          top: '16px',
+          right: '16px',
+          cursor: 'pointer',
+          zIndex: '1',
+          borderRadius: '50px',
+          background: 'rgba(255, 255, 255, 0.90)',
+          display: 'flex',
+          padding: '3px',
+        },
+      },
     },
     '& .card__title': {
       fontSize: '48px',
@@ -113,6 +129,7 @@ const VacancyCard = ({
   active,
 }: VacancyCardProps) => {
   const [openEdit, setOpenEdit] = useState(false);
+  const [deleteJobById] = useDeleteJobMutation();
 
   const job = {
     jobId,
@@ -125,17 +142,25 @@ const VacancyCard = ({
     active,
   };
 
-  const onOpenEdit = () => {
-    setOpenEdit(true);
-  };
   const onCloseEdit = () => {
     setOpenEdit(false);
+  };
+
+  const handleEdit = () => {
+    setOpenEdit(true);
+  };
+
+  const handleDelete = () => {
+    deleteJobById(jobId);
   };
 
   return (
     <>
       <StyledVacancyCard bgColor={backgroundColor}>
         <div className='card__content'>
+          <div className='card__tooltip'>
+            <CardMenu onEdit={handleEdit} onDelete={handleDelete} />
+          </div>
           <div className='card__title'>{title}</div>
           <div className='card__terms title'>
             <div className='terms__title title'>Условия:</div>
@@ -157,11 +182,6 @@ const VacancyCard = ({
               </div>
             )}
           </div>
-          <UploadButton
-            text='Редактировать'
-            icon={<EditFileIcon />}
-            onClick={onOpenEdit}
-          />
         </div>
       </StyledVacancyCard>
       <CustomModal maxwidth='900px' open={openEdit} handleClose={onCloseEdit}>
