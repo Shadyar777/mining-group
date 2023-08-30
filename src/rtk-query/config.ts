@@ -3,7 +3,7 @@ import { AppState } from '../store';
 import { getAddGlobalLanguages } from '../modules/common/sliceCommon/slice.ts';
 import { getAdmin } from '../modules/admin/signIn/slice.ts';
 
-export const baseUrl = 'http://13.53.150.229';
+export const baseUrl = 'http://13.49.241.81';
 
 export function getBasicAuthHeader(login: string, password: string): string {
   const encodedCredentials = btoa(`${login}:${password}`);
