@@ -68,7 +68,7 @@ export const valuesApi = createApi({
     }),
     deleteValues: build.mutation<void, string | number>({
       query: (id) => ({
-        url: `getAll/getById/${id}`,
+        url: `values/delete/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: [{ type: 'Values', id: 'LIST' }],

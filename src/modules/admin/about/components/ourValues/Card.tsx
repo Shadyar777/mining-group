@@ -2,8 +2,8 @@ import { styled, Typography } from '@mui/material';
 import CustomModal from '../../../../common/CustomModal.tsx';
 import { useState } from 'react';
 import EditingToolsForOurValuesCard from './EditingToolsForOurValuesCard.tsx';
-
-import editSrcIcon from '@public/svgs/contract_edit.svg';
+import CardMenu from '../../../common/CardMenu.tsx';
+import { useDeleteValuesMutation } from '../../../../../rtk-query';
 
 export const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   width: 'clamp(150px, 100%, 250px)',
@@ -78,19 +78,27 @@ export type CardProps = {
 
 const Card = ({ id, title, icon, text }: CardProps) => {
   const [openEditModal, setOpenEditModal] = useState(false);
+  const [deleteValueById] = useDeleteValuesMutation();
 
-  const onClickEdit = () => {
-    setOpenEditModal(true);
-  };
   const onCloseEditModal = () => {
     setOpenEditModal(false);
+  };
+
+  const handleEdit = () => {
+    setOpenEditModal(true);
+  };
+
+  const handleDelete = () => {
+    deleteValueById(id);
   };
   return (
     <>
       <StyledCard className='card'>
-        <div className='card__edit' onClick={onClickEdit}>
-          <img alt='' src={editSrcIcon} />
+        <div className='card__edit'>
+          <CardMenu onEdit={handleEdit} onDelete={handleDelete} />
+          {/*<img alt='' src={editSrcIcon} />*/}
         </div>
+
         <Typography variant='h5' className='card__title'>
           {title}
         </Typography>
