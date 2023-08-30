@@ -3,7 +3,9 @@ import { useState } from 'react';
 import CustomModal from '../../../../common/CustomModal.tsx';
 import EditingToolsForActivityCard from './EditingToolsForActivityCard.tsx';
 
-import editSrc from '@public/svgs/contract_edit.svg';
+// import editSrc from '@public/svgs/contract_edit.svg';
+import CardMenu from '../../../common/CardMenu.tsx';
+import { useDeleteActivityMutation } from '../../../../../rtk-query';
 
 export const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   height: 'auto',
@@ -47,19 +49,26 @@ type CardProps = {
 };
 const Card = ({ title, text, id }: CardProps) => {
   const [openEditModal, setOpenEditModal] = useState(false);
+  const [deleteActivityById] = useDeleteActivityMutation();
   const editContent = { title, text, id };
 
-  const onClickEdit = () => {
-    setOpenEditModal(true);
-  };
   const onCloseEditModal = () => {
     setOpenEditModal(false);
+  };
+
+  const handleEdit = () => {
+    setOpenEditModal(true);
+  };
+
+  const handleDelete = () => {
+    deleteActivityById({ id });
   };
   return (
     <>
       <StyledCard className='card'>
-        <div className='card__edit' onClick={onClickEdit}>
-          <img alt='' src={editSrc} />
+        <div className='card__edit'>
+          <CardMenu onEdit={handleEdit} onDelete={handleDelete} />
+          {/*<img alt='' src={editSrc} />*/}
         </div>
         <Typography variant='h5' className='card__title'>
           {title}
