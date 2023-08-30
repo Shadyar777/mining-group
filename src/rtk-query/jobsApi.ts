@@ -12,6 +12,7 @@ type List = {
   phone: string;
   mail: string;
   language: TLanguageRequests;
+  active: boolean;
 };
 
 type JobsResponse = {
@@ -29,6 +30,12 @@ type BodyJob = {
   tasks: string;
   phone: string;
   mail: string;
+  active: boolean;
+};
+
+type TAllJobsParams = {
+  lng: TLanguage;
+  active?: boolean;
 };
 
 export const jobsApi = createApi({
@@ -38,8 +45,11 @@ export const jobsApi = createApi({
     ...configFetchBaseQuery,
   }),
   endpoints: (build) => ({
-    getAllJobs: build.query<JobsResponse, TLanguage>({
-      query: () => `jobs/getAll`,
+    getAllJobs: build.query<JobsResponse, TAllJobsParams>({
+      query: ({ active }) => {
+        const params = typeof active === 'undefined' ? `` : `?active=${active}`;
+        return `jobs/getAll${params}`;
+      },
       providesTags: (result: JobsResponse | undefined) => {
         if (result) {
           return [

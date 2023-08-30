@@ -24,22 +24,12 @@ const StyledVacancies = styled('div')(({ theme: { breakpoints } }) => ({
   },
 }));
 
-// const maskProps = {
-//   title: 'Главный экономист предприятия',
-//   termsText: 'График 5/2 оффлайн, город Шымкент',
-//   tasksText:
-//     'Сознание экономического блока. Сознание системы бюджетирование и планирования 5/2 оффлайн, город Шымкент',
-//   mailHref: 'info@imgkz.com',
-//   baColor: '#004B8F',
-// };
-
-// const emptyArray = getArray(4);
 const Vacancies = () => {
   const { breakpoints } = useTheme();
   const isMobile = useMediaQuery(breakpoints.down('mobileSm'));
 
   const lng = useAppSelector(getAddGlobalLanguages);
-  const { data } = useGetAllJobsQuery(lng);
+  const { data } = useGetAllJobsQuery({ lng });
 
   const jobs =
     data &&
@@ -51,6 +41,7 @@ const Vacancies = () => {
       mail: job.mail,
       phone: job.phone,
       jobId: job.id,
+      active: job.active,
     }));
 
   return (

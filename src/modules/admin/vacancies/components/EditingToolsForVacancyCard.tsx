@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { styled } from '@mui/material';
+import { styled, Switch } from '@mui/material';
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import PhoneRoundedIcon from '@mui/icons-material/PhoneRounded';
 import EditCustomInput from '../../../common/buttons/EditCustomInput.tsx';
@@ -24,6 +24,12 @@ const StyledForm = styled('form')(() => ({
   '& .editTitle': {
     fontSize: '48px',
   },
+  '& .flex': {
+    display: 'flex',
+    gap: '0 20px',
+    // justifyContent: 'center',
+    alignItems: 'center',
+  },
 
   '.upload-button': {
     width: '200px',
@@ -41,6 +47,7 @@ const validationSchema = yup.object().shape({
   tasks: yup.string().required('Задачи не могут быть пустыми'),
   phone: yup.string(),
   mail: yup.string().email('Недопустимый адрес электронной почты'),
+  isVisible: yup.boolean().required(),
 });
 
 type FormData = {
@@ -49,6 +56,7 @@ type FormData = {
   tasks: string;
   phone?: string;
   mail?: string;
+  isVisible: boolean;
 };
 
 type EditingToolsForVacancyCardProps = {
@@ -60,25 +68,30 @@ type EditingToolsForVacancyCardProps = {
     mail: string;
     backgroundColor: string;
     phone: string;
+    active: boolean;
   };
   setOpenEdit: Dispatch<SetStateAction<boolean>>;
 };
+const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
 const EditingToolsForVacancyCard = ({
   jobContent,
   setOpenEdit,
 }: EditingToolsForVacancyCardProps) => {
-  const { control, handleSubmit, setValue } = useForm<FormData>({
+  const { control, handleSubmit, reset } = useForm<FormData>({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore FIXME
     resolver: yupResolver(validationSchema),
+    defaultValues: {
+      isVisible: false,
+    },
   });
 
   const [addJob, { isSuccess: isSuccessAddJob }] = useAddJobMutation();
   const [updateJob, { isSuccess: isSuccessUpdate }] = useUpdateJobMutation();
 
   const onSubmit = (data: FormData) => {
-    const { backgroundColor, mail, tasks, phone, title } = data;
+    const { backgroundColor, mail, tasks, phone, title, isVisible } = data;
     // Добавление
     if (!jobContent?.jobId) {
       addJob({
@@ -88,6 +101,7 @@ const EditingToolsForVacancyCard = ({
         tasks,
         phone: phone || '',
         conditions: tasks,
+        active: isVisible,
       });
       return;
     }
@@ -100,6 +114,7 @@ const EditingToolsForVacancyCard = ({
       tasks,
       phone: phone || '',
       conditions: tasks,
+      active: isVisible,
     });
   };
 
@@ -112,21 +127,42 @@ const EditingToolsForVacancyCard = ({
   useEffect(() => {
     // Заполняем начальные данные
     if (jobContent?.jobId) {
-      for (const key in jobContent) {
-        setValue(key as any, jobContent[key as keyof typeof jobContent]);
-      }
+      reset({
+        isVisible: jobContent.active,
+        title: jobContent.title,
+        mail: jobContent.mail,
+        tasks: jobContent.tasks,
+        phone: jobContent.phone,
+        backgroundColor: jobContent.backgroundColor as ColorForColorPickerType,
+      });
     }
-  }, [jobContent, jobContent?.jobId, setValue]);
+  }, [jobContent, jobContent?.jobId, reset]);
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
-      <TitleEdit>Фоновый цвет:</TitleEdit>
-      <Controller
-        name='backgroundColor'
-        control={control}
-        render={({ field }) => (
-          <ColorPicker value={field.value} onChange={field.onChange} />
-        )}
-      />
+      <div className='flex'>
+        <TitleEdit>Видимость:</TitleEdit>
+        <Controller
+          name='isVisible'
+          control={control}
+          render={({ field }) => (
+            <Switch
+              {...label}
+              checked={field.value}
+              onChange={(e) => field.onChange(e.target.checked)}
+            />
+          )}
+        />
+      </div>
+      <div className='flex'>
+        <TitleEdit>Фоновый цвет:</TitleEdit>
+        <Controller
+          name='backgroundColor'
+          control={control}
+          render={({ field }) => (
+            <ColorPicker value={field.value} onChange={field.onChange} />
+          )}
+        />
+      </div>
       <TitleEdit>Заголовок:</TitleEdit>
       <Controller
         name='title'

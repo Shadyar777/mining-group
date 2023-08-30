@@ -27,7 +27,10 @@ const Vacancies = () => {
   const isMobile = useMediaQuery(breakpoints.down('mobileSm'));
 
   const lng = useAppSelector(getAddGlobalLanguages);
-  const { data, isLoading } = useGetAllJobsQuery(lng);
+  const { data, isLoading } = useGetAllJobsQuery({
+    lng,
+    active: true,
+  });
 
   if (isLoading) {
     return <LoadingSpinner />;

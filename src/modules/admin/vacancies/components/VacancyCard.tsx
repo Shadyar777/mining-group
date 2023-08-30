@@ -100,6 +100,7 @@ type VacancyCardProps = {
   mail: string;
   backgroundColor: string;
   phone: string;
+  active: boolean;
 };
 const VacancyCard = ({
   jobId,
@@ -109,6 +110,7 @@ const VacancyCard = ({
   mail,
   backgroundColor,
   phone,
+  active,
 }: VacancyCardProps) => {
   const [openEdit, setOpenEdit] = useState(false);
 
@@ -120,6 +122,7 @@ const VacancyCard = ({
     mail,
     backgroundColor,
     phone,
+    active,
   };
 
   const onOpenEdit = () => {
