@@ -70,8 +70,8 @@ const OurValuesMobileCarousel = ({
       {data.map(({ text, id, title, file }) => {
         const parsedIconBase64 = data
           ? parseImgBase64({
-              data: file.data || '',
-              type: file.type || '',
+              data: file?.data || '',
+              type: file?.type || '',
             })
           : null;
 
