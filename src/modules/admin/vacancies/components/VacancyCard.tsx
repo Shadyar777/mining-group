@@ -9,11 +9,13 @@ import { useDeleteJobMutation } from '../../../../rtk-query';
 
 type StyledVacancyCardProps = {
   bgColor: string;
+  isActive: boolean;
 };
 
 const StyledVacancyCard = styled('div')<StyledVacancyCardProps>(
-  ({ theme: { breakpoints }, bgColor }) => ({
+  ({ theme: { breakpoints }, bgColor, isActive }) => ({
     backgroundColor: bgColor ?? '#F28A2E',
+    opacity: isActive ? 1 : 0.5,
     padding: '32px',
     color: 'white',
     borderRadius: '30px',
@@ -156,7 +158,7 @@ const VacancyCard = ({
 
   return (
     <>
-      <StyledVacancyCard bgColor={backgroundColor}>
+      <StyledVacancyCard bgColor={backgroundColor} isActive={active}>
         <div className='card__content'>
           <div className='card__tooltip'>
             <CardMenu onEdit={handleEdit} onDelete={handleDelete} />
