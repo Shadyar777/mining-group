@@ -35,7 +35,7 @@ const StyledVacancyCard = styled('div')<StyledVacancyCardProps>(
           cursor: 'pointer',
           zIndex: '1',
           borderRadius: '50px',
-          background: 'rgba(255, 255, 255, 0.90)',
+          color: 'white',
           display: 'flex',
           padding: '3px',
         },
