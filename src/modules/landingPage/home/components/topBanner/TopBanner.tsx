@@ -29,6 +29,7 @@ export const StyledTopBanner = styled('div')<StyledTopBannerProps>(
     },
 
     [breakpoints.down('mobileSm')]: {
+      display: 'none',
       height: '100px',
       '& .top-banner-container': {
         background: 'unset',

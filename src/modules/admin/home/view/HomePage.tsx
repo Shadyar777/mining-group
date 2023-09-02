@@ -1,7 +1,7 @@
+import { styled, useMediaQuery, useTheme } from '@mui/material';
 import TopBanner from '../components/topBanner/TopBanner.tsx';
 import AboutCompany from '../components/aboutCompany/AboutCompany.tsx';
 import FindOutMore from '../components/findOutMore/FindOutMore.tsx';
-import { styled } from '@mui/material';
 import TradingViewWidget from '../../../landingPage/home/components/resources/Resources.tsx';
 
 export const StyledHomePage = styled('div')(({ theme: { breakpoints } }) => ({
@@ -22,9 +22,11 @@ export const StyledHomePage = styled('div')(({ theme: { breakpoints } }) => ({
 }));
 
 const HomePage = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('mobileSm'));
   return (
     <StyledHomePage>
-      <TopBanner />
+      {isMobile && <TopBanner />}
       <TradingViewWidget />
       <AboutCompany />
       <FindOutMore />

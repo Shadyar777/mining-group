@@ -1,4 +1,4 @@
-import { styled } from '@mui/material';
+import { styled, useMediaQuery, useTheme } from '@mui/material';
 import TopBanner from '../components/topBanner/TopBanner.tsx';
 import Resources from '../components/resources/Resources.tsx';
 import AboutCompany from '../components/aboutCompany/AboutCompany.tsx';
@@ -21,9 +21,11 @@ export const StyledHomePage = styled('div')(({ theme: { breakpoints } }) => ({
 }));
 
 const HomePage = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('mobileSm'));
   return (
     <StyledHomePage>
-      <TopBanner />
+      {isMobile && <TopBanner />}
       <Resources />
       <AboutCompany />
       <FindOutMore />
