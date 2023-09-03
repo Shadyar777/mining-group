@@ -12,7 +12,7 @@ const StyledFooter = styled('footer')(({ theme: { breakpoints } }) => ({
   flexDirection: 'column',
   justifyContent: 'end',
   paddingBottom: '20px',
-  height: '336px',
+  height: '376px',
   '.footer__conteiner': {
     display: 'grid',
     gridTemplateAreas: `"logo list-links list-links" "rights-reserved rights-reserved rights-reserved"`,
