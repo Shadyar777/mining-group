@@ -9,8 +9,8 @@ const Footer = () => {
   const location = useLocation();
   const isAdmin = location.pathname.includes('/admin');
   const { t } = useTranslation('translation', { keyPrefix: 'nav' });
-  const links = isAdmin ? getLinksAdmin() : getLinksLanding();
-
+  const footerLinks = isAdmin ? getLinksAdmin() : getLinksLanding();
+  const links = footerLinks.filter((link) => link.name !== 'main');
   return (
     <StyledFooter>
       <Container maxWidth='lg'>

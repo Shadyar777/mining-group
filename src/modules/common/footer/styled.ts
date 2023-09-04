@@ -25,6 +25,7 @@ const StyledFooter = styled('footer')(({ theme: { breakpoints } }) => ({
     },
     '& .footer__list-links': {
       gridArea: 'list-links',
+      justifySelf: 'start',
     },
     '& .footer-text__rights-reserved': {
       gridArea: 'rights-reserved',
@@ -43,7 +44,7 @@ const StyledFooter = styled('footer')(({ theme: { breakpoints } }) => ({
     fontWeight: '400',
     fontSize: '24px',
     display: 'flex',
-    gap: '0 16px',
+    gap: '0 64px',
     flexWrap: 'wrap',
 
     li: {
