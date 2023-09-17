@@ -1,6 +1,4 @@
 import { styled, Typography } from '@mui/material';
-import { TitleResponse } from '../../../../../rtk-query';
-import { parseImgBase64 } from '../../../../../utils';
 import { useNavigate } from 'react-router-dom';
 import { lendingRoutes } from '../../../routers';
 
@@ -60,7 +58,7 @@ type CardProps = {
   id: string | number;
   title: string;
   text: string;
-  file?: TitleResponse['data']['0']['file'] | null;
+  file?: string;
   type: Type;
 };
 
@@ -75,12 +73,6 @@ const getPath = (to: Type) => {
 
 const Card = ({ title, text, file, type }: CardProps) => {
   const navigate = useNavigate();
-  const parsedIconBase64 = file
-    ? parseImgBase64({
-        data: file.data || '',
-        type: file.type || '',
-      })
-    : '';
 
   const goTo = () => {
     navigate(getPath(type));
@@ -88,7 +80,7 @@ const Card = ({ title, text, file, type }: CardProps) => {
   return (
     <StyledCard onClick={goTo}>
       <div className='card__img'>
-        <img alt='' src={parsedIconBase64} />
+        <img alt='' src={file} />
       </div>
       <Typography variant='h4' className='card__title'>
         {title}

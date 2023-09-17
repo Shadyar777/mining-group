@@ -9,12 +9,7 @@ type StrategyResponse = {
     title: string;
     text: string;
     language: string;
-    file: {
-      id: string;
-      name: string;
-      type: string;
-      data: string;
-    };
+    file: string;
   };
 };
 

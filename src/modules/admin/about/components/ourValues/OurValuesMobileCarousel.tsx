@@ -5,7 +5,6 @@ import NewCard from './NewCard.tsx';
 import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 import { useGetValuesQuery } from '../../../../../rtk-query';
-import { parseImgBase64 } from '../../../../../utils';
 import LoadingSpinner from '../../../../common/loadingSpinner';
 
 export const StyledActivityMobileCarousel = styled(Carousel)(() => ({
@@ -75,21 +74,8 @@ const OurValuesMobileCarousel = () => {
     >
       {data?.data &&
         data.data.map(({ text, id, title, file }) => {
-          const parsedIconBase64 = data?.data
-            ? parseImgBase64({
-                data: file?.data || '',
-                type: file?.type || '',
-              })
-            : null;
-
           return (
-            <Card
-              title={title}
-              text={text}
-              icon={parsedIconBase64}
-              id={id}
-              key={id}
-            />
+            <Card title={title} text={text} icon={file} id={id} key={id} />
           );
         })}
       <NewCard />

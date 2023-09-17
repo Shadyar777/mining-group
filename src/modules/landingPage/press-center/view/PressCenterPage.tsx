@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { Container, styled } from '@mui/material';
 import PressCenterTitle from '../components/pressCenterPage/PressCenterTitle.tsx';
 import PdfViewer from '../components/pdfViewer/PdfViewer.tsx';
@@ -47,14 +46,14 @@ const PressCenterPage = () => {
     lng,
   });
 
-  const pdfURL = useMemo(() => {
-    return data?.data.mainFile?.data
-      ? parseImgBase64({
-          data: data.data.mainFile.data || '',
-          type: data.data.mainFile.data || '',
-        })
-      : '';
-  }, [data?.data?.mainFile?.data]);
+  // const pdfURL = useMemo(() => {
+  //   return data?.data.mainFile?.data
+  //     ? parseImgBase64({
+  //         data: data.data.mainFile || '',
+  //         type: data.data.mainFile || '',
+  //       })
+  //     : '';
+  // }, [data?.data?.mainFile]);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -82,11 +81,11 @@ const PressCenterPage = () => {
           <PressCenterTitle title={data.data.title} />
 
           <div className='press__pdf-block'>
-            <PdfViewer pdfURL={pdfURL} />
+            <PdfViewer pdfURL={data?.data?.mainFile || ''} />
             <DownloadButton
               text='Загрузить файл'
               icon={<AddPhotoAlternateIcon />}
-              href={pdfURL as string}
+              href={data?.data?.mainFile || ''}
               download
             />
           </div>

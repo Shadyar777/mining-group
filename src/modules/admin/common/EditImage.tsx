@@ -8,10 +8,6 @@ import useImageUploader from '../../../hooks/useImageUploader.ts';
 const StyledEditImage = styled('div')({
   position: 'relative',
 
-  '& img': {
-    // ... возможные дополнительные стили для изображения
-  },
-
   '& .action-icons': {
     position: 'absolute',
     top: '15px',
@@ -23,8 +19,6 @@ const StyledEditImage = styled('div')({
     backgroundColor: '#FFF',
     borderRadius: '50px',
     padding: '12px 16px',
-
-    // color: '#505050'
   },
 
   '& label': {

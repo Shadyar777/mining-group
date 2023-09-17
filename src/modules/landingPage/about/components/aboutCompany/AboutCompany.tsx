@@ -2,7 +2,6 @@ import { Container, styled, Typography } from '@mui/material';
 import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 import { useGetAllHomeQuery } from '../../../../../rtk-query';
-import { parseImgBase64 } from '../../../../../utils';
 import LoadingSpinner from '../../../../common/loadingSpinner';
 
 export const StyledAboutCompany = styled('div')(
@@ -79,12 +78,7 @@ const AboutCompany = () => {
   if (!data) {
     return;
   }
-  const parsedBase64Img = data?.data
-    ? parseImgBase64({
-        data: data.data.file.data || '',
-        type: data.data.file.type || '',
-      })
-    : '';
+
   return (
     <StyledAboutCompany>
       <Container maxWidth='md'>
@@ -94,7 +88,7 @@ const AboutCompany = () => {
           </Typography>
           <div className='content__text'>{data?.data?.text || ''}</div>
           <div className='content__img'>
-            <img alt='' src={parsedBase64Img} />
+            <img alt='' src={data?.data?.file} />
           </div>
         </div>
       </Container>

@@ -4,7 +4,6 @@ import { lendingRoutes } from '../../../routers';
 import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 import { useGetAllHomeQuery } from '../../../../../rtk-query';
-import { parseImgBase64 } from '../../../../../utils';
 import LoadingSpinner from '../../../../common/loadingSpinner';
 import companyBgSrc from '@public/images/home-page-about-company-bg.jpg';
 
@@ -89,12 +88,6 @@ const AboutCompany = () => {
   const navigate = useNavigate();
   const lng = useAppSelector(getAddGlobalLanguages);
   const { data, isLoading } = useGetAllHomeQuery(lng);
-  const parsedBase64Img = data?.data
-    ? parseImgBase64({
-        data: data.data.file.data || '',
-        type: data.data.file.type || '',
-      })
-    : '';
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -112,7 +105,7 @@ const AboutCompany = () => {
           </Typography>
           <div className='content__text'>{data?.data?.text}</div>
           <div className='content__img'>
-            <img alt='' src={parsedBase64Img} />
+            <img alt='' src={data?.data?.file} />
           </div>
           <Button onClick={() => navigate(lendingRoutes.ABOUT)}>
             Подробнее

@@ -7,13 +7,7 @@ type Data = {
   title: string;
   text: string;
   language: string;
-  file: {
-    id: string;
-    name: string;
-    type: string;
-    data: string;
-    fieldsId: string;
-  };
+  file: string;
   type: 'job' | 'about_company' | 'investors';
 };
 

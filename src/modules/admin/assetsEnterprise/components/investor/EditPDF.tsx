@@ -85,6 +85,7 @@ const EditPDF = ({ urlPdf, setUploadedPdf }: EditPDFProps) => {
           <label onClick={() => setOpen(true)}>
             <PictureAsPdfIcon style={{ fontSize: 100, color: '#ccc' }} />
           </label>
+          <p style={{ textAlign: 'center' }}>Проверить файл</p>
           <Dialog open={open} onClose={() => setOpen(false)} fullScreen>
             <DialogContent>
               <IconButton

@@ -4,8 +4,6 @@ import CustomModal from '../../../../common/CustomModal.tsx';
 import EditingTools from './EditingTools.tsx';
 
 import srcEditIcon from '@public/images/contract_edit.png';
-import { TitleResponse } from '../../../../../rtk-query';
-import { parseImgBase64 } from '../../../../../utils';
 
 export const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   // width: '100%',
@@ -69,17 +67,11 @@ type CardProps = {
   id: string | number;
   title: string;
   text: string;
-  file?: TitleResponse['data']['0']['file'] | null;
+  file?: string;
 };
 const Card = ({ id, text, title, file }: CardProps) => {
   const [openEditModal, setOpenEditModal] = useState(false);
 
-  const parsedIconBase64 = file
-    ? parseImgBase64({
-        data: file.data || '',
-        type: file.type || '',
-      })
-    : '';
   const onClickEdit = () => {
     setOpenEditModal(true);
   };
@@ -91,7 +83,7 @@ const Card = ({ id, text, title, file }: CardProps) => {
     <>
       <StyledCard>
         <div className='card__img'>
-          <img alt='' src={parsedIconBase64} />
+          <img alt='' src={file} />
           <div className='card__edit' onClick={onClickEdit}>
             <img alt='edit' src={srcEditIcon} />
           </div>

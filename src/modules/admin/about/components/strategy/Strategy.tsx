@@ -11,7 +11,7 @@ import {
 } from '../../../../../rtk-query';
 import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
-import { base64ToFile, parseImgBase64 } from '../../../../../utils';
+import { base64ToFile } from '../../../../../utils';
 import LoadingSpinner from '../../../../common/loadingSpinner';
 
 export const StyledStrategy = styled('div')(({ theme: { breakpoints } }) => ({
@@ -68,7 +68,7 @@ const Strategy = () => {
   const [uploadedImage, setUploadedImage] = useState<
     string | ArrayBuffer | null
   >(null);
-  const [imageBase64, setImageBase64] = useState<string | null>('');
+  const [image, setImage] = useState<string | null>('');
 
   const lng = useAppSelector(getAddGlobalLanguages);
   const { data, isLoading: isGetLoading } = useGetStrategyQuery(lng);
@@ -105,15 +105,9 @@ const Strategy = () => {
 
   useEffect(() => {
     if (data) {
-      const parsedImagBase64 = data?.data
-        ? parseImgBase64({
-            data: data?.data?.file.data || '',
-            type: data?.data?.file.type || '',
-          })
-        : null;
       setContentTitle(data?.data?.title || '');
       setContentText(data?.data?.text || '');
-      setImageBase64(parsedImagBase64);
+      setImage(data?.data?.file);
     }
   }, [data, setContentText, setContentTitle]);
 
@@ -144,10 +138,7 @@ const Strategy = () => {
             dangerouslySetInnerHTML={{ __html: contentText }}
           />
           <div className='content__img'>
-            <EditImage
-              setUploadedImage={setUploadedImage}
-              urlImag={imageBase64}
-            />
+            <EditImage setUploadedImage={setUploadedImage} urlImag={image} />
           </div>
           <UploadButton
             text='Сохранить'

@@ -5,15 +5,9 @@ import UploadButton from '../../../../common/buttons/UploadButton.tsx';
 import PlusFile from '../../../../../svgs/PlusFile.tsx';
 import EditImage from './EditImage.tsx';
 import { useEditableContent } from '../../../../../hooks/useEditableContent.ts';
-import {
-  TitleResponse,
-  useUpdateTitleMutation,
-} from '../../../../../rtk-query';
-import {
-  base64ToFile,
-  createFormData,
-  parseImgBase64,
-} from '../../../../../utils';
+import { useUpdateTitleMutation } from '../../../../../rtk-query';
+import { createFormData } from '../../../../../utils';
+import { getUploadedImageToBase64 } from '../../../../../utils/getUploadedImageToBase64.ts';
 
 const StyledEditingTools = styled('div')(({ theme: { shape } }) => ({
   color: '#6A6A6A',
@@ -61,7 +55,7 @@ type EditingToolsProps = {
   id: string | number;
   title: string;
   text: string;
-  file?: TitleResponse['data']['0']['file'] | null;
+  file?: string;
   onCloseEditModal: () => void;
 };
 const EditingTools = ({
@@ -73,12 +67,6 @@ const EditingTools = ({
 }: EditingToolsProps) => {
   const [updateTitle, { isSuccess: isSuccessUpdateTitle }] =
     useUpdateTitleMutation();
-  const parsedIconBase64 = file
-    ? parseImgBase64({
-        data: file.data || '',
-        type: file.type || '',
-      })
-    : null;
 
   const {
     content: contentHeadings,
@@ -99,13 +87,7 @@ const EditingTools = ({
         id: id,
         title: contentHeadings,
         text: contentShortDescription,
-        file: uploadedImage
-          ? await base64ToFile({
-              dataURI: uploadedImage as string,
-              fileName: 'image',
-              optionsType: 'image/jpeg',
-            })
-          : null,
+        file: await getUploadedImageToBase64(uploadedImage),
       };
       const formData = createFormData(data);
       updateTitle(formData);
@@ -139,10 +121,7 @@ const EditingTools = ({
         dangerouslySetInnerHTML={{ __html: contentShortDescription }}
       />
       <TitleEdit>Фоновое изображение:</TitleEdit>
-      <EditImage
-        setUploadedImage={setUploadedImage}
-        urlImag={parsedIconBase64}
-      />
+      <EditImage setUploadedImage={setUploadedImage} urlImag={file || null} />
       <UploadButton
         text='Сохранить'
         onClick={onUploadDate}

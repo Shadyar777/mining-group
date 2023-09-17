@@ -10,17 +10,19 @@ import {
 } from '../../../../../rtk-query';
 import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
-import {
-  base64ToFile,
-  createFormData,
-  parseImgBase64,
-} from '../../../../../utils';
+import { createFormData } from '../../../../../utils';
+import TitleEdit from '../../../common/TitleEdit.tsx';
+import { getUploadedImageToBase64 } from '../../../../../utils/getUploadedImageToBase64.ts';
 
 const StyledMapOfKazakhstan = styled('div')(({ theme: { breakpoints } }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '120px',
   marginTop: '50px',
+
+  '& .border-bottom': {
+    borderBottom: '1px solid red',
+  },
 
   '& .map__content': {
     display: 'flex',
@@ -56,6 +58,8 @@ const StyledMapOfKazakhstan = styled('div')(({ theme: { breakpoints } }) => ({
       fontSize: '24px',
       fontWeight: '500',
       alignSelf: 'end',
+      width: '100%',
+      textAlign: 'end',
     },
   },
 
@@ -118,13 +122,7 @@ const MapOfKazakhstan = () => {
       title: contentTitle,
       author: contentAuthor,
       quotes: contentText,
-      file: uploadedImage
-        ? await base64ToFile({
-            dataURI: uploadedImage as string,
-            fileName: 'image',
-            optionsType: 'image/jpeg',
-          })
-        : null,
+      file: await getUploadedImageToBase64(uploadedImage),
     };
     console.log(data);
     const formData = createFormData(data);
@@ -134,16 +132,10 @@ const MapOfKazakhstan = () => {
 
   useEffect(() => {
     if (data) {
-      const parsedIconBase64 = data?.data
-        ? parseImgBase64({
-            data: data?.data?.file?.data || '',
-            type: data?.data?.file?.type || '',
-          })
-        : null;
       setContentTitle(data?.data?.title);
       setContentText(data?.data?.quotes);
       setContentAuthor(data?.data?.author);
-      setImageBase64(parsedIconBase64 || null);
+      setImageBase64(data?.data?.file || null);
     }
   }, [data, setContentAuthor, setContentText, setContentTitle]);
 
@@ -151,8 +143,9 @@ const MapOfKazakhstan = () => {
     <StyledMapOfKazakhstan>
       <Container maxWidth='md'>
         <div className='map__content'>
+          <TitleEdit>Заголовок:</TitleEdit>
           <Typography
-            className='text__title'
+            className='text__title border-bottom'
             variant='h3'
             marginBottom='20px'
             contentEditable={true}
@@ -174,16 +167,18 @@ const MapOfKazakhstan = () => {
             />
           </div>
           <div className='map__text'>
+            <TitleEdit>Основной текст:</TitleEdit>
             <Typography
-              className='text__quote'
+              className='text__quote border-bottom'
               contentEditable={true}
               onBlur={handleContentText}
               onPaste={handlePasteText}
               ref={contentRefText}
               dangerouslySetInnerHTML={{ __html: contentText }}
             />
+            <TitleEdit>Автор:</TitleEdit>
             <Typography
-              className='text__author'
+              className='text__author border-bottom'
               contentEditable={true}
               onBlur={handleContentAuthor}
               onPaste={handlePasteAuthor}

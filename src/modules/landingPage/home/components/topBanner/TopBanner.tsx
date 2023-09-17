@@ -1,10 +1,10 @@
 import { styled } from '@mui/material';
-import { useEffect, useState } from 'react';
 import { useGetBackgroundQuery } from '../../../../../rtk-query';
 import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
-import { parseImgBase64 } from '../../../../../utils';
 import LoadingSpinner from '../../../../common/loadingSpinner';
+
+import mokeImg from './../../../../../../public/images/home-top-banner.jpg';
 
 type StyledTopBannerProps = {
   bgImg?: string | null;
@@ -39,26 +39,15 @@ export const StyledTopBanner = styled('div')<StyledTopBannerProps>(
 );
 
 const TopBanner = () => {
-  const [bgImg, setBgImg] = useState<null | string>('');
   const lng = useAppSelector(getAddGlobalLanguages);
   const { data, isLoading } = useGetBackgroundQuery(lng);
-
-  useEffect(() => {
-    const parsedIconBase64 = data?.data
-      ? parseImgBase64({
-          data: data.data.mainFile.data || '',
-          type: data.data.mainFile.type || '',
-        })
-      : null;
-    setBgImg(parsedIconBase64);
-  }, [data?.data]);
 
   if (isLoading) {
     return <LoadingSpinner />;
   }
 
   return (
-    <StyledTopBanner bgImg={bgImg}>
+    <StyledTopBanner bgImg={data?.data?.image || mokeImg}>
       <div className='top-banner-container' />
     </StyledTopBanner>
   );

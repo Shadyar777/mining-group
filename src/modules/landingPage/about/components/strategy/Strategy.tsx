@@ -2,7 +2,6 @@ import { Container, styled, Typography } from '@mui/material';
 import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 import { useGetStrategyQuery } from '../../../../../rtk-query';
-import { parseImgBase64 } from '../../../../../utils';
 import LoadingSpinner from '../../../../common/loadingSpinner';
 
 export const StyledStrategy = styled('div')(({ theme: { breakpoints } }) => ({
@@ -67,12 +66,6 @@ const Strategy = () => {
     return;
   }
 
-  const parsedImagBase64 = data?.data
-    ? parseImgBase64({
-        data: data?.data?.file.data || '',
-        type: data?.data?.file.type || '',
-      })
-    : '';
   return (
     <StyledStrategy>
       <Container maxWidth='md'>
@@ -83,7 +76,7 @@ const Strategy = () => {
 
           <div className='content__text'>{data.data?.text}</div>
           <div className='content__img'>
-            <img src={parsedImagBase64} alt={data.data?.title || ''} />
+            <img src={data.data?.file} alt={data.data?.title || ''} />
           </div>
         </div>
       </Container>

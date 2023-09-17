@@ -7,15 +7,7 @@ export interface Data {
   title: string;
   text: string;
   language: string;
-  file: File;
-}
-
-export interface File {
-  id: string;
-  name: string;
-  type: string;
-  data: string;
-  fieldsId: any;
+  file: string;
 }
 
 export type ValuesResponse = {

@@ -7,8 +7,6 @@ import { getIconForResource } from '../../../../common/utls/getIconForResource.t
 import { formatDate } from '../../../../common/utls/formatDate.ts';
 import { currencyFormat } from '../../../../common/utls/currencyFormat.ts';
 import { useDeleteFieldsMutation } from '../../../../../rtk-query';
-import { parseImgBase64 } from '../../../../../utils';
-import { BackgroundImageFiles } from '../../../../../rtk-query/types/fields-types.ts';
 
 const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   borderRadius: '32px',
@@ -96,7 +94,7 @@ type CardProps = {
   resources: string[];
   price: number;
   createdDate: string;
-  backgroundImageFiles?: BackgroundImageFiles;
+  backgroundImageFiles?: string;
 };
 
 const Card = memo(
@@ -111,13 +109,6 @@ const Card = memo(
     const [openCardModal, onCloseCardModal] = useState<boolean>(false);
 
     const [deleteFields] = useDeleteFieldsMutation();
-
-    const parsedImgBase64 = backgroundImageFiles
-      ? parseImgBase64({
-          data: backgroundImageFiles.data || '',
-          type: backgroundImageFiles.type || '',
-        })
-      : '';
 
     const handleEdit = () => {
       onCloseCardModal(true);
@@ -134,7 +125,7 @@ const Card = memo(
         <StyledCard className='card'>
           <div className='card__img'>
             <CardActionsMenu onEdit={handleEdit} onDelete={handleDelete} />
-            <img src={parsedImgBase64} alt={title} />
+            <img src={backgroundImageFiles} alt={title} />
           </div>
           <div className='card__content'>
             <div className='card__id'>ID объекта: {id}</div>

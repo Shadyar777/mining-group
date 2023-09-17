@@ -2,7 +2,6 @@ import { Container, styled, Typography } from '@mui/material';
 import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 import { useGetGeoProdQuery } from '../../../../../rtk-query';
-import { parseImgBase64 } from '../../../../../utils';
 import LoadingSpinner from '../../../../common/loadingSpinner';
 
 const StyledMapOfKazakhstan = styled('div')(({ theme: { breakpoints } }) => ({
@@ -75,12 +74,6 @@ const MapOfKazakhstan = () => {
     return;
   }
 
-  const parsedIconBase64 = data?.data?.file?.data
-    ? parseImgBase64({
-        data: data.data.file.data || '',
-        type: data.data.file.type || '',
-      })
-    : 'null';
   return (
     <StyledMapOfKazakhstan>
       <Container maxWidth='md'>
@@ -89,7 +82,7 @@ const MapOfKazakhstan = () => {
             {data.data?.title ?? ''}
           </Typography>
           <div className='map__image'>
-            <img alt={data.data?.title ?? '#'} src={parsedIconBase64} />
+            <img alt={data.data?.title ?? '#'} src={data?.data?.file} />
           </div>
           <div className='map__text'>
             <Typography className='text__quote'>

@@ -12,7 +12,6 @@ import {
   base64ToFile,
   createFormData,
   fileToBase64,
-  parseImgBase64,
 } from '../../../../../utils';
 
 import UploadImage from '../../../../common/buttons/UploadImage.tsx';
@@ -60,7 +59,6 @@ export const StyledTopBanner = styled('div')<StyledTopBannerProps>(
 );
 
 const TopBanner = () => {
-  const [bgImg, setBgImg] = useState<null | string>('');
   const [backgroundImageUrl, setBackgroundImageUrl] = useState<string | null>(
     null,
   );
@@ -109,16 +107,6 @@ const TopBanner = () => {
   };
 
   useEffect(() => {
-    const parsedIconBase64 = data?.data
-      ? parseImgBase64({
-          data: data.data.mainFile.data || '',
-          type: data.data.mainFile.type || '',
-        })
-      : null;
-    setBgImg(parsedIconBase64);
-  }, [data?.data]);
-
-  useEffect(() => {
     return () => {
       if (backgroundImageUrl) {
         URL.revokeObjectURL(backgroundImageUrl);
@@ -127,7 +115,7 @@ const TopBanner = () => {
   }, [backgroundImageUrl]);
 
   return (
-    <StyledTopBanner bgImg={backgroundImageUrl || bgImg}>
+    <StyledTopBanner bgImg={backgroundImageUrl || data?.data.image}>
       <div className='top-banner-container' />
       {backgroundImageUrl ? (
         <>

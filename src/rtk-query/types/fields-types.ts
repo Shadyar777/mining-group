@@ -4,21 +4,13 @@ export interface ListFields {
   allPageCount: number;
 }
 
-export interface BackgroundImageFiles {
-  data: string;
-  fieldsId: null;
-  id: string;
-  name: string;
-  type: string;
-}
-
 export interface ListField {
   id: number;
   title: string;
   resources: string[];
   price: number;
   createdDate: string;
-  backgroundImageFiles: BackgroundImageFiles;
+  backgroundImageFiles: string;
 }
 
 export interface DataGetAllFields {
@@ -56,19 +48,11 @@ export interface DataById {
   price: number;
   resources: string[];
   language: string;
-  backgroundImageFiles: BackgroundImageFiles;
-  mainFile: MainFile;
+  backgroundImageFiles: string;
+  mainFile: string;
   images: Image[];
   location: string;
   createdDate: string;
-}
-
-export interface MainFile {
-  id: string;
-  name: string;
-  type: string;
-  data: string;
-  fieldsId: any;
 }
 
 export interface Image {

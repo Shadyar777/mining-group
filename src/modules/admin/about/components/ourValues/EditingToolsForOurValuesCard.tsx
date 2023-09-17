@@ -12,6 +12,7 @@ import {
 import { base64ToFile } from '../../../../../utils';
 import { createFormData } from '../../../../../utils';
 import LoadingSpinner from '../../../../common/loadingSpinner';
+import { getUploadedImageToBase64 } from '../../../../../utils/getUploadedImageToBase64.ts';
 
 const StyledEditingToolsForOurValuesCard = styled('div')(() => ({
   display: 'flex',
@@ -77,13 +78,7 @@ const EditingToolsForOurValuesCard = ({
         id: content.id,
         title: contentHeadings,
         text: contentShortDescription,
-        file: uploadedImage
-          ? await base64ToFile({
-              dataURI: uploadedImage as string,
-              fileName: 'icon',
-              optionsType: 'image/jpeg',
-            })
-          : null,
+        file: await getUploadedImageToBase64(uploadedImage),
       };
       const formData = createFormData(data);
       updateValues(formData);

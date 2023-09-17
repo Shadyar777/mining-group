@@ -10,13 +10,7 @@ type geoProdResponse = {
     language: string;
     quotes: string;
     author: string;
-    file: {
-      id: string;
-      name: string;
-      type: string;
-      data: string;
-      fieldsId: string;
-    };
+    file: string;
   };
 };
 

@@ -9,26 +9,15 @@ type HomeResponse = {
     title: string;
     text: string;
     language: string;
-    file: {
-      id: string;
-      name: string;
-      type: string;
-      data: string;
-      fieldsId: any;
-    };
+    file: string;
   };
 };
 type BackgroundResponse = {
   message: string;
   data: {
     id: string;
-    mainFile: {
-      id: string;
-      name: string;
-      type: string;
-      data: string;
-      fieldsId: any;
-    };
+    image: string;
+    video: string;
   };
 };
 

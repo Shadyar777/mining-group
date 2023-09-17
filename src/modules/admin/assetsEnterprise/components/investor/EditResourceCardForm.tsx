@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, styled } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -18,8 +18,7 @@ import {
   useUpdateFieldsByIdMutation,
 } from '../../../../../rtk-query';
 import LoadingSpinner from '../../../../common/loadingSpinner';
-import { base64ToFile, parseImgBase64 } from '../../../../../utils';
-import { convertBase64ToPdfDataUrl } from '../../../../../utils/convertBase64ToPdfDataUrl.ts';
+import { base64ToFile } from '../../../../../utils';
 import { updateCheckboxes } from '../../../../../utils/updateCheckboxes.ts';
 import { dataURLtoBlob } from '../../../../../utils/dataURLtoBlob.tsx';
 import { getCheckedNames } from '../../../../../utils/getCheckedNames.ts';
@@ -104,20 +103,25 @@ const EditResourceCardForm = ({
         formData.append('images', imgBlob, `image${index}`);
       }
     });
-    formData.append(
-      'backgroundImageFiles',
-      await base64ToFile({
-        dataURI: uploadedImage as string,
-        fileName: 'backgroundImageFiles',
-        optionsType: 'image/jpeg',
-      }),
-    );
-    const pdfFile = await base64ToFile({
-      dataURI: urlPdf as string,
-      fileName: 'file-pdf',
-      optionsType: 'application/pdf',
-    });
-    formData.append('mainFile', pdfFile);
+
+    const bgImage = String(uploadedImage).includes('base64')
+      ? await base64ToFile({
+          dataURI: uploadedImage as string,
+          fileName: 'backgroundImageFiles',
+          optionsType: 'image/jpeg',
+        })
+      : uploadedImage;
+
+    formData.append('backgroundImageFiles', bgImage);
+
+    const pdfFile = String(urlPdf).includes('base64')
+      ? await base64ToFile({
+          dataURI: urlPdf as string,
+          fileName: 'pdf',
+          optionsType: 'application/pdf',
+        })
+      : null;
+    formData.append('mainFile', pdfFile as string);
     formData.append('location', data.mapLink);
     formData.append('password', data.projectPassword);
     formData.append('price', String(data.price));
@@ -127,28 +131,22 @@ const EditResourceCardForm = ({
     updateFieldsById(formData);
   };
 
-  const srcImagesBase64 = useMemo(() => {
-    return (
-      data?.data?.images.map((image) => ({
-        src: parseImgBase64({
-          data: image.data || '',
-          type: image.type || '',
-        }),
-      })) ?? []
-    );
-  }, [data?.data?.images]);
+  // const srcImagesBase64 = useMemo(() => {
+  //   return (
+  //     data?.data?.images?.map((image) => ({
+  //       src: parseImgBase64({
+  //         data: image.data || '',
+  //         type: image.type || '',
+  //       }),
+  //     })) ?? []
+  //   );
+  // }, [data?.data?.images]);
 
   useEffect(() => {
     if (data) {
-      const convertedDataUrl = data.data?.mainFile?.data
-        ? convertBase64ToPdfDataUrl(data.data?.mainFile?.data || '')
-        : null;
-      const parsedBgImgFiles = data.data.backgroundImageFiles?.data
-        ? parseImgBase64({
-            data: data.data.backgroundImageFiles.data || '',
-            type: data.data.backgroundImageFiles.type || '',
-          })
-        : null;
+      // const convertedDataUrl = data.data?.mainFile?.data
+      //   ? convertBase64ToPdfDataUrl(data.data?.mainFile?.data || '')
+      //   : null;
       setResourceData(updateCheckboxes(resourceData, data.data.resources));
       reset({
         title: data.data.title,
@@ -158,9 +156,9 @@ const EditResourceCardForm = ({
         mapLink: data.data.location,
       });
       setTimeout(() => {
-        setUploadedImage(() => parsedBgImgFiles);
+        setUploadedImage(() => data?.data?.backgroundImageFiles);
         if (data.data?.mainFile) {
-          setUploadedPdf(() => convertedDataUrl);
+          setUploadedPdf(() => data.data?.mainFile);
         }
       }, 100);
     }
@@ -248,7 +246,7 @@ const EditResourceCardForm = ({
 
       <TitleEdit>Загрузить дополнительные изображения:</TitleEdit>
       <Box m={2} margin='14px 0 14px 0'>
-        <ImageGallery onChange={setImages} initialImages={srcImagesBase64} />
+        <ImageGallery onChange={setImages} initialImages={[]} />
       </Box>
 
       <TitleEdit>Ссылка локации на карте:</TitleEdit>

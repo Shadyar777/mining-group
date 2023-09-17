@@ -4,7 +4,6 @@ import NewCard from './NewCard.tsx';
 import { useGetValuesQuery } from '../../../../../rtk-query';
 import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
-import { parseImgBase64 } from '../../../../../utils';
 import LoadingSpinner from '../../../../common/loadingSpinner';
 
 export const StyledActivityDesktop = styled('div')(() => ({
@@ -30,22 +29,8 @@ const OurValuesDesktop = () => {
     <StyledActivityDesktop>
       {data?.data &&
         data.data.map(({ text, id, title, file }) => {
-          const parsedIconBase64 = data?.data
-            ? parseImgBase64({
-                data: file?.data || '',
-                type: file?.type || '',
-              })
-            : null;
-
           return (
-            <Card
-              title={title}
-              text={text}
-              // icon={file.data || null}
-              icon={parsedIconBase64}
-              id={id}
-              key={id}
-            />
+            <Card title={title} text={text} icon={file} id={id} key={id} />
           );
         })}
       <NewCard />

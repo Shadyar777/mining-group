@@ -1,7 +1,5 @@
 import { Divider, styled } from '@mui/material';
 import { memo, ReactElement } from 'react';
-import { BackgroundImageFiles } from '../../../../../rtk-query/types/fields-types.ts';
-import { parseImgBase64 } from '../../../../../utils';
 import { getIconForResource } from '../../../../common/utls/getIconForResource.ts';
 import { currencyFormat } from '../../../../common/utls/currencyFormat.ts';
 import { formatDate } from '../../../../common/utls/formatDate.ts';
@@ -95,7 +93,7 @@ type CardProps = {
   resources: string[];
   price: number;
   createdDate: string;
-  backgroundImageFiles?: BackgroundImageFiles;
+  backgroundImageFiles?: string;
   handleOpenModal: (value: number) => void;
 };
 
@@ -113,17 +111,10 @@ const Card = memo(
       keyPrefix: 'assetsEnterprise',
     });
 
-    const parsedImgBase64 = backgroundImageFiles
-      ? parseImgBase64({
-          data: backgroundImageFiles.data || '',
-          type: backgroundImageFiles.type || '',
-        })
-      : '';
-
     return (
       <StyledCard className='card'>
         <div className='card__img'>
-          <img src={parsedImgBase64} alt={title} />
+          <img src={backgroundImageFiles} alt={title} />
           <img
             className='img__arrow-icon'
             src={arrowIcon}

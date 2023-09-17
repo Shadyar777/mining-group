@@ -2,7 +2,6 @@ import Carousel from 'react-multi-carousel';
 import Card from './Card.tsx';
 import { styled } from '@mui/material';
 import { ValuesResponse } from '../../../../../rtk-query';
-import { parseImgBase64 } from '../../../../../utils';
 
 export const StyledActivityMobileCarousel = styled(Carousel)(() => ({
   '& .card': {
@@ -68,22 +67,7 @@ const OurValuesMobileCarousel = ({
       swipeable
     >
       {data.map(({ text, id, title, file }) => {
-        const parsedIconBase64 = data
-          ? parseImgBase64({
-              data: file?.data || '',
-              type: file?.type || '',
-            })
-          : null;
-
-        return (
-          <Card
-            title={title}
-            text={text}
-            icon={parsedIconBase64}
-            id={id}
-            key={id}
-          />
-        );
+        return <Card title={title} text={text} icon={file} id={id} key={id} />;
       })}
     </StyledActivityMobileCarousel>
   );

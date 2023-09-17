@@ -12,18 +12,15 @@ import {
 } from '../../../../../rtk-query';
 import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
-import {
-  base64ToFile,
-  createFormData,
-  parseImgBase64,
-} from '../../../../../utils';
+import { createFormData } from '../../../../../utils';
 import LoadingSpinner from '../../../../common/loadingSpinner';
+import { getUploadedImageToBase64 } from '../../../../../utils/getUploadedImageToBase64.ts';
 
 const AboutCompany = () => {
   const [uploadedImage, setUploadedImage] = useState<
     string | ArrayBuffer | null
   >(null);
-  const [imageBase64, setImageBase64] = useState<string | null>('');
+  const [image, setImage] = useState<string | null>('');
 
   const lng = useAppSelector(getAddGlobalLanguages);
   const { data, isLoading: isGetLoading } = useGetAllHomeQuery(lng);
@@ -49,13 +46,7 @@ const AboutCompany = () => {
     const data = {
       title: contentTitle,
       text: contentText,
-      file: uploadedImage
-        ? await base64ToFile({
-            fileName: 'about-page',
-            dataURI: uploadedImage as string,
-            optionsType: 'image/jpeg',
-          })
-        : null,
+      file: await getUploadedImageToBase64(uploadedImage),
     };
     const formData = createFormData(data);
     updateAboutHome(formData);
@@ -63,15 +54,9 @@ const AboutCompany = () => {
 
   useEffect(() => {
     if (data) {
-      const parsedIconBase64 = data?.data
-        ? parseImgBase64({
-            data: data.data.file.data || '',
-            type: data.data.file.type || '',
-          })
-        : null;
       setContentTitle(data?.data?.title || '');
       setContentText(data?.data?.text || '');
-      setImageBase64(parsedIconBase64 || null);
+      setImage(data.data?.file || null);
     }
   }, [data, setContentText, setContentTitle]);
 
@@ -83,7 +68,6 @@ const AboutCompany = () => {
     <StyledAboutCompany>
       <Container maxWidth='md'>
         <div className='about-company__content'>
-          {/*<LanguageSwitcher onClick={onSwitchLaunch} />*/}
           <TitleEdit>Заголовок:</TitleEdit>
           <Typography
             variant='h3'
@@ -104,10 +88,7 @@ const AboutCompany = () => {
             dangerouslySetInnerHTML={{ __html: contentText }}
           />
           <div className='content__img'>
-            <EditImage
-              setUploadedImage={setUploadedImage}
-              urlImag={imageBase64}
-            />
+            <EditImage setUploadedImage={setUploadedImage} urlImag={image} />
           </div>
           <UploadButton
             text='Сохранить'
