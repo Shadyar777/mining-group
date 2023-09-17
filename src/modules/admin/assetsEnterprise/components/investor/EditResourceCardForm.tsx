@@ -112,7 +112,7 @@ const EditResourceCardForm = ({
         })
       : uploadedImage;
 
-    formData.append('backgroundImageFiles', bgImage);
+    formData.append('backgroundImageFiles', bgImage as unknown as string);
 
     const pdfFile = String(urlPdf).includes('base64')
       ? await base64ToFile({
@@ -121,7 +121,7 @@ const EditResourceCardForm = ({
           optionsType: 'application/pdf',
         })
       : null;
-    formData.append('mainFile', pdfFile as string);
+    formData.append('mainFile', pdfFile as unknown as string);
     formData.append('location', data.mapLink);
     formData.append('password', data.projectPassword);
     formData.append('price', String(data.price));
