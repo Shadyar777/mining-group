@@ -6,13 +6,14 @@ type UpdateButtonProps = {
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   icon: ReactNode;
   handleFileChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  accept?: string;
 };
 const UploadImage = ({
   text,
   onClick,
   icon,
-
   handleFileChange,
+  accept,
 }: UpdateButtonProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -42,6 +43,7 @@ const UploadImage = ({
         style={{ display: 'none' }}
         ref={inputRef}
         onChange={handleFileChange}
+        accept={accept}
       />
     </Button>
   );

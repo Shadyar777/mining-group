@@ -26,7 +26,7 @@ const HomePage = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('mobileSm'));
   return (
     <StyledHomePage>
-      {isMobile && <TopBanner />}
+      {!isMobile && <TopBanner />}
       <TradingViewWidget />
       <AboutCompany />
       <FindOutMore />

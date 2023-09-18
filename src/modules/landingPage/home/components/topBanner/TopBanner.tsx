@@ -3,40 +3,19 @@ import { useGetBackgroundQuery } from '../../../../../rtk-query';
 import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
 import LoadingSpinner from '../../../../common/loadingSpinner';
+import ContentBanner from './ContentBanner.tsx';
 
-import mokeImg from './../../../../../../public/images/home-top-banner.jpg';
-
-type StyledTopBannerProps = {
-  bgImg?: string | null;
-};
-
-export const StyledTopBanner = styled('div')<StyledTopBannerProps>(
-  ({ theme: { breakpoints }, bgImg }) => ({
-    width: '100%',
-    height: '700px',
-    position: 'relative',
-    marginTop: '-160px',
-
-    gridArea: 'TopBanner',
-
-    '.top-banner-container': {
-      width: '100%',
-      height: '100%',
-      backgroundImage: bgImg ? `url(${bgImg})` : 'none',
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center',
-      backgroundSize: 'cover',
-    },
-
-    [breakpoints.down('mobileSm')]: {
-      display: 'none',
-      height: '100px',
-      '& .top-banner-container': {
-        background: 'unset',
-      },
-    },
-  }),
-);
+export const StyledTopBanner = styled('div')(({ theme: { breakpoints } }) => ({
+  width: '100%',
+  height: '700px',
+  position: 'relative',
+  marginTop: '-160px',
+  gridArea: 'TopBanner',
+  [breakpoints.down('mobileSm')]: {
+    display: 'none',
+    height: '100px',
+  },
+}));
 
 const TopBanner = () => {
   const lng = useAppSelector(getAddGlobalLanguages);
@@ -45,10 +24,13 @@ const TopBanner = () => {
   if (isLoading) {
     return <LoadingSpinner />;
   }
+  if (!data) {
+    return;
+  }
 
   return (
-    <StyledTopBanner bgImg={data?.data?.image || mokeImg}>
-      <div className='top-banner-container' />
+    <StyledTopBanner>
+      <ContentBanner videoSrc={data.data.video} imageSrc={data.data.image} />
     </StyledTopBanner>
   );
 };

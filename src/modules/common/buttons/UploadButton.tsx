@@ -29,6 +29,7 @@ const UploadButton = ({
         fontWeight: '400',
         border: '1px solid #000',
         color: '#2A2A2A',
+        opacity: disabled ? '0.5' : '1',
         borderRadius: '50px',
       }}
       startIcon={icon}

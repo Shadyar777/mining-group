@@ -4,6 +4,12 @@ import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternate
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+
+import UploadImage from '../../../../common/buttons/UploadImage.tsx';
+import UploadButton from '../../../../common/buttons/UploadButton.tsx';
+import { useAppSelector } from '../../../../../store/hooks.ts';
+import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
+import ContentBanner from './ContentBanner.tsx';
 import {
   useGetBackgroundQuery,
   useUpdateHomeBackgroundMutation,
@@ -14,76 +20,72 @@ import {
   fileToBase64,
 } from '../../../../../utils';
 
-import UploadImage from '../../../../common/buttons/UploadImage.tsx';
-import UploadButton from '../../../../common/buttons/UploadButton.tsx';
-import { useAppSelector } from '../../../../../store/hooks.ts';
-import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
+export const StyledTopBanner = styled('div')(({ theme: { breakpoints } }) => ({
+  width: '100%',
+  position: 'relative',
+  marginTop: '-160px',
 
-type StyledTopBannerProps = {
-  bgImg?: string | null;
+  gridArea: 'TopBanner',
+
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+
+  '& .upload-button': {
+    marginTop: '48px',
+  },
+
+  [breakpoints.down('mobileSm')]: {
+    display: 'none',
+    height: '100px',
+  },
+}));
+
+type backgroundFileUrl = {
+  type: string;
+  file: string;
+  name: string;
 };
-export const StyledTopBanner = styled('div')<StyledTopBannerProps>(
-  ({ theme: { breakpoints }, bgImg }) => ({
-    width: '100%',
-    height: '700px',
-    position: 'relative',
-    marginTop: '-160px',
-
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-
-    '& .upload-button': {
-      marginTop: '48px',
-    },
-
-    gridArea: 'TopBanner',
-
-    '.top-banner-container': {
-      width: '100%',
-      height: '100%',
-      backgroundImage: bgImg ? `url(${bgImg})` : 'none',
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center',
-      backgroundSize: 'cover',
-    },
-
-    [breakpoints.down('mobileSm')]: {
-      display: 'none',
-      height: '100px',
-      '& .top-banner-container': {
-        background: 'unset',
-      },
-    },
-  }),
-);
 
 const TopBanner = () => {
-  const [backgroundImageUrl, setBackgroundImageUrl] = useState<string | null>(
-    null,
-  );
-  const [imgForReport, setImgForReport] = useState<string | null>(null);
+  const [backgroundFileUrl, setBackgroundFileUrl] =
+    useState<backgroundFileUrl | null>(null);
+  const [fileForReport, setFileForReport] = useState<string | null>(null);
 
-  const [updateBgImage] = useUpdateHomeBackgroundMutation();
+  const [updateBgImage, { isLoading }] = useUpdateHomeBackgroundMutation();
 
   const lng = useAppSelector(getAddGlobalLanguages);
   const { data } = useGetBackgroundQuery(lng);
   const onUploadImage = async () => {
+    const convertedFileToBase64 = backgroundFileUrl
+      ? await base64ToFile({
+          dataURI: fileForReport as string,
+          optionsType: backgroundFileUrl.type as any,
+          fileName: backgroundFileUrl?.name,
+        })
+      : null;
     const data = {
-      file: imgForReport
-        ? await base64ToFile({
-            dataURI: imgForReport as string,
-            fileName: 'bg-image',
-            optionsType: 'image/jpeg',
-          })
+      video: backgroundFileUrl?.type.includes('video')
+        ? convertedFileToBase64
+        : null,
+      image: backgroundFileUrl?.type.includes('image')
+        ? convertedFileToBase64
         : null,
     };
     const FormData = createFormData(data);
-    await updateBgImage(FormData);
+    await updateBgImage(FormData)
+      .then((result: any) => {
+        if (result?.data.message === 'Success') {
+          setTimeout(() => setBackgroundFileUrl(null), 500);
+        }
+      })
+      .catch((error) => {
+        console.warn('error', error);
+      });
 
-    if (backgroundImageUrl) {
-      URL.revokeObjectURL(backgroundImageUrl);
-      setBackgroundImageUrl(null);
+    if (backgroundFileUrl) {
+      URL.revokeObjectURL(backgroundFileUrl.file);
+      setBackgroundFileUrl(null);
     }
   };
 
@@ -92,32 +94,55 @@ const TopBanner = () => {
     if (file) {
       const base64String = await fileToBase64(file);
       if (base64String) {
-        setImgForReport(base64String);
+        setFileForReport(base64String);
         const url = URL.createObjectURL(file);
-        setBackgroundImageUrl(url);
+        setBackgroundFileUrl({ file: url, type: file.type, name: file.name });
       }
     }
   };
 
   const onDeleteImage = () => {
-    if (backgroundImageUrl) {
-      URL.revokeObjectURL(backgroundImageUrl);
-      setBackgroundImageUrl(null);
+    if (backgroundFileUrl) {
+      URL.revokeObjectURL(backgroundFileUrl.file);
+      setBackgroundFileUrl(null);
     }
   };
 
   useEffect(() => {
     return () => {
-      if (backgroundImageUrl) {
-        URL.revokeObjectURL(backgroundImageUrl);
+      if (backgroundFileUrl) {
+        URL.revokeObjectURL(backgroundFileUrl.file);
       }
     };
-  }, [backgroundImageUrl]);
+  }, [backgroundFileUrl]);
+
+  const getFile = (file: backgroundFileUrl | null) => {
+    if (file?.type?.includes('video')) {
+      return {
+        newVideoSrc: file.file,
+      };
+    }
+    if (file?.type?.includes('image')) {
+      return {
+        imageSrc: file.file,
+      };
+    }
+    if (data?.data?.video) {
+      return {
+        oldVideoSrc: data.data.video,
+      };
+    }
+    if (data?.data?.image) {
+      return {
+        imageSrc: data.data.image,
+      };
+    }
+  };
 
   return (
-    <StyledTopBanner bgImg={backgroundImageUrl || data?.data.image}>
-      <div className='top-banner-container' />
-      {backgroundImageUrl ? (
+    <StyledTopBanner>
+      <ContentBanner {...getFile(backgroundFileUrl)} />
+      {backgroundFileUrl ? (
         <>
           <Box display='flex' gap='0 10px'>
             <UploadButton
@@ -129,6 +154,7 @@ const TopBanner = () => {
               text='Загрузить'
               onClick={onUploadImage}
               icon={<CloudUploadIcon />}
+              disabled={isLoading}
             />
           </Box>
         </>
@@ -137,6 +163,7 @@ const TopBanner = () => {
           text='Загрузить картинку'
           icon={<AddPhotoAlternateOutlinedIcon />}
           handleFileChange={handleFileChange}
+          accept='video/*, image/*'
         />
       )}
     </StyledTopBanner>
