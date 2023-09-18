@@ -47,6 +47,7 @@ const StyledMapOfKazakhstan = styled('div')(({ theme: { breakpoints } }) => ({
     marginTop: '120px',
     display: 'flex',
     flexDirection: 'column',
+    width: '100%',
     '& .text__quote': {
       color: '#F28A2E',
       fontSize: '36px',
@@ -88,10 +89,9 @@ const MapOfKazakhstan = () => {
     string | ArrayBuffer | null
   >(null);
   const [imageBase64, setImageBase64] = useState<string | null>('');
-
   const lng = useAppSelector(getAddGlobalLanguages);
   const { data } = useGetGeoProdQuery(lng);
-  const [updateGeoProd] = useUpdateGeoProdMutation();
+  const [updateGeoProd, { isLoading }] = useUpdateGeoProdMutation();
 
   const {
     content: contentTitle,
@@ -124,9 +124,8 @@ const MapOfKazakhstan = () => {
       quotes: contentText,
       file: await getUploadedImageToBase64(uploadedImage),
     };
-    console.log(data);
+
     const formData = createFormData(data);
-    // console.log(formData.get('file'))
     updateGeoProd(formData);
   };
 
@@ -164,6 +163,7 @@ const MapOfKazakhstan = () => {
               text='Сохранить'
               onClick={onUploadDate}
               icon={<PlusFile />}
+              disabled={isLoading}
             />
           </div>
           <div className='map__text'>

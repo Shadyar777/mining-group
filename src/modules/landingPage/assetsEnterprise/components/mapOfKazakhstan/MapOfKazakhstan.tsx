@@ -26,6 +26,7 @@ const StyledMapOfKazakhstan = styled('div')(({ theme: { breakpoints } }) => ({
     marginTop: '60px',
     display: 'flex',
     flexDirection: 'column',
+    width: '100%',
     '& .text__quote': {
       color: '#F28A2E',
       fontSize: '36px',
