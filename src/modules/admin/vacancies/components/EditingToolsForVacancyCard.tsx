@@ -44,6 +44,7 @@ const validationSchema = yup.object().shape({
     .oneOf(colorForColorPicker, 'Недопустимый цвет')
     .required('Цвет обязателен'),
   title: yup.string().required('Заголовок не может быть пустым'),
+  conditions: yup.string().required('Условия не может быть пустым'),
   tasks: yup.string().required('Задачи не могут быть пустыми'),
   phone: yup.string(),
   mail: yup.string().email('Недопустимый адрес электронной почты'),
@@ -53,6 +54,7 @@ const validationSchema = yup.object().shape({
 type FormData = {
   backgroundColor: ColorForColorPickerType;
   title: string;
+  conditions: string;
   tasks: string;
   phone?: string;
   mail?: string;
@@ -86,7 +88,7 @@ const EditingToolsForVacancyCard = ({
       isVisible: false,
     },
   });
-
+  console.log(jobContent);
   const [addJob, { isSuccess: isSuccessAddJob, isLoading: isLoadingAddJob }] =
     useAddJobMutation();
   const [
@@ -95,7 +97,15 @@ const EditingToolsForVacancyCard = ({
   ] = useUpdateJobMutation();
 
   const onSubmit = (data: FormData) => {
-    const { backgroundColor, mail, tasks, phone, title, isVisible } = data;
+    const {
+      backgroundColor,
+      mail,
+      conditions,
+      tasks,
+      phone,
+      title,
+      isVisible,
+    } = data;
     // Добавление
     if (!jobContent?.jobId) {
       addJob({
@@ -104,7 +114,7 @@ const EditingToolsForVacancyCard = ({
         mail: mail || '',
         tasks,
         phone: phone || '',
-        conditions: tasks,
+        conditions,
         active: isVisible,
       });
       return;
@@ -117,7 +127,7 @@ const EditingToolsForVacancyCard = ({
       mail: mail || '',
       tasks,
       phone: phone || '',
-      conditions: tasks,
+      conditions,
       active: isVisible,
     });
   };
@@ -134,6 +144,7 @@ const EditingToolsForVacancyCard = ({
       reset({
         isVisible: jobContent.active,
         title: jobContent.title,
+        conditions: jobContent.conditions,
         mail: jobContent.mail,
         tasks: jobContent.tasks,
         phone: jobContent.phone,
@@ -170,6 +181,19 @@ const EditingToolsForVacancyCard = ({
       <TitleEdit>Заголовок:</TitleEdit>
       <Controller
         name='title'
+        control={control}
+        render={({ field, fieldState }) => (
+          <EditCustomInput
+            {...field}
+            placeholder=''
+            error={!!fieldState?.error}
+            helperText={fieldState?.error?.message}
+          />
+        )}
+      />
+      <TitleEdit>Условия:</TitleEdit>
+      <Controller
+        name='conditions'
         control={control}
         render={({ field, fieldState }) => (
           <EditCustomInput
