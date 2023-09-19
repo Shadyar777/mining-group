@@ -151,7 +151,7 @@ const TopBanner = () => {
               icon={<DeleteIcon />}
             />
             <UploadButton
-              text='Загрузить'
+              text='Загрузить файл'
               onClick={onUploadImage}
               icon={<CloudUploadIcon />}
               disabled={isLoading}
