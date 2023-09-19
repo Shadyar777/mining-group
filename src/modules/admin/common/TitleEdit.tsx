@@ -9,9 +9,10 @@ const StyledTitleEdit = styled('div')(() => ({
 
 type TitleEditProps = {
   children: JSX.Element | string;
+  className?: string;
 };
-const TitleEdit: FC<TitleEditProps> = ({ children }) => {
-  return <StyledTitleEdit>{children}</StyledTitleEdit>;
+const TitleEdit: FC<TitleEditProps> = ({ children, className }) => {
+  return <StyledTitleEdit className={className}>{children}</StyledTitleEdit>;
 };
 
 export default TitleEdit;

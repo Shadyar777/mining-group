@@ -22,12 +22,20 @@ const StyledMapOfKazakhstan = styled('div')(({ theme: { breakpoints } }) => ({
 
   '& .border-bottom': {
     borderBottom: '1px solid red',
+    width: '100%',
   },
 
   '& .map__content': {
     display: 'flex',
     flexDirection: 'column',
     placeItems: 'center',
+
+    '& .title': {
+      alignSelf: 'start',
+    },
+    '& .text__title': {
+      textAlign: 'center',
+    },
   },
   '& .map__image': {
     display: 'flex',
@@ -142,7 +150,7 @@ const MapOfKazakhstan = () => {
     <StyledMapOfKazakhstan>
       <Container maxWidth='md'>
         <div className='map__content'>
-          <TitleEdit>Заголовок:</TitleEdit>
+          <TitleEdit className='title'>Заголовок:</TitleEdit>
           <Typography
             className='text__title border-bottom'
             variant='h3'
