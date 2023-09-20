@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 import { IconButton, Box, styled } from '@mui/material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -37,7 +37,7 @@ const StyledRemoveButton = styled(IconButton)(() => ({
   right: 3,
 }));
 
-export const ImageCard: React.FC<ImageCardProps> = ({
+export const ImageCard: FC<ImageCardProps> = ({
   initialImageSrc,
   onImageChange,
   onImageRemove,
@@ -46,7 +46,7 @@ export const ImageCard: React.FC<ImageCardProps> = ({
     initialImageSrc || null,
   );
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();

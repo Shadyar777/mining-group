@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
 import { ImageCard } from './ImageCard.tsx';
 
@@ -10,15 +10,22 @@ export interface Image {
 interface ImageGalleryProps {
   initialImages?: Image[];
   onChange?: (images: Image[]) => void;
+  isEdit?: boolean;
 }
 
 const ImageGallery: FC<ImageGalleryProps> = ({
   initialImages = [],
   onChange,
+  isEdit = false,
 }) => {
-  const [images, setImages] = useState<Image[]>(
-    initialImages.concat(Array(6 - initialImages.length).fill({})),
-  );
+  const emptyArrObj = initialImages.concat(Array(6).fill({}));
+  const [images, setImages] = useState<Image[]>(isEdit ? [] : emptyArrObj);
+
+  useEffect(() => {
+    if (initialImages.length) {
+      setImages(initialImages.concat(Array(6 - initialImages.length).fill({})));
+    }
+  }, [initialImages]);
 
   const handleImageChange = (index: number, file: File) => {
     const updatedImages = [...images];
@@ -41,7 +48,7 @@ const ImageGallery: FC<ImageGalleryProps> = ({
   return (
     <Grid container spacing={2}>
       {images.map((image, index) => (
-        <Grid item xs={4} key={index} margin={0}>
+        <Grid item xs={4} key={`${image || ''}-${index}`} margin={0}>
           <ImageCard
             initialImageSrc={image.src}
             onImageChange={(file) => handleImageChange(index, file)}

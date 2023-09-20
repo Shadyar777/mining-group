@@ -50,15 +50,7 @@ export interface DataById {
   language: string;
   backgroundImageFiles: string;
   mainFile: string;
-  images: Image[];
+  images: string[];
   location: string;
   createdDate: string;
-}
-
-export interface Image {
-  id: string;
-  name: string;
-  type: string;
-  data: string;
-  fieldsId: number;
 }

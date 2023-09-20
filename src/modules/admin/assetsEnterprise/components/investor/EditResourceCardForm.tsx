@@ -25,6 +25,10 @@ import { getCheckedNames } from '../../../../../utils/getCheckedNames.ts';
 import { resourceSchema } from '../../utils/resourceSchema.ts';
 import { useAppSelector } from '../../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../../common/sliceCommon/slice.ts';
+import {
+  convertAllImagesToBase64,
+  convertFileToBase64,
+} from '../../../../../utils/convertFileToBase64.ts';
 
 type FormData = {
   title: string;
@@ -131,22 +135,13 @@ const EditResourceCardForm = ({
     updateFieldsById(formData);
   };
 
-  // const srcImagesBase64 = useMemo(() => {
-  //   return (
-  //     data?.data?.images?.map((image) => ({
-  //       src: parseImgBase64({
-  //         data: image.data || '',
-  //         type: image.type || '',
-  //       }),
-  //     })) ?? []
-  //   );
-  // }, [data?.data?.images]);
-
-  useEffect(() => {
+  const asyncFunc = async () => {
     if (data) {
-      // const convertedDataUrl = data.data?.mainFile?.data
-      //   ? convertBase64ToPdfDataUrl(data.data?.mainFile?.data || '')
-      //   : null;
+      const base64BgImage = await convertFileToBase64(
+        data?.data?.backgroundImageFiles,
+      );
+      const base64Images = await convertAllImagesToBase64(data.data?.images);
+      const base64PdfFile = await convertFileToBase64(data.data?.mainFile);
       setResourceData(updateCheckboxes(resourceData, data.data.resources));
       reset({
         title: data.data.title,
@@ -155,12 +150,25 @@ const EditResourceCardForm = ({
         price: data.data.price,
         mapLink: data.data.location,
       });
-      setTimeout(() => {
-        setUploadedImage(() => data?.data?.backgroundImageFiles);
-        if (data.data?.mainFile) {
-          setUploadedPdf(() => data.data?.mainFile);
-        }
-      }, 100);
+      // setTimeout(() => {
+      setUploadedImage(() => base64BgImage);
+      setImages(
+        () =>
+          base64Images?.map((item) => ({
+            src: item,
+            file: 'hello' as any,
+          })) || [],
+      );
+      if (data.data?.mainFile) {
+        setUploadedPdf(() => base64PdfFile);
+      }
+      // }, 100);
+    }
+  };
+
+  useEffect(() => {
+    if (data) {
+      asyncFunc().then(console.log);
     }
   }, [data, data?.data, reset]);
 
@@ -246,7 +254,11 @@ const EditResourceCardForm = ({
 
       <TitleEdit>Загрузить дополнительные изображения:</TitleEdit>
       <Box m={2} margin='14px 0 14px 0'>
-        <ImageGallery onChange={setImages} initialImages={[]} />
+        <ImageGallery
+          onChange={setImages}
+          initialImages={moreImages}
+          isEdit={true}
+        />
       </Box>
 
       <TitleEdit>Ссылка локации на карте:</TitleEdit>
