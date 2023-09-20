@@ -14,7 +14,6 @@ import { getListIconResources } from '../../../../common/utls/getListIconResourc
 import EditImage from '../../../common/EditImage.tsx';
 import EditPDF from './EditPDF.tsx';
 import { useAddFieldsMutation } from '../../../../../rtk-query';
-import { dataURLtoBlob } from '../../../../../utils/dataURLtoBlob.tsx';
 import { base64ToFile } from '../../../../../utils';
 import { resourceSchema } from '../../utils/resourceSchema.ts';
 import { getCheckedNames } from '../../../../../utils/getCheckedNames.ts';
@@ -75,10 +74,9 @@ const CreateResourceCardForm = ({ handleClose }: CreateResourceCardForm) => {
 
   const onSubmit = async (data: FormData) => {
     const formData = new FormData();
-    moreImages.forEach((item, index) => {
-      if (item.src) {
-        const imgBlob = dataURLtoBlob(item.src);
-        formData.append('images', imgBlob, `image${index}`);
+    moreImages.forEach((item) => {
+      if (item?.src && item?.file) {
+        formData.append(`images`, item?.file);
       }
     });
     typeof uploadedImage === 'string' &&
