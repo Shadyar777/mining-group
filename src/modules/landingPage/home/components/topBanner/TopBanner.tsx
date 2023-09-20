@@ -7,7 +7,6 @@ import ContentBanner from './ContentBanner.tsx';
 
 export const StyledTopBanner = styled('div')(({ theme: { breakpoints } }) => ({
   width: '100%',
-  height: '700px',
   position: 'relative',
   marginTop: '-160px',
   gridArea: 'TopBanner',
