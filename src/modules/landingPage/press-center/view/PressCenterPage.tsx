@@ -4,7 +4,6 @@ import PdfViewer from '../components/pdfViewer/PdfViewer.tsx';
 import Slider from '../components/slider/Slider.tsx';
 import { useGetFieldsPrivateByIdQuery } from '../../../../rtk-query';
 import { useAppSelector } from '../../../../store/hooks.ts';
-import { parseImgBase64 } from '../../../../utils';
 import { useNavigate } from 'react-router-dom';
 import GoogleMaps from '../components/googleMap/GoogleMap.tsx';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
@@ -46,15 +45,6 @@ const PressCenterPage = () => {
     lng,
   });
 
-  // const pdfURL = useMemo(() => {
-  //   return data?.data.mainFile?.data
-  //     ? parseImgBase64({
-  //         data: data.data.mainFile || '',
-  //         type: data.data.mainFile || '',
-  //       })
-  //     : '';
-  // }, [data?.data?.mainFile]);
-
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -66,13 +56,6 @@ const PressCenterPage = () => {
   if (!data) {
     return;
   }
-
-  const images = data?.data?.images?.map(({ data, type }) => {
-    return parseImgBase64({
-      data: data || '',
-      type: type || '',
-    });
-  });
 
   return (
     <StyledPressCenterPage>
@@ -86,10 +69,11 @@ const PressCenterPage = () => {
               text='Загрузить файл'
               icon={<AddPhotoAlternateIcon />}
               href={data?.data?.mainFile || ''}
+              key={data?.data?.mainFile}
               download
             />
           </div>
-          <Slider images={images} />
+          <Slider images={data?.data?.images} />
           <GoogleMaps srcGoogle={data.data.location} />
         </div>
       </Container>

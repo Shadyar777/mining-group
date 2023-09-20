@@ -43,6 +43,10 @@ type SliderProps = {
 const Slider = ({ images }: SliderProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('mobileSm'));
+
+  if (!images) {
+    return;
+  }
   return (
     <StyledSlider>
       <Container maxWidth='md' disableGutters={isMobile}>
@@ -74,7 +78,7 @@ const Slider = ({ images }: SliderProps) => {
           slidesToSlide={1}
           swipeable
         >
-          {images.map((image, idx) => (
+          {images?.map((image, idx) => (
             <Box width='100%' height='600px'>
               <img
                 key={idx}
