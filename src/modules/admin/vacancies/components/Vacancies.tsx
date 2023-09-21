@@ -1,4 +1,10 @@
-import { Container, styled, useMediaQuery, useTheme } from '@mui/material';
+import {
+  Container,
+  styled,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import VacancyCard from './VacancyCard.tsx';
 import AddNewVacancy from './AddNewVacancy.tsx';
 import { useGetAllJobsQuery } from '../../../../rtk-query';
@@ -6,7 +12,11 @@ import { getAddGlobalLanguages } from '../../../common/sliceCommon/slice.ts';
 import { useAppSelector } from '../../../../store/hooks.ts';
 
 const StyledVacancies = styled('div')(({ theme: { breakpoints } }) => ({
-  padding: '40px 0',
+  padding: '50px 0',
+
+  '& .vacancies__title': {
+    textAlign: 'center',
+  },
   '& .vacancies__container': {
     display: 'flex',
     flexDirection: 'column',
@@ -16,11 +26,13 @@ const StyledVacancies = styled('div')(({ theme: { breakpoints } }) => ({
     gap: '32px',
   },
   [breakpoints.down('mobileSm')]: {
-    // marginTop: '60px',
-    // background: '#FFF8EC !important', // FIXME - нужно исправить background для всего page
     flexDirection: 'unset',
     display: 'unset',
     gap: 'unset',
+    '& .vacancies__title': {
+      textAlign: 'center',
+      fontSize: '24px',
+    },
   },
 }));
 
@@ -48,6 +60,9 @@ const Vacancies = () => {
     <StyledVacancies>
       <Container maxWidth='md' disableGutters={isMobile}>
         <div className='vacancies__container'>
+          <Typography id='services' variant='h3' className='vacancies__title'>
+            Вакансии
+          </Typography>
           {jobs &&
             jobs.map((job, idx) => (
               <VacancyCard {...job} key={`${idx}-${job.title}`} />

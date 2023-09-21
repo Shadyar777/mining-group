@@ -1,12 +1,22 @@
-import { Container, styled, useMediaQuery, useTheme } from '@mui/material';
+import {
+  Container,
+  styled,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import VacancyCard from './VacancyCard.tsx';
 import { useAppSelector } from '../../../../store/hooks.ts';
 import { getAddGlobalLanguages } from '../../../common/sliceCommon/slice.ts';
 import { useGetAllJobsQuery } from '../../../../rtk-query';
 import LoadingSpinner from '../../../common/loadingSpinner';
+import { useTranslation } from 'react-i18next';
 
 const StyledVacancies = styled('div')(({ theme: { breakpoints } }) => ({
-  padding: '40px 0',
+  padding: '50px 0',
+  '& .vacancies__title': {
+    textAlign: 'center',
+  },
   '& .vacancies__container': {
     display: 'flex',
     flexDirection: 'column',
@@ -19,10 +29,18 @@ const StyledVacancies = styled('div')(({ theme: { breakpoints } }) => ({
     flexDirection: 'unset',
     display: 'unset',
     gap: 'unset',
+
+    '& .vacancies__title': {
+      textAlign: 'center',
+      fontSize: '24px',
+    },
   },
 }));
 
 const Vacancies = () => {
+  const { t } = useTranslation('translation', {
+    keyPrefix: 'vacancies',
+  });
   const { breakpoints } = useTheme();
   const isMobile = useMediaQuery(breakpoints.down('mobileSm'));
 
@@ -55,6 +73,9 @@ const Vacancies = () => {
     <StyledVacancies>
       <Container maxWidth='md' disableGutters={isMobile}>
         <div className='vacancies__container'>
+          <Typography id='services' variant='h3' className='vacancies__title'>
+            {t('vacancies')}
+          </Typography>
           {jobs.map((job, idx) => (
             <VacancyCard {...job} key={idx} />
           ))}
