@@ -1,7 +1,8 @@
 type Base64ToFileParams = {
   dataURI: string;
   fileName: string;
-  optionsType: 'application/pdf' | 'image/jpeg';
+  optionsType: string;
+  // optionsType: 'application/pdf' | 'image/jpeg';
 };
 
 async function base64ToFile({
@@ -23,7 +24,7 @@ async function base64ToFile({
   }
 
   const blob = new Blob([arrayBuffer], { type: optionsType });
-  return new File([blob], fileName);
+  return new File([blob], fileName, { type: blob.type });
 }
 
 export { base64ToFile };

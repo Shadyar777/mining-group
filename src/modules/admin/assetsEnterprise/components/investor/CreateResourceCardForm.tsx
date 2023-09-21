@@ -101,6 +101,8 @@ const CreateResourceCardForm = ({ handleClose }: CreateResourceCardForm) => {
     formData.append('price', String(data.price));
     formData.append('resources', getCheckedNames(resourceData).join());
     formData.append('title', data.title);
+    //
+    // console.log(formData.get('mainFile'));
     addFields(formData);
   };
 
