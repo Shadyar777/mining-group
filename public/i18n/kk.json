@@ -39,7 +39,8 @@
   },
   "vacancies": {
     "conditions": "Шарттар:",
-    "tasks": "Тапсырмалар:"
+    "tasks": "Тапсырмалар:",
+    "vacancies": "Бос жұмыс орындары"
   },
   "common": {
     "moreDetailed": "Толығырақ",

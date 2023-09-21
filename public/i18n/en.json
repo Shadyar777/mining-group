@@ -4,22 +4,22 @@
   "lng": "ru",
   "nav": {
     "main": "Main",
-    "aboutCompany": "About the company",
+    "aboutCompany": "About company",
     "forInvestors": "For investors",
     "services": "Services",
     "assetsOfEnterprise": "Assets of the enterprise",
-    "vacancies": "Job openings",
+    "vacancies": "Vacancies",
     "contacts": "Contacts"
   },
   "home": {
-    "toLearnMore": "To learn more"
+    "toLearnMore": "Learn more"
   },
   "about": {
     "activity": "Types of activities and range of services",
     "ourValues": "Our values"
   },
   "assetsEnterprise": {
-    "investor": "Investors",
+    "investor": "Mineral",
     "deposits": "Deposits",
     "filters": "Filters",
     "sort": "Sorting",
@@ -39,7 +39,8 @@
   },
   "vacancies": {
     "conditions": "Conditions:",
-    "tasks": "Tasks:"
+    "tasks": "Tasks:",
+    "vacancies": "Vacancies"
   },
   "common": {
     "moreDetailed": "More detailed",

@@ -39,7 +39,8 @@
   },
   "vacancies": {
     "conditions": "Условия:",
-    "tasks": "Задачи:"
+    "tasks": "Задачи:",
+    "vacancies": "Вакансии"
   },
   "common": {
     "moreDetailed": "Подробнее",

@@ -45,7 +45,7 @@ const Footer = () => {
           </ul>
           {/*</div>*/}
           <div className='footer-text__rights-reserved'>
-            © TOO “Invest Mining Group” | All rights reserved.
+            © LLP “Invest Mining Group” | All rights reserved.
           </div>
         </div>
       </Container>
