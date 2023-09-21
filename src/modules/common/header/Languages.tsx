@@ -1,10 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import {
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  SxProps,
+  Theme,
+} from '@mui/material';
 import { StyledLanguages } from './styled';
 import { addGlobalLanguages } from '../sliceCommon/slice.ts';
 import { useAppDispatch } from '../../../store/hooks.ts';
 import { TLanguage } from '../types';
+
+import kkIcon from './../../../../public/svgs/languages/kazakhstan.svg';
+import ruIcon from './../../../../public/svgs/languages/russia.svg';
+import enIcon from './../../../../public/svgs/languages/united-kingdom.svg';
+
+const sxProps: SxProps<Theme> | undefined = { display: 'flex', gap: '0 8px' };
 
 const Languages = () => {
   const { i18n } = useTranslation();
@@ -46,9 +58,15 @@ const Languages = () => {
             },
         }}
       >
-        <MenuItem value={'ru'}>🇷🇺 RU</MenuItem>
-        <MenuItem value={'kk'}>🇰🇿 KK</MenuItem>
-        <MenuItem value={'en'}>🇺🇸 EN</MenuItem>
+        <MenuItem sx={sxProps} value={'ru'}>
+          <img src={ruIcon} alt={'RU'} /> <span>RU</span>
+        </MenuItem>
+        <MenuItem sx={sxProps} value={'kk'}>
+          <img src={kkIcon} alt={'KK'} /> <span>KK</span>
+        </MenuItem>
+        <MenuItem sx={sxProps} value={'en'}>
+          <img src={enIcon} alt={'EN'} /> <span>EN</span>
+        </MenuItem>
       </Select>
     </StyledLanguages>
   );

@@ -67,6 +67,8 @@ export const StyledLanguages = styled(FormControl)(
     },
     '& .MuiInputBase-input, .MuiOutlinedInput-input': {
       paddingRight: '16px !important',
+      display: 'flex',
+      gap: '0 8px',
     },
 
     [breakpoints.between('sm', 'md')]: {
