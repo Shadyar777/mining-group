@@ -14,6 +14,9 @@ export const convertFileToBase64 = async (fileUrl: string): Promise<string> => {
 };
 
 export const convertAllImagesToBase64 = async (urls: string[]) => {
+  if (!urls?.length) {
+    return [];
+  }
   const promises = urls.map((url) => convertFileToBase64(url));
   return Promise.all(promises);
 };

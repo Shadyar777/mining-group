@@ -75,6 +75,8 @@ const EditResourceCardForm = ({
     { isSuccess: isSuccessUpdateFieldsById, isLoading: isPostLoading },
   ] = useUpdateFieldsByIdMutation();
   const [moreImages, setImages] = useState<TImageGallery[]>([]);
+  const [isLoadingWhenFillingData, setIsLoadingWhenFillingData] =
+    useState(false);
   const {
     control,
     handleSubmit,
@@ -116,7 +118,9 @@ const EditResourceCardForm = ({
         })
       : uploadedImage;
 
-    formData.append('backgroundImageFiles', bgImage as unknown as string);
+    if (bgImage) {
+      formData.append('backgroundImageFiles', bgImage as unknown as string);
+    }
 
     const pdfFile = String(urlPdf).includes('base64')
       ? await base64ToFile({
@@ -137,11 +141,16 @@ const EditResourceCardForm = ({
 
   const asyncFunc = async () => {
     if (data) {
-      const base64BgImage = await convertFileToBase64(
-        data?.data?.backgroundImageFiles,
-      );
-      const base64Images = await convertAllImagesToBase64(data.data?.images);
-      const base64PdfFile = await convertFileToBase64(data.data?.mainFile);
+      setIsLoadingWhenFillingData(true);
+      const base64BgImage = data?.data?.backgroundImageFiles
+        ? await convertFileToBase64(data?.data?.backgroundImageFiles)
+        : null;
+      const base64Images = data.data?.images?.length
+        ? await convertAllImagesToBase64(data.data?.images)
+        : null;
+      const base64PdfFile = data.data?.mainFile
+        ? await convertFileToBase64(data.data?.mainFile)
+        : null;
       setResourceData(updateCheckboxes(resourceData, data.data.resources));
       reset({
         title: data.data.title,
@@ -150,19 +159,18 @@ const EditResourceCardForm = ({
         price: data.data.price,
         mapLink: data.data.location,
       });
-      // setTimeout(() => {
       setUploadedImage(() => base64BgImage);
       setImages(
         () =>
           base64Images?.map((item) => ({
             src: item,
-            file: 'hello' as any,
+            file: '' as any,
           })) || [],
       );
       if (data.data?.mainFile) {
         setUploadedPdf(() => base64PdfFile);
       }
-      // }, 100);
+      setIsLoadingWhenFillingData(false);
     }
   };
 
@@ -178,7 +186,7 @@ const EditResourceCardForm = ({
     }
   }, [handleClose, isSuccessUpdateFieldsById]);
 
-  if (isGetLoading || isPostLoading) {
+  if (isGetLoading || isPostLoading || isLoadingWhenFillingData) {
     return <LoadingSpinner />;
   }
 
@@ -256,8 +264,8 @@ const EditResourceCardForm = ({
       <Box m={2} margin='14px 0 14px 0'>
         <ImageGallery
           onChange={setImages}
-          initialImages={moreImages}
-          isEdit={true}
+          initialImages={moreImages.length ? moreImages : []}
+          isEdit={false}
         />
       </Box>
 
