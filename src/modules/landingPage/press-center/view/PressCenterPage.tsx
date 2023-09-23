@@ -66,7 +66,7 @@ const PressCenterPage = () => {
           <div className='press__pdf-block'>
             <PdfViewer pdfURL={data?.data?.mainFile || ''} />
             <DownloadButton
-              text='Загрузить файл'
+              text='Скачать файл'
               icon={<AddPhotoAlternateIcon />}
               href={data?.data?.mainFile || ''}
               key={data?.data?.mainFile}

@@ -1,9 +1,9 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { styled } from '@mui/material';
-import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 import UploadImage from '../../../../common/buttons/UploadImage.tsx';
 import UploadButton from '../../../../common/buttons/UploadButton.tsx';
@@ -160,8 +160,8 @@ const TopBanner = () => {
         </>
       ) : (
         <UploadImage
-          text='Загрузить картинку'
-          icon={<AddPhotoAlternateOutlinedIcon />}
+          text='Загрузить файл'
+          icon={<ArrowDownwardIcon />}
           handleFileChange={handleFileChange}
           accept='video/*, image/*'
         />
