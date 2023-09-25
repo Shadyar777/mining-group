@@ -10,6 +10,12 @@ import LoadingSpinner from '../../../../common/loadingSpinner';
 export const StyledActivityMobileCarousel = styled(Carousel)(() => ({
   '& .card': {
     padding: '16px',
+    height: '100%',
+  },
+  '& .card__edit': {
+    position: 'absolute',
+    top: '4px',
+    right: '4px',
   },
   '& .react-multi-carousel-item ': {
     marginRight: '10px',

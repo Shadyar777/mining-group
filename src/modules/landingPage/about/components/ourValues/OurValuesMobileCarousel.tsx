@@ -6,6 +6,7 @@ import { ValuesResponse } from '../../../../../rtk-query';
 export const StyledActivityMobileCarousel = styled(Carousel)(() => ({
   '& .card': {
     padding: '16px',
+    height: '100%',
   },
   '& .react-multi-carousel-item ': {
     marginRight: '10px',
