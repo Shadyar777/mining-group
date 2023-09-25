@@ -128,7 +128,7 @@ const Card = memo(
             <img src={backgroundImageFiles} alt={title} />
           </div>
           <div className='card__content'>
-            <div className='card__id'>ID объекта: {id}</div>
+            {/*<div className='card__id'>ID объекта: {id}</div>*/}
             <div className='card__geolocation'>{title}</div>
             <div className='card__resource'>
               {resources?.map((resource, key) => (
@@ -169,7 +169,7 @@ function ResourceName({
 }) {
   return (
     <div className='card__resource-name'>
-      {iconSrc ?? 'icon ('}
+      {iconSrc || ''}
       <div>{name}</div>
     </div>
   );

@@ -124,9 +124,9 @@ const Card = memo(
           />
         </div>
         <div className='card__content'>
-          <div className='card__id'>
-            {t('objectID')} {id}
-          </div>
+          {/*<div className='card__id'>*/}
+          {/*  {t('objectID')} {id}*/}
+          {/*</div>*/}
           <div className='card__geolocation'>{title}</div>
           <div className='card__resource'>
             {resources.map((resource, key) => (
@@ -165,7 +165,8 @@ function ResourceName({
   return (
     <div className='card__resource-name'>
       {/*<img src={iconSrc} alt='' />*/}
-      {iconSrc ?? 'icon ('}
+      {/*{iconSrc ?? 'icon'}*/}
+      {iconSrc || ''}
       <div>{name}</div>
     </div>
   );
