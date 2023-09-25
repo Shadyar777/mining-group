@@ -131,7 +131,9 @@ const EditResourceCardForm = ({
           optionsType: 'application/pdf',
         })
       : null;
-    formData.append('mainFile', pdfFile as unknown as string);
+    if (pdfFile) {
+      formData.append('mainFile', pdfFile as unknown as string);
+    }
     formData.append('location', data?.mapLink ?? '');
     formData.append('password', data.projectPassword);
     formData.append('price', String(data.price));

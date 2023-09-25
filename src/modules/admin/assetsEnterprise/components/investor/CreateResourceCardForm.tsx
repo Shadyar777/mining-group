@@ -88,14 +88,16 @@ const CreateResourceCardForm = ({ handleClose }: CreateResourceCardForm) => {
         }),
       );
     formData.append('location', data?.mapLink || '');
-    formData.append(
-      'mainFile',
-      await base64ToFile({
-        fileName: 'pdf-file',
-        optionsType: 'application/pdf',
-        dataURI: urlPdf as string,
-      }),
-    );
+    if (typeof urlPdf === 'string' && urlPdf) {
+      formData.append(
+        'mainFile',
+        await base64ToFile({
+          fileName: 'pdf-file',
+          optionsType: 'application/pdf',
+          dataURI: urlPdf as string,
+        }),
+      );
+    }
     formData.append('password', data.projectPassword);
     formData.append('price', String(data.price));
     formData.append('resources', getCheckedNames(resourceData).join());

@@ -88,7 +88,6 @@ const EditingToolsForVacancyCard = ({
       isVisible: false,
     },
   });
-  console.log(jobContent);
   const [addJob, { isSuccess: isSuccessAddJob, isLoading: isLoadingAddJob }] =
     useAddJobMutation();
   const [

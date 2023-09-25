@@ -63,18 +63,23 @@ const PressCenterPage = () => {
         <div className='press-content'>
           <PressCenterTitle title={data.data.title} />
 
-          <div className='press__pdf-block'>
-            <PdfViewer pdfURL={data?.data?.mainFile || ''} />
-            <DownloadButton
-              text='Скачать файл'
-              icon={<AddPhotoAlternateIcon />}
-              href={data?.data?.mainFile || ''}
-              key={data?.data?.mainFile}
-              download
-            />
-          </div>
+          {Boolean(data?.data?.mainFile) && (
+            <div className='press__pdf-block'>
+              <PdfViewer pdfURL={data?.data?.mainFile || ''} />
+              <DownloadButton
+                text='Скачать файл'
+                icon={<AddPhotoAlternateIcon />}
+                href={data?.data?.mainFile || ''}
+                key={data?.data?.mainFile}
+                download
+                target='_blank'
+              />
+            </div>
+          )}
           <Slider images={data?.data?.images} />
-          <GoogleMaps srcGoogle={data.data.location} />
+          {Boolean(data.data.location) && (
+            <GoogleMaps srcGoogle={data.data.location} />
+          )}
         </div>
       </Container>
     </StyledPressCenterPage>

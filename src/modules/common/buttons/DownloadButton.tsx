@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { HTMLAttributeAnchorTarget, ReactNode } from 'react';
 import { Button } from '@mui/material';
 
 type DownloadButtonProps = {
@@ -7,6 +7,7 @@ type DownloadButtonProps = {
   type?: 'button' | 'submit' | 'reset';
   href: string;
   download: boolean;
+  target?: HTMLAttributeAnchorTarget | undefined;
 };
 const DownloadButton = ({
   text,
@@ -14,6 +15,7 @@ const DownloadButton = ({
   type,
   href,
   download,
+  target,
 }: DownloadButtonProps) => {
   return (
     <Button
@@ -23,6 +25,7 @@ const DownloadButton = ({
       download={download}
       href={href}
       startIcon={icon}
+      target={target}
       style={{
         backgroundColor: 'transparent',
         boxShadow: 'none',
