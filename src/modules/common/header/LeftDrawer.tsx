@@ -48,11 +48,7 @@ const LeftDrawer = ({
           );
         })}
         <div className='exit' onClick={onClose}>
-          {isAdmin ? (
-            <NavLink to='/'>Выйти</NavLink>
-          ) : (
-            <NavLink to='/auth'>Auth</NavLink>
-          )}
+          {isAdmin && <NavLink to='/'>Выйти</NavLink>}
         </div>
       </ul>
       {isMobile && (
