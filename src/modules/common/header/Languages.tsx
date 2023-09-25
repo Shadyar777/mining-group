@@ -51,10 +51,10 @@ const Languages = () => {
         inputProps={{ IconComponent: () => null }}
         sx={{
           boxShadow: 'none',
-          '.MuiOutlinedInput-notchedOutline': { border: '2px solid white' },
+          '.MuiOutlinedInput-notchedOutline': { border: '1px solid white' },
           '&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':
             {
-              border: '2px solid white',
+              border: '1px solid white',
             },
         }}
       >

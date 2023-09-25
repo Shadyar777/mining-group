@@ -19,12 +19,11 @@ import { resourceSchema } from '../../utils/resourceSchema.ts';
 import { getCheckedNames } from '../../../../../utils/getCheckedNames.ts';
 import LoadingSpinner from '../../../../common/loadingSpinner';
 
-type FormData = {
+export type FormData = {
   title: string;
-  objectId: string;
   projectPassword: string;
-  price: number;
-  mapLink: string;
+  price?: string;
+  mapLink?: string;
 };
 
 const initialResources = getListIconResources().map((resource) => ({
@@ -55,12 +54,12 @@ type CreateResourceCardForm = {
 const CreateResourceCardForm = ({ handleClose }: CreateResourceCardForm) => {
   const [addFields, { isSuccess, isLoading }] = useAddFieldsMutation();
   const [moreImages, setImages] = useState<TImageGallery[]>([]);
-  const { control, handleSubmit } = useForm<FormData>({
+  // FIXME: FormData
+  const { control, handleSubmit } = useForm<FormData | any>({
     resolver: yupResolver(resourceSchema),
     defaultValues: {
       title: '',
-      objectId: '',
-      price: 0,
+      price: '',
       projectPassword: '',
       mapLink: '',
     },
@@ -88,7 +87,7 @@ const CreateResourceCardForm = ({ handleClose }: CreateResourceCardForm) => {
           dataURI: uploadedImage as string,
         }),
       );
-    formData.append('location', data.mapLink);
+    formData.append('location', data?.mapLink || '');
     formData.append(
       'mainFile',
       await base64ToFile({
@@ -119,19 +118,6 @@ const CreateResourceCardForm = ({ handleClose }: CreateResourceCardForm) => {
       <TitleEdit>Заголовок:</TitleEdit>
       <Controller
         name='title'
-        control={control}
-        render={({ field, fieldState }) => (
-          <CustomInput
-            {...field}
-            placeholder=''
-            error={!!fieldState?.error}
-            helperText={fieldState?.error?.message}
-          />
-        )}
-      />
-      <TitleEdit>ID объекта:</TitleEdit>
-      <Controller
-        name='objectId'
         control={control}
         render={({ field, fieldState }) => (
           <CustomInput

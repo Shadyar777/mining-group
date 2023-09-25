@@ -6,6 +6,7 @@ import { formatDate } from '../../../../common/utls/formatDate.ts';
 
 import arrowIcon from '@public/svgs/arrow-forward-sharp.svg';
 import { useTranslation } from 'react-i18next';
+import { isAN } from '../../../../../utils/isAN.ts';
 
 const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   borderRadius: '32px',
@@ -91,7 +92,7 @@ type CardProps = {
   id: number;
   title: string;
   resources: string[];
-  price: number;
+  price: string;
   createdDate: string;
   backgroundImageFiles?: string;
   handleOpenModal: (value: number) => void;
@@ -140,7 +141,8 @@ const Card = memo(
           <Divider className='card__divider' />
           {/*<Divider variant='middle' />*/}
           <div className='card__price'>
-            {t('price')} {currencyFormat(Number(price))}
+            {t('price')}{' '}
+            {isAN(Number(price)) ? currencyFormat(Number(price)) : price}
           </div>
           <div className='card__date'>
             {t('Published')} {formatDate(createdDate)}

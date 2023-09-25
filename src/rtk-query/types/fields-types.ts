@@ -8,7 +8,7 @@ export interface ListField {
   id: number;
   title: string;
   resources: string[];
-  price: number;
+  price: string;
   createdDate: string;
   backgroundImageFiles: string;
 }
@@ -45,7 +45,7 @@ export interface DataById {
   id: number;
   title: string;
   password: string;
-  price: number;
+  price: string;
   resources: string[];
   language: string;
   backgroundImageFiles: string;

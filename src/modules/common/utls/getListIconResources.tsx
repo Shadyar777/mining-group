@@ -12,7 +12,7 @@ export const getListIconResources = () => {
   return [
     {
       id: 1,
-      name: 'Золото рассыпное',
+      name: 'Золото',
       icon: <Gold />,
     },
     {

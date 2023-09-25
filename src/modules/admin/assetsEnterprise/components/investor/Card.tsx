@@ -7,6 +7,7 @@ import { getIconForResource } from '../../../../common/utls/getIconForResource.t
 import { formatDate } from '../../../../common/utls/formatDate.ts';
 import { currencyFormat } from '../../../../common/utls/currencyFormat.ts';
 import { useDeleteFieldsMutation } from '../../../../../rtk-query';
+import { isAN } from '../../../../../utils/isAN.ts';
 
 const StyledCard = styled('div')(({ theme: { breakpoints } }) => ({
   borderRadius: '32px',
@@ -92,7 +93,7 @@ type CardProps = {
   id: number;
   title: string;
   resources: string[];
-  price: number;
+  price: string;
   createdDate: string;
   backgroundImageFiles?: string;
 };
@@ -109,7 +110,6 @@ const Card = memo(
     const [openCardModal, onCloseCardModal] = useState<boolean>(false);
 
     const [deleteFields] = useDeleteFieldsMutation();
-
     const handleEdit = () => {
       onCloseCardModal(true);
     };
@@ -142,7 +142,8 @@ const Card = memo(
 
             <Divider className='card__divider' />
             <div className='card__price'>
-              Цена: {currencyFormat(Number(price))}
+              Цена:{' '}
+              {isAN(Number(price)) ? currencyFormat(Number(price)) : price}
             </div>
             <div className='card__date'>
               Опубликовано {formatDate(createdDate)}

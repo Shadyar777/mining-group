@@ -54,9 +54,9 @@ export const StyledLanguages = styled(FormControl)(
       boxShadow: 'none',
       color: 'white',
       borderRadius: '50px',
-      '.MuiOutlinedInput-notchedOutline': { border: '2px solid white' },
+      '.MuiOutlinedInput-notchedOutline': { border: '1px solid white' },
       '&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-        border: '2px solid white',
+        border: '1px solid white',
       },
     },
     '& .MuiSelect-select': {
@@ -75,10 +75,10 @@ export const StyledLanguages = styled(FormControl)(
       '& .languages__select': {
         color: 'black',
 
-        '.MuiOutlinedInput-notchedOutline': { border: '2px solid black' },
+        '.MuiOutlinedInput-notchedOutline': { border: '1px solid black' },
         '&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':
           {
-            border: '2px solid black',
+            border: '1px solid black',
           },
       },
     },

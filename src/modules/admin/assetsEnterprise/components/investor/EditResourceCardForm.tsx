@@ -32,10 +32,9 @@ import {
 
 type FormData = {
   title: string;
-  objectId: string;
   projectPassword: string;
-  price: number;
-  mapLink: string;
+  price?: string;
+  mapLink?: string;
 };
 
 const initialResources = getListIconResources().map((resource) => ({
@@ -82,13 +81,11 @@ const EditResourceCardForm = ({
     handleSubmit,
     formState: { errors },
     reset,
-    // setValue
   } = useForm({
     resolver: yupResolver(resourceSchema),
     defaultValues: {
       title: '',
-      objectId: '',
-      price: 0,
+      price: '',
       projectPassword: '',
       mapLink: '',
     },
@@ -109,6 +106,11 @@ const EditResourceCardForm = ({
         formData.append('images', imgBlob, `image${index}`);
       }
     });
+    // const arr = moreImages.filter(item => Object.keys(item).length)
+    //
+    // if (!arr.length) {
+    //   formData.append('images', new File([], `empty`));
+    // }
 
     const bgImage = String(uploadedImage).includes('base64')
       ? await base64ToFile({
@@ -130,7 +132,7 @@ const EditResourceCardForm = ({
         })
       : null;
     formData.append('mainFile', pdfFile as unknown as string);
-    formData.append('location', data.mapLink);
+    formData.append('location', data?.mapLink ?? '');
     formData.append('password', data.projectPassword);
     formData.append('price', String(data.price));
     formData.append('resources', getCheckedNames(resourceData).join());
@@ -154,7 +156,6 @@ const EditResourceCardForm = ({
       setResourceData(updateCheckboxes(resourceData, data.data.resources));
       reset({
         title: data.data.title,
-        objectId: data.data.id as unknown as string,
         projectPassword: data.data.password,
         price: data.data.price,
         mapLink: data.data.location,
@@ -201,18 +202,6 @@ const EditResourceCardForm = ({
             {...field}
             error={!!errors.title}
             helperText={errors.title?.message}
-          />
-        )}
-      />
-      <TitleEdit>ID объекта:</TitleEdit>
-      <Controller
-        name='objectId'
-        control={control}
-        render={({ field }) => (
-          <CustomInput
-            {...field}
-            error={!!errors.objectId}
-            helperText={errors.objectId?.message}
           />
         )}
       />
