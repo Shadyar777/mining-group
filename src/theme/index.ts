@@ -13,7 +13,8 @@ function createTheme() {
         xs: 0,
         mobileSm: 480,
         sm: 600,
-        md: 980,
+        md: 848,
+        lgSmall: 1015, // 981px
         lg: 1280,
         xl: 1440,
       },
@@ -32,6 +33,7 @@ declare module '@mui/material/styles' {
     mobileSm: true;
     sm: true;
     md: true;
+    lgSmall: true;
     lg: true;
     xl: true;
   }

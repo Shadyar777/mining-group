@@ -35,7 +35,7 @@ const OurValues = () => {
 
   return (
     <StyledOurValues>
-      <Container maxWidth='md'>
+      <Container maxWidth='lgSmall'>
         <div className='ourValues__container'>
           <Typography variant='h3' className='ourValues__title'>
             Наши ценности

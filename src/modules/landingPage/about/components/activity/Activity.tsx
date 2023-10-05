@@ -63,19 +63,17 @@ const Activity = () => {
   }
   return (
     <StyledActivity>
-      <Container maxWidth='md'>
-        <Container maxWidth='md'>
-          <div className='activity__container'>
-            <Typography id='services' variant='h3' className='activity__title'>
-              {t('activity')}
-            </Typography>
-            <div className='activity__content'>
-              {data.data.map(({ title, text, id }, idx) => (
-                <Card title={title} text={text} id={id} key={`${idx}-${id}`} />
-              ))}
-            </div>
+      <Container maxWidth='lgSmall'>
+        <div className='activity__container'>
+          <Typography id='services' variant='h3' className='activity__title'>
+            {t('activity')}
+          </Typography>
+          <div className='activity__content'>
+            {data.data.map(({ title, text, id }, idx) => (
+              <Card title={title} text={text} id={id} key={`${idx}-${id}`} />
+            ))}
           </div>
-        </Container>
+        </div>
       </Container>
     </StyledActivity>
   );

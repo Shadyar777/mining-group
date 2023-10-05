@@ -71,7 +71,7 @@ const FindOutMore = () => {
   }
   return (
     <StyledFindOutMore>
-      <Container maxWidth='md'>
+      <Container maxWidth='lgSmall'>
         <div className='find-out-more__content'>
           <Typography variant='h3' className='content__title'>
             {t('toLearnMore')}
