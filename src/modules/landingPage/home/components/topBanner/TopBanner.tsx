@@ -11,8 +11,9 @@ export const StyledTopBanner = styled('div')(({ theme: { breakpoints } }) => ({
   marginTop: '-160px',
   gridArea: 'TopBanner',
   [breakpoints.down('mobileSm')]: {
-    display: 'none',
-    height: '100px',
+    display: 'block',
+    height: '100%',
+    marginTop: '0',
   },
 }));
 
