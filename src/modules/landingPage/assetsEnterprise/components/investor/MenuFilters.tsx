@@ -7,8 +7,8 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { styled } from '@mui/material';
-import TFilterPopoverProps from './FilterPopover.tsx';
+import { ClickAwayListener, styled } from '@mui/material';
+import TFilterPopover from './FilterPopper.tsx';
 import SearchInput from './SearchInput.tsx';
 import iconFilter from '@public/svgs/icon-filter.svg';
 import { QueryFieldsParams } from '../../../../../rtk-query/types/fields-types.ts';
@@ -79,31 +79,42 @@ const MenuFilters = memo(
       // Дополнительные действия поиска, если нужно
     };
 
+    const handleClickAway = () => {
+      setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
+
     useEffect(() => {
       setFieldsParams((prevState) => ({
         ...prevState,
         title: debouncedSearchValue,
+        page: 1,
       }));
     }, [debouncedSearchValue, setFieldsParams]);
 
     return (
-      <StyledMenuFilter className='investor__menu-filters'>
-        <div className='menu-filters' onClick={onOpenPopoverFilters}>
-          <div className='menu-filters__icon'>
-            <img alt='' src={iconFilter} />
+      <ClickAwayListener onClickAway={handleClickAway}>
+        <StyledMenuFilter className='investor__menu-filters'>
+          <div className='menu-filters' onClick={onOpenPopoverFilters}>
+            <div className='menu-filters__icon'>
+              <img alt='' src={iconFilter} />
+            </div>
+            <div className='menu-filters__label'>{t('filters')}</div>
+            {open ? (
+              <TFilterPopover
+                setFieldsParams={setFieldsParams}
+                anchorEl={anchorEl}
+                handlePopoverClose={onClosePopoverFilter}
+                paramResources={paramResources}
+              />
+            ) : null}
           </div>
-          <div className='menu-filters__label'>{t('filters')}</div>
-          <TFilterPopoverProps
-            setFieldsParams={setFieldsParams}
-            anchorEl={anchorEl}
-            handlePopoverClose={onClosePopoverFilter}
-            paramResources={paramResources}
-          />
-        </div>
-        <div className='menu-filters__search'>
-          <SearchInput value={searchValue} onChange={handleSearchChange} />
-        </div>
-      </StyledMenuFilter>
+          <div className='menu-filters__search'>
+            <SearchInput value={searchValue} onChange={handleSearchChange} />
+          </div>
+        </StyledMenuFilter>
+      </ClickAwayListener>
     );
   },
 );

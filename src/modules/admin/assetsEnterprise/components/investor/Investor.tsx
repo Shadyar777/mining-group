@@ -104,6 +104,7 @@ const Investor = () => {
         <Pagination
           count={data.data.listFields.allPageCount}
           onChange={onChangePagination}
+          page={fieldsParams.page}
         />
       </Container>
     </StyledInvestor>

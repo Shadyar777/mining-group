@@ -11,10 +11,16 @@ const StyledPaginationMui = styled(PaginationMui)(() => ({
 type PaginationProps = {
   count: number;
   onChange: (event: ChangeEvent<unknown>, page: number) => void;
+  page?: number;
 };
-const Pagination = ({ count = 0, onChange }: PaginationProps) => {
+const Pagination = ({ count = 0, onChange, page = 0 }: PaginationProps) => {
   return (
-    <StyledPaginationMui onChange={onChange} count={count} shape='rounded' />
+    <StyledPaginationMui
+      page={page}
+      onChange={onChange}
+      count={count}
+      shape='rounded'
+    />
   );
 };
 

@@ -3,7 +3,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   Checkbox,
-  Popover,
+  Popper,
   styled,
   Typography,
 } from '@mui/material';
@@ -13,7 +13,7 @@ import { QueryFieldsParams } from '../../../../../rtk-query/types/fields-types.t
 import { getListIconResources } from '../../../../common/utls/getListIconResources.tsx';
 import { useTranslation } from 'react-i18next';
 
-type TFilterPopoverProps = {
+type TFilterPopperProps = {
   anchorEl: HTMLElement | null;
   handlePopoverClose: () => void;
   setFieldsParams: Dispatch<SetStateAction<QueryFieldsParams>>;
@@ -24,7 +24,8 @@ interface IFormInput {
   [resourceName: string]: boolean;
 }
 
-const StyledPopover = styled(Popover)(({ theme: { breakpoints } }) => ({
+const StyledPopper = styled(Popper)(({ theme: { breakpoints } }) => ({
+  zIndex: '2',
   '& .filter__common': {
     color: 'inherit',
     textAlign: 'center',
@@ -73,12 +74,35 @@ const getSelectedResources = (
   return Object.keys(resourceObj).filter((key) => resourceObj[key]);
 };
 
-const FilterPopover = ({
+const modifiers = [
+  {
+    name: 'flip',
+    enabled: true,
+    options: {
+      altBoundary: true,
+      rootBoundary: 'document',
+      padding: 8,
+    },
+  },
+  {
+    name: 'preventOverflow',
+    enabled: true,
+    options: {
+      altAxis: true,
+      altBoundary: true,
+      tether: true,
+      rootBoundary: 'document',
+      padding: 8,
+    },
+  },
+];
+
+const FilterPopper = ({
   anchorEl,
-  handlePopoverClose,
+  // handlePopoverClose,
   setFieldsParams,
   paramResources,
-}: TFilterPopoverProps) => {
+}: TFilterPopperProps) => {
   const { t } = useTranslation('translation', {
     keyPrefix: 'assetsEnterprise',
   });
@@ -107,80 +131,72 @@ const FilterPopover = ({
     setFieldsParams((prevState) => ({
       ...prevState,
       resources: getSelectedResources(checkboxState),
+      page: 1,
     }));
   }, [checkboxState, setFieldsParams]);
 
   return (
-    <div>
-      <StyledPopover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handlePopoverClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-      >
-        <Accordion>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className='filter__common'>{t('sort')}</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography component={'span'} className='filter__publication-date'>
-              {t('byPublicationDate')}
-            </Typography>
-            <div className='filter__new-old'>
-              <div onClick={() => onClickNewOrOld('new')}>{t('new')}</div>
-              <div onClick={() => onClickNewOrOld('old')}>{t('old')}</div>
-            </div>
-          </AccordionDetails>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className='filter__common'>
-              {t('mineralResource')}
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              flexWrap: 'wrap',
-            }}
-          >
-            {resourcesList.map((resource) => (
-              <label
-                key={resource.id}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginRight: '20px',
-                  marginBottom: '10px',
-                  cursor: 'pointer',
-                }}
-              >
-                <Checkbox
-                  checked={checkboxState[resource.name] || false}
-                  onChange={(e) =>
-                    handleCheckboxChange(resource.name, e.target.checked)
-                  }
-                />
-                {resource.icon}
-                <Typography style={{ marginLeft: '10px' }}>
-                  {resource.name}
-                </Typography>
-              </label>
-            ))}
-          </AccordionDetails>
-        </Accordion>
-      </StyledPopover>
-    </div>
+    <StyledPopper
+      id={id}
+      open={open}
+      anchorEl={anchorEl}
+      disablePortal={false}
+      modifiers={modifiers}
+    >
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography className='filter__common'>{t('sort')}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography component={'span'} className='filter__publication-date'>
+            {t('byPublicationDate')}
+          </Typography>
+          <div className='filter__new-old'>
+            <div onClick={() => onClickNewOrOld('new')}>{t('new')}</div>
+            <div onClick={() => onClickNewOrOld('old')}>{t('old')}</div>
+          </div>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography className='filter__common'>
+            {t('mineralResource')}
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            flexWrap: 'wrap',
+          }}
+        >
+          {resourcesList.map((resource) => (
+            <label
+              key={resource.id}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                marginRight: '20px',
+                marginBottom: '10px',
+                cursor: 'pointer',
+              }}
+            >
+              <Checkbox
+                checked={checkboxState[resource.name] || false}
+                onChange={(e) =>
+                  handleCheckboxChange(resource.name, e.target.checked)
+                }
+              />
+              {resource.icon}
+              <Typography style={{ marginLeft: '10px' }}>
+                {resource.name}
+              </Typography>
+            </label>
+          ))}
+        </AccordionDetails>
+      </Accordion>
+    </StyledPopper>
   );
 };
 
-export default FilterPopover;
+export default FilterPopper;
