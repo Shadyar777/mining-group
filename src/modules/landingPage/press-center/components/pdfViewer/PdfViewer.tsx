@@ -1,8 +1,10 @@
 import { FC } from 'react';
-import { Document, Page } from 'react-pdf';
+import { Document, Page, pdfjs } from 'react-pdf';
+import { styled } from '@mui/material';
 
 import 'react-pdf/dist/esm/Page/TextLayer.css';
-import { styled } from '@mui/material';
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const StyledPDFViewer = styled('div')(() => ({
   width: '100%',
