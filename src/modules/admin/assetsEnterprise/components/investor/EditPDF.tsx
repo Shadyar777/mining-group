@@ -1,13 +1,13 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Document, Page, pdfjs } from 'react-pdf';
-import { IconButton, styled, Dialog, DialogContent } from '@mui/material';
+import { Document, Page } from 'react-pdf';
+import { Dialog, DialogContent, IconButton, styled } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import useImageUploader from '../../../../../hooks/useImageUploader.ts';
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+import 'react-pdf/dist/esm/Page/TextLayer.css';
 
 const StyledEditPDF = styled('div')({
   position: 'relative',
