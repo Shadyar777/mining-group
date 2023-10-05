@@ -14,7 +14,6 @@ const StyledAboutPage = styled('div')(({ theme: { breakpoints } }) => ({
     gap: '60px',
   },
   [breakpoints.down('mobileSm')]: {
-    // marginTop: '60px',
     flexDirection: 'unset',
     display: 'unset',
     gap: 'unset',

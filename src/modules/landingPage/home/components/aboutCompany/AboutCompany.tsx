@@ -30,7 +30,7 @@ export const StyledAboutCompany = styled('div')(
       },
       '& .content__text': {
         color: '#1E1E1E',
-        fontSize: '26px',
+        fontSize: '20px',
         fontStyle: 'normal',
         fontWeight: '300',
         lineHeight: 'normal',
@@ -43,7 +43,7 @@ export const StyledAboutCompany = styled('div')(
       },
       '& button': {
         color: '#FFF',
-        fontSize: '24px',
+        fontSize: '16px',
         fontStyle: 'normal',
         fontWeight: '600',
         lineHeight: 'normal',

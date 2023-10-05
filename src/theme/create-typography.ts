@@ -53,7 +53,7 @@ export const createTypography = (): TypographyOptions => {
     h3: {
       fontFamily: "'Geologica', sans-serif",
       fontWeight: 700,
-      fontSize: '3rem', // 48px
+      fontSize: '2.25rem', // 36px
       lineHeight: 1.2,
     },
     h4: {

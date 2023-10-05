@@ -24,7 +24,7 @@ export const StyledStrategy = styled('div')(({ theme: { breakpoints } }) => ({
     },
     '& .content__text': {
       color: '#1E1E1E',
-      fontSize: '26px',
+      fontSize: '20px',
       fontStyle: 'normal',
       fontWeight: '300',
       lineHeight: 'normal',
