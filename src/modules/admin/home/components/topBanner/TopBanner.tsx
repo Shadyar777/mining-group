@@ -36,8 +36,13 @@ export const StyledTopBanner = styled('div')(({ theme: { breakpoints } }) => ({
   },
 
   [breakpoints.down('mobileSm')]: {
-    display: 'none',
-    height: '100px',
+    display: 'flex',
+    // height: '100px',
+    marginTop: '0',
+
+    '& .upload-button': {
+      marginTop: '0px',
+    },
   },
 }));
 
@@ -149,6 +154,7 @@ const TopBanner = () => {
               text='Удалить'
               onClick={onDeleteImage}
               icon={<DeleteIcon />}
+              disabled={isLoading}
             />
             <UploadButton
               text='Загрузить файл'

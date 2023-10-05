@@ -1,5 +1,24 @@
 import { ChangeEvent, MouseEvent, ReactNode, useRef } from 'react';
-import { Button } from '@mui/material';
+import { Button, styled } from '@mui/material';
+
+export const StyledUploadImage = styled(Button)(
+  ({ theme: { breakpoints } }) => ({
+    fontSize: '16px',
+
+    [breakpoints.down('mobileSm')]: {
+      fontSize: '12px',
+    },
+  }),
+);
+
+const inlineStyles = {
+  backgroundColor: 'transparent',
+  boxShadow: 'none',
+  fontWeight: '400',
+  border: '1px solid #000',
+  color: '#2A2A2A',
+  borderRadius: '50px',
+};
 
 type UpdateButtonProps = {
   text: string;
@@ -21,21 +40,13 @@ const UploadImage = ({
     onClick?.(e);
   };
   return (
-    <Button
+    <StyledUploadImage
       type='button'
       variant='contained'
       onClick={handleButtonClick}
       className='upload-button'
-      style={{
-        backgroundColor: 'transparent',
-        boxShadow: 'none',
-        fontSize: '16px',
-        fontWeight: '400',
-        border: '1px solid #000',
-        color: '#2A2A2A',
-        borderRadius: '50px',
-      }}
       startIcon={icon}
+      style={inlineStyles}
     >
       {text}
       <input
@@ -45,7 +56,7 @@ const UploadImage = ({
         onChange={handleFileChange}
         accept={accept}
       />
-    </Button>
+    </StyledUploadImage>
   );
 };
 

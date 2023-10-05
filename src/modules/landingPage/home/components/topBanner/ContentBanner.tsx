@@ -4,12 +4,23 @@ export const StyledContentBanner = styled('div')(
   ({ theme: { breakpoints } }) => ({
     width: '100%',
     height: '100%',
-    aspectRatio: '16 / 9',
     '& .banner-image, .banner-video': {
       width: '100%',
     },
 
-    [breakpoints.down('mobileSm')]: {},
+    [breakpoints.up('lg')]: {
+      '& .banner-video, .banner-image': {
+        width: '100%',
+        height: '700px',
+        objectFit: 'fill',
+      },
+    },
+    [breakpoints.down('lg')]: {
+      '& .banner-video, .banner-image': {
+        aspectRatio: '16 / 9',
+        height: 'auto',
+      },
+    },
   }),
 );
 

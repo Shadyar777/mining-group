@@ -1,5 +1,28 @@
 import { MouseEvent, ReactNode } from 'react';
-import { Button } from '@mui/material';
+import { Button, styled } from '@mui/material';
+
+type StyledUploadButtonProps = {
+  disabled?: boolean;
+};
+export const StyledUploadButton = styled(Button)<StyledUploadButtonProps>(
+  ({ theme: { breakpoints }, disabled }) => ({
+    fontSize: '16px',
+    opacity: disabled ? '0.5' : '1',
+
+    [breakpoints.down('mobileSm')]: {
+      fontSize: '12px',
+    },
+  }),
+);
+
+const inlineStyles = {
+  backgroundColor: 'transparent',
+  boxShadow: 'none',
+  fontWeight: '400',
+  border: '1px solid #000',
+  color: '#2A2A2A',
+  borderRadius: '50px',
+};
 
 type UpdateButtonProps = {
   text: string;
@@ -16,26 +39,17 @@ const UploadButton = ({
   disabled = false,
 }: UpdateButtonProps) => {
   return (
-    <Button
+    <StyledUploadButton
       type={type}
       variant='contained'
       onClick={onClick}
       disabled={disabled}
       className='upload-button'
-      style={{
-        backgroundColor: 'transparent',
-        boxShadow: 'none',
-        fontSize: '16px',
-        fontWeight: '400',
-        border: '1px solid #000',
-        color: '#2A2A2A',
-        opacity: disabled ? '0.5' : '1',
-        borderRadius: '50px',
-      }}
       startIcon={icon}
+      style={{ ...inlineStyles }}
     >
       {text}
-    </Button>
+    </StyledUploadButton>
   );
 };
 
