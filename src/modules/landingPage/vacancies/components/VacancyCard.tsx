@@ -1,4 +1,4 @@
-import { styled } from '@mui/material';
+import { styled, Typography } from '@mui/material';
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import PhoneRoundedIcon from '@mui/icons-material/PhoneRounded';
 import { useTranslation } from 'react-i18next';
@@ -20,7 +20,6 @@ const StyledVacancyCard = styled('div')<StyledVacancyCardProps>(
       gap: '30px 0',
     },
     '& .card__title': {
-      fontSize: '48px',
       fontWeight: 600,
     },
     '& .card__terms': {
@@ -32,11 +31,11 @@ const StyledVacancyCard = styled('div')<StyledVacancyCardProps>(
       '& .tasks__text': {},
     },
     '& .title': {
-      fontSize: '36px',
+      fontSize: '24px',
       fontWeight: 400,
     },
     '& .text': {
-      fontSize: '24px',
+      fontSize: '20px',
       fontWeight: 300,
     },
 
@@ -61,6 +60,7 @@ const StyledVacancyCard = styled('div')<StyledVacancyCardProps>(
       gap: '60px',
     },
     [breakpoints.down('mobileSm')]: {
+      borderRadius: '0px',
       '& .card__content': {
         gap: '24px 0',
       },
@@ -93,6 +93,7 @@ type VacancyCardProps = {
   backgroundColor: string;
   phone: string;
 };
+
 const VacancyCard = ({
   title,
   conditions,
@@ -107,7 +108,9 @@ const VacancyCard = ({
   return (
     <StyledVacancyCard bgColor={backgroundColor}>
       <div className='card__content'>
-        <div className='card__title'>{title}</div>
+        <Typography variant='h3' className='card__title'>
+          {title}
+        </Typography>
         <div className='card__terms title'>
           <div className='terms__title title'>{t('conditions')}</div>
           <div className='terms__text text'>{conditions}</div>
