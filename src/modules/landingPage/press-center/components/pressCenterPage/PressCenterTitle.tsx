@@ -3,7 +3,6 @@ import { Container, styled, Typography } from '@mui/material';
 const StyledPressCenterTitle = styled('div')(({ theme: { breakpoints } }) => ({
   '& .press-center__title': {
     color: '#004B8F',
-    fontSize: '48px',
     fontWeight: 700,
     textAlign: 'center',
   },
