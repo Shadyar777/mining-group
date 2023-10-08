@@ -28,7 +28,7 @@ const StyledInvestor = styled('div')(({ theme: { breakpoints } }) => ({
     '& .sub-title': {
       color: '#392C0B',
       textAlign: 'center',
-      fontSize: '36px',
+      fontSize: '24px',
       fontWeight: 400,
     },
   },

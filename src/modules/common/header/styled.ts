@@ -110,30 +110,37 @@ export const StyledLogo = styled('div')(({ theme: { breakpoints } }) => ({
   },
 }));
 
-export const StyledMenu = styled('div')(({ theme: { breakpoints } }) => ({
+export const StyledMenu = styled('div')(() => ({
   '& .box-icon': {
     background: '#FFB940',
     borderRadius: '50%',
-    overflow: 'hidden',
+    position: 'fixed',
     color: 'white',
   },
 
-  '.MuiIconButton-root': {
+  '& .MuiIconButton-root': {
     margin: '0',
     padding: '8px',
   },
-  [breakpoints.down('mobileSm')]: {
+  width: '32px',
+  height: '32px',
+  position: 'relative',
+  '.MuiIconButton-root': {
     width: '32px',
     height: '32px',
-    position: 'relative',
-    '& .box-icon': {
-      position: 'fixed',
-    },
-    '.MuiIconButton-root': {
-      width: '32px',
-      height: '32px',
-    },
   },
+  // [breakpoints.down('mobileSm')]: {
+  //   width: '32px',
+  //   height: '32px',
+  //   position: 'relative',
+  //   '& .box-icon': {
+  //     position: 'fixed',
+  //   },
+  //   '.MuiIconButton-root': {
+  //     width: '32px',
+  //     height: '32px',
+  //   },
+  // },
 }));
 export const StyledLeftDrawer = styled(Drawer)(
   ({ theme: { breakpoints } }) => ({
