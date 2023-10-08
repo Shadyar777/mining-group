@@ -1,9 +1,9 @@
 import { NavLink, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useMediaQuery, useTheme } from '@mui/material';
 import { getLinksAdmin, getLinksLanding } from '../../../routers/appRoutes.tsx';
 import { StyledLeftDrawer } from './styled';
 import Languages from './Languages.tsx';
-import { useMediaQuery, useTheme } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 
 const LeftDrawer = ({
   isOpen,
@@ -29,11 +29,6 @@ const LeftDrawer = ({
                 <NavLink
                   onClick={() => {
                     onClose();
-                    setTimeout(() => {
-                      const element = document.getElementById('services');
-                      if (element)
-                        element.scrollIntoView({ behavior: 'smooth' });
-                    }, 200);
                   }}
                   to={path}
                 >

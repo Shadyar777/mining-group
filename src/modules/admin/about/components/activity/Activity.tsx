@@ -1,7 +1,6 @@
 import { Container, styled, Typography } from '@mui/material';
 import Card from './Card.tsx';
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import NewCard from './NewCard.tsx';
 import { useGetAllActivitiesQuery } from '../../../../../rtk-query';
 import { useAppSelector } from '../../../../../store/hooks.ts';
@@ -40,17 +39,16 @@ export const StyledActivity = styled('div')(({ theme: { breakpoints } }) => ({
 }));
 
 const Activity = () => {
-  const location = useLocation();
   const lng = useAppSelector(getAddGlobalLanguages);
   const { data, isLoading } = useGetAllActivitiesQuery(lng);
+
   useEffect(() => {
-    if (location.hash === '#services') {
+    const hashValue = window.location.hash.substring(1); // #services => services
+    if (!isLoading && data && hashValue === 'services') {
       const element = document.getElementById('services');
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
+      element && element.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [location]);
+  }, [data, isLoading]);
 
   if (isLoading) {
     return <LoadingSpinner />;
