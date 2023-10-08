@@ -12,10 +12,6 @@ import { addGlobalLanguages } from '../sliceCommon/slice.ts';
 import { useAppDispatch } from '../../../store/hooks.ts';
 import { TLanguage } from '../types';
 
-import kkIcon from './../../../../public/svgs/languages/kazakhstan.svg';
-import ruIcon from './../../../../public/svgs/languages/russia.svg';
-import enIcon from './../../../../public/svgs/languages/united-kingdom.svg';
-
 const sxProps: SxProps<Theme> | undefined = { display: 'flex', gap: '0 8px' };
 
 const Languages = () => {
@@ -59,13 +55,13 @@ const Languages = () => {
         }}
       >
         <MenuItem sx={sxProps} value={'ru'}>
-          <img src={ruIcon} alt={'RU'} /> <span>RU</span>
+          <span>RU</span>
         </MenuItem>
         <MenuItem sx={sxProps} value={'kk'}>
-          <img src={kkIcon} alt={'KK'} /> <span>KK</span>
+          <span>KK</span>
         </MenuItem>
         <MenuItem sx={sxProps} value={'en'}>
-          <img src={enIcon} alt={'EN'} /> <span>EN</span>
+          <span>EN</span>
         </MenuItem>
       </Select>
     </StyledLanguages>
