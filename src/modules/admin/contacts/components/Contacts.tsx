@@ -39,7 +39,7 @@ const StyledContacts = styled('div')(({ theme: { breakpoints } }) => ({
       flex: '1 1 300px',
       color: '#392C0B',
       gap: '31px 0',
-      fontSize: '26px',
+      fontSize: '24px',
       fontWeight: 400,
       display: 'flex',
       flexDirection: 'column',
@@ -49,11 +49,11 @@ const StyledContacts = styled('div')(({ theme: { breakpoints } }) => ({
         display: 'flex',
         alignItems: 'center',
         gap: '0 16px',
-        fontSize: '26px',
+        fontSize: '24px',
 
         div: {
           color: '#392C0B',
-          fontSize: '26px',
+          fontSize: '24px',
           fontWeight: 400,
           textDecoration: 'none',
         },
@@ -154,7 +154,7 @@ const Contacts = () => {
     <StyledContacts>
       <Container maxWidth='md'>
         <div className='contacts__container'>
-          <Typography variant='h2' className='contacts__title'>
+          <Typography variant='h3' className='contacts__title'>
             Контакты
           </Typography>
           <div className='contacts__content'>
