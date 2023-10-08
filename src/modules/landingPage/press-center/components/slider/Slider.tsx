@@ -1,5 +1,5 @@
-import { Box, Container, styled, useMediaQuery, useTheme } from '@mui/material';
 import Carousel from 'react-multi-carousel';
+import { Container, styled, useMediaQuery, useTheme } from '@mui/material';
 
 const responsive = {
   desktop: {
@@ -25,15 +25,14 @@ const responsive = {
   },
 };
 
-const StyledSlider = styled('div')(({ theme: { breakpoints, shape } }) => ({
-  background: '#FFF8EC',
-  '& .container[dir="ltr"]': {
-    borderRadius: shape.borderRadius,
+const StyledSlider = styled('div')(({ theme: { breakpoints } }) => ({
+  '& .image-box': {
+    width: '100%',
+    height: '350px',
   },
   [breakpoints.down('sm')]: {},
   [breakpoints.down('mobileSm')]: {
     padding: '32px 0',
-    '& .container[dir="ltr"]': {},
   },
 }));
 
@@ -79,7 +78,7 @@ const Slider = ({ images }: SliderProps) => {
           swipeable
         >
           {images?.map((image, idx) => (
-            <Box width='100%' height='600px'>
+            <div className='image-box'>
               <img
                 key={idx}
                 alt=''
@@ -87,9 +86,10 @@ const Slider = ({ images }: SliderProps) => {
                 style={{
                   width: '100%',
                   height: '100%',
+                  objectFit: 'contain',
                 }}
               />
-            </Box>
+            </div>
           ))}
         </Carousel>
       </Container>
